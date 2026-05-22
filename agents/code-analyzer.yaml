@@ -1,0 +1,41 @@
+name: code-analyzer
+version: 1.0.0
+description: "Project scanner — analyzes structure, tech stack, dependencies, and code patterns"
+model_tier: 1
+model: opencode-go/deepseek-v4-flash
+capabilities:
+  - scan_project
+  - analyze_structure
+  - detect_tech_stack
+  - audit_dependencies
+  - check_code_health
+  - security_review
+  - find_patterns
+skills_used:
+  - security-basics
+  - performance-optimization
+  - code-review
+  - cs-fundamentals
+  - pr-review
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - fetch_fetch
+  - memory_search_nodes
+  - memory_open_nodes
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+dependencies: []
+role: analyzer
+guardrails:
+  - read_only
+  - no_code_modifications
+  - no_file_writes
+  - flag_security_issues
+  - flag_structural_issues

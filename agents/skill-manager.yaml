@@ -1,0 +1,41 @@
+name: skill-manager
+version: 1.0.0
+description: "Skill creation and management agent — creates, mirrors, updates, and imports skills"
+model_tier: 2
+model: opencode-go/deepseek-v4-pro
+capabilities:
+  - create_skill
+  - update_skill
+  - import_skill
+  - mirror_skill
+  - manage_memory
+  - enrich_skills
+  - deduplicate_skills
+skills_used:
+  - skill-learning
+  - batch-skill-enrichment
+  - hermes-integration
+  - hermes-agent
+  - progressive-disclosure
+mcp_tools_allowed:
+  - read
+  - write
+  - edit
+  - glob
+  - grep
+  - bash
+  - memory_create_entities
+  - memory_add_observations
+  - memory_create_relations
+  - memory_search_nodes
+  - memory_open_nodes
+  - memory_read_graph
+mcp_tools_denied: []
+dependencies: []
+role: curator
+guardrails:
+  - no_code_changes
+  - skills_only
+  - respect_progressive_disclosure
+  - never_modify_application_code
+  - always_create_from_template

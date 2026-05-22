@@ -1,0 +1,40 @@
+name: evolution-agent
+version: 2.0.0
+description: "DNA auto-writer — scans session_log, detects patterns, auto-writes Genes to DNA.yaml + Graph entities"
+model_tier: 2
+model: opencode-go/deepseek-v4-pro
+capabilities:
+  - analyze_performance
+  - identify_patterns
+  - propose_improvements
+  - create_genes
+  - write_to_dna_yaml
+  - sync_to_graph
+  - evolve_config
+skills_used:
+  - skill-learning
+  - batch-skill-enrichment
+dna_families_monitored: [all]
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - write
+  - edit
+  - bash
+  - memory_search_nodes
+  - memory_open_nodes
+  - memory_read_graph
+  - memory_create_entities
+  - memory_add_observations
+  - memory_create_relations
+mcp_tools_denied: []
+dependencies: []
+role: curator
+guardrails:
+  - never_modify_application_code
+  - config_only
+  - dna_and_graph_only
+  - user_approval_required_for_changes
+  - prefer_genes_over_skills
+  - one_proposal_at_a_time

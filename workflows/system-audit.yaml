@@ -1,0 +1,65 @@
+# System Audit — Regular Agent Configuration Health Check
+
+**Purpose:** Automated weekly scan of the OpenCode configuration for health, drift, and improvement opportunities.
+
+**Trigger:** Cron `"0 8 1 * *"` (first of month) or manual `"run system audit"`
+
+---
+
+## Audit Checklist
+
+### 1. Agent Health
+- [ ] All 9 agent `.md` files exist and are non-empty
+- [ ] All 9 agent `.yaml` manifests exist and parse correctly
+- [ ] No agent has been silently removed or renamed
+
+### 2. Skill Health
+- [ ] Count skills in `~/.config/opencode/skills/` vs expected (56)
+- [ ] Flag any skills that haven't been used in 30+ days
+- [ ] Check for orphaned skills (not referenced by any agent)
+
+### 3. Config Validation
+- [ ] `opencode.json` parses as valid JSON
+- [ ] All enabled MCPs are accessible (no broken paths)
+- [ ] API keys referenced via `{env:VAR}` are set in environment
+
+### 4. Memory Health
+- [ ] `memory/session_log.md` is not oversized (>500 lines)
+- [ ] `memory/checkpoint.yaml` has no stale entries (>24h)
+- [ ] `memory/lessons_learned.md` has entries from last 30 days
+
+### 5. Security Scan
+- [ ] No hardcoded tokens/secrets in config files
+- [ ] All `{env:VAR}` references exist in environment
+- [ ] No disabled MCPs that should be removed entirely
+
+### 6. Performance Check
+- [ ] Total agent `.md` file size (should be <500KB total)
+- [ ] Total skill directory size (should be <2MB)
+- [ ] MCP count: enabled vs disabled (target: ≤5 enabled)
+
+### 7. Evolution Opportunities
+- [ ] Check `session_log.md` for patterns (same bug 3+ times → suggest skill)
+- [ ] Check `lessons_learned.md` for recurring themes → suggest agent rule update
+- [ ] Compare with latest `HARNESS_IMPROVEMENT_POA.md` — any items ready to execute?
+
+---
+
+## Audit Output
+
+Generates `memory/audit_report_YYYY-MM-DD.md` with:
+- **Score** (0-100): overall config health
+- **Findings**: issues found with severity (critical/high/medium/low)
+- **Recommendations**: suggested actions ranked by impact
+
+---
+
+## How to Run
+
+```
+User: run system audit
+→ main-coordinator routes to code-analyzer + architecture-advisor (parallel)
+→ code-analyzer: scans config, skills, memory
+→ architecture-advisor: evaluates structure, suggests improvements
+→ Aggregated report
+```

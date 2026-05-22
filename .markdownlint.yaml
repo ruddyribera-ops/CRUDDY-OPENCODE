@@ -1,0 +1,106 @@
+# Markdown linting rules
+# See: https://github.com/DavidAnson/markdownlint
+
+MD001: false  # Heading levels should only increment by one
+MD002: false  # First heading should be a heading 1
+MD003: false  # Heading style
+MD004: false  # Unordered list style
+MD005: false  # Inconsistent indentation for list items
+MD006: false  # List items should be indented from the parent
+MD007: false  # Unordered list indentation
+MD009: false  # No trailing spaces
+MD010: false  # Hard tabs
+MD011: false  # No reverse links
+MD012: false  # Multiple consecutive blank lines
+MD013: false  # Line length
+MD014: false  # Dollar signs used before commands
+MD018: false  # Missing heading space after ATX
+MD019: false  # Multiple spaces after heading hash
+MD020: false  # No space after heading hash
+MD021: false  # Multiple spaces before heading hash
+MD022: false  # Headings should be surrounded by blank lines
+MD023: false  # Heading indentation
+MD024: false  # Multiple headings with same content
+MD025: false  # Multiple top-level headings
+MD026: false  # No space after punctuation in heading
+MD027: false  # Multiple spaces after blockquote symbol
+MD028: false  # Blank line inside blockquote
+MD029: false  # Ordered list item style
+MD030: false  # Spaces after list markers
+MD031: false  # Blanks around fenced code blocks
+MD032: false  # Lists should be surrounded by blank lines
+MD033: false  # No inline HTML
+MD034: false  # No bare URLs
+MD035: false  # Horizontal rule style
+MD036: false  # No emphasized text
+MD037: false  # No space after emphasis
+MD038: false  # No space before closing emphasis
+MD039: false  # No space after closing strong emphasis
+MD040: false  # Fenced code blocks should have a language specified
+MD041: false  # First line in file should be a heading
+MD042: false  # No empty links
+MD043: false  # Heading order
+MD044: false  # Proper names
+MD045: false  # Images should have alt text
+MD046: false  # Code block style
+MD047: false  # File should end with newline
+MD048: false  # Code fence style
+MD049: false  # Emphasis used instead of strong
+MD050: false  # Strong used instead of emphasis
+MD051: false  # Multiple blank lines not allowed
+MD052: false  # Blanks around fenced code
+MD053: false  # Links should be in square brackets
+MD054: false  # Link text should not be bare URL
+MD055: false  # Block quote style
+MD056: false  # No hard tabs
+MD057: false  # No space after list marker
+MD058: false  # Missing blank line after list
+MD059: false  # Remove unused link reference definitions
+MD060: false  # Remove missing link reference definition labels
+MD061: false  # Remove broken link reference definitions
+MD062: false  # Remove empty link reference definitions
+MD063: false  # Remove self-referencing link reference definitions
+MD064: false  # Text should not be left-aligned
+MD065: false  # Use empty lines in blockquotes
+MD066: false  # No extra blank lines around blockquotes
+MD067: false  # Use dash for unordered lists
+MD068: false  # List item spacing
+MD069: false  # Unordered list spacing
+MD070: false  # No extra spacing for unordered list indicators
+MD071: false  # No prefix for blockquote
+MD072: false  # Multiple spaces after blockquote
+MD073: false  # Blockquote marker position
+MD074: false  # No prefix for ordered list
+MD075: false  # Blank line before first list item
+MD076: false  # Double top heading
+MD077: false  # Multiple top headings
+MD078: false  # Top heading indentation
+MD079: false  # Heading indentation
+MD080: false  # No space after link text bracket
+MD081: false  # Broken link
+MD082: false  # Code blocks indented
+MD083: false  # No space after emphasis
+MD084: false  # No prefix for list
+MD085: false  # List bullet spacing
+MD086: false  # No space after strong
+MD087: false  # No space after emphasis
+MD088: false  # No extra space in code block
+MD089: false  # No extra space in emphasis
+MD090: false  # No extra space in strong
+MD091: false  # No space in reference link
+MD092: false  # No space in image
+MD093: false  # No space in link
+MD094: false  # No space in reference
+MD095: false  # No space in literal
+MD096: false  # No extra space in strong emphasis
+MD097: false  # No extra space in emphasis strong
+MD098: false  # No space in strong
+MD099: false  # No space in emphasis
+MD100: false  # No trailing whitespace
+MD101: false  # No trailing whitespace in code
+MD102: false  # No trailing whitespace in list
+MD103: false  # No trailing whitespace in tables
+MD104: false  # No trailing whitespace in headings
+MD105: false  # No trailing whitespace in blockquote
+MD106: false  # No trailing whitespace in fenced code
+MD107: false  # No trailing whitespace in emphasis

@@ -1,0 +1,96 @@
+# Agent Manifest Schema v1.0
+# Defines the valid structure for agent manifest files (agents/*.yaml)
+#
+# Usage: This schema is referenced by validate-manifests.ps1
+# to ensure every agent manifest conforms to the expected structure.
+#
+# Last updated: 2026-05-18
+
+required_keys:
+  - name
+  - version
+  - description
+  - model_tier
+  - capabilities
+  - skills_used
+  - role
+  - guardrails
+
+optional_keys:
+  - model
+  - mcp_tools_allowed
+  - mcp_tools_denied
+  - dependencies
+  - trigger_keywords
+
+roles:
+  enum:
+    - coordinator
+    - executor
+    - analyzer
+    - decider
+    - reporter
+    - generator
+    - curator
+  description: "Agent role from duties.md (coordinator|executor|analyzer|decider|reporter|generator|curator)"
+
+model_tier:
+  type: integer
+  min: 1
+  max: 3
+  description: "1=Flash, 2=Pro, 3=M2.7"
+
+capabilities:
+  min_items: 3
+  type: "list of strings"
+  description: "At least 3 capability names in snake_case"
+
+guardrails:
+  min_items: 3
+  type: "list of strings"
+  description: "At least 3 guardrail rules in snake_case"
+
+skills_used:
+  type: "list of strings (can be empty)"
+  description: "Skill names matching skill files under skills/ directory"
+
+dependencies:
+  max_items: 5
+  type: "list of agent names"
+  description: "Other agents this agent depends on; max 5"
+  validation: "Each dependency must match an existing agent name in the agents/ directory"
+  no_self_dependency: true
+
+mcp_tools_allowed:
+  type: "list of strings"
+  description: "MCP tool names this agent is permitted to use"
+  validation: "Tool names must match available MCP tools (bash, read, write, edit, glob, grep, context7_query-docs, context7_resolve-library-id, sequential-thinking_sequentialthinking, fetch_fetch, webfetch, task, memory_*, desktop-commander_*, filesystem_*)"
+
+mcp_tools_denied:
+  type: "list of strings"
+  description: "MCP tool names explicitly denied to this agent"
+
+model:
+  type: string
+  description: "Explicit model override; must match model_tier assignment"
+  validation:
+    tier_1: "opencode-go/deepseek-v4-flash"
+    tier_2: "opencode-go/deepseek-v4-pro"
+    tier_3: "opencode-go/minimax-m2.7"
+
+trigger_keywords:
+  type: "list of strings"
+  description: "Keywords that trigger routing to this agent"
+
+name:
+  type: string
+  description: "Unique agent identifier, matching the YAML filename (minus .yaml)"
+
+version:
+  type: string
+  pattern: "^\\d+\\.\\d+\\.\\d+$"
+  description: "SemVer version string"
+
+description:
+  type: string
+  description: "One-line summary of the agent's purpose"

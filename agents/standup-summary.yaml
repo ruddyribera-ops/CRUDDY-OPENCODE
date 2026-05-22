@@ -1,0 +1,29 @@
+name: standup-summary
+version: 1.0.0
+description: "Daily standup reporter — summarizes git activity, project health, and deployment status"
+model_tier: 1
+model: opencode-go/deepseek-v4-flash
+capabilities:
+  - summarize_git
+  - report_status
+  - list_changes
+  - identify_issues
+  - check_deployment
+skills_used: []
+mcp_tools_allowed:
+  - bash
+  - read
+  - glob
+  - grep
+  - memory_read_graph
+  - memory_open_nodes
+  - memory_search_nodes
+mcp_tools_denied:
+  - write
+  - edit
+dependencies: []
+role: reporter
+guardrails:
+  - read_only_except_memory_update
+  - no_code_changes
+  - brief_reports

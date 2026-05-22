@@ -1,0 +1,82 @@
+# Token Budgets — Per-Agent Cost Enforcement
+
+**Purpose:** Track token usage per agent per session. Set hard/soft budget limits. Reject or warn when exceeded.
+
+**Location:** `~/.config/opencode/rules/budgets.yaml`
+**Consumer:** Enforced by main-coordinator before routing.
+
+---
+
+## Budget Configuration
+
+```yaml
+# Per-agent token budgets
+budgets:
+  per_session:
+    code-builder: 50000
+    bug-fixer: 30000
+    code-analyzer: 20000
+    architecture-advisor: 25000
+    project-generator: 40000
+    skill-manager: 15000
+    code-explainer: 10000
+    standup-summary: 5000
+    main-coordinator: 10000
+    default: 15000
+
+  per_task:
+    default: 8000
+    code-builder: 12000  # complex tasks can use more
+    project-generator: 15000
+
+  # Behavior when budget exceeded
+  enforcement:
+    per_session: hard    # hard = reject | soft = warn
+    per_task: soft       # hard = reject | soft = warn
+    reset: daily         # daily | weekly | per_session
+
+# Token estimation (rough): characters ÷ token_ratio
+estimation:
+  token_ratio: 4.0       # 4 chars ≈ 1 token
+  overhead_per_call: 500  # overhead per task() invocation
+
+# Tracking method
+tracking:
+  method: session_log    # derived from memory/session_log.md
+  minimal_overhead: true # don't do extra token counting, estimate from log
+```
+
+---
+
+## Enforcement Flow
+
+```
+Agent request arrives at coordinator
+  → Check budget for this agent
+  → Calculate running total from session_log.md (this session)
+  → Add estimated tokens for this task
+  → If over per_session budget AND enforcement=hard → REJECT
+  → If over per_session budget AND enforcement=soft → WARN, proceed
+  → If over per_task budget AND enforcement=hard → REJECT
+  → If over per_task budget AND enforcement=soft → WARN, proceed
+  → Route normally
+```
+
+---
+
+## Reduction Strategies (when budget low)
+
+When an agent is at 80%+ of its budget, coordinator can:
+1. Route to **Tier 1 model** (flash) instead of Tier 2/3
+2. Suggest **smaller scope** for the task
+3. Defer to **next session** (next day)
+4. **Batch** multiple small tasks into one call
+
+---
+
+## Budget Log
+
+Budget status appended to `memory/session_log.md`:
+```
+| 15:00 | main-coordinator | [budget] code-builder 42k/50k (84%) | ~0 | 0.1s | ⚠️ |
+```

@@ -1,0 +1,166 @@
+---
+name: vibekit_stages
+description: 7-stage VibeKit workflow for code manufacturing with halt-on-defect enforcement
+type: workflow
+version: 1.0
+---
+
+# VibeKit Workflow — 7-Stage Pipeline
+
+This workflow formalizes the code manufacturing process. Every stage MUST output a tangible artifact.
+Halt-on-defect: if any stage's criteria are not met, STOP and return to the plan stage.
+
+## Stage 1: Brainstorm
+**Purpose:** Explore possibilities, not commit to solutions.
+
+**Artifact:** `brainstorm.md` — a list of 3-5 possible approaches with pros/cons.
+**Criteria:** At least 2 approaches identified with named tradeoffs.
+**Exit gate:** User or Architect selects one approach → proceed to Stage 2.
+
+---
+
+## Stage 2: Specification
+**Purpose:** Define WHAT we're building, not HOW.
+
+**Artifact:** `SPEC.md` — requirements document:
+- Functionality: what the feature does, inputs, outputs, edge cases
+- Constraints: performance, security, compatibility
+- Success criteria: how we know it's done (measurable)
+
+**Criteria:** SPEC.md exists, covers happy path + at least 2 edge cases, signed off by user.
+**Exit gate:** User approves SPEC.md → proceed to Stage 3.
+
+---
+
+## Stage 3: Plan
+**Purpose:** Define HOW we're building it — the technical blueprint.
+
+**Artifact:** `POA.md` (Plan of Action) — for each file:
+- Action: CREATE / MODIFY / DELETE
+- Path: relative file path
+- Change: one-sentence description of what changes
+- Min lines: minimum expected line count (no empty files)
+
+**Criteria:** Every file in scope listed. No empty directories. Scope locked.
+**Exit gate:** POA is complete → proceed to Stage 4.
+
+---
+
+## Stage 4: Implement
+**Purpose:** Write code that passes the POA.
+
+**Artifact:** Source files matching POA exactly.
+**Criteria:**
+- Every CREATE file exists with real content (>5 lines)
+- Every MODIFY reflects the POA change
+- No scope creep (if more files needed → STOP, update POA, get approval)
+
+**Rules:**
+- Follow the matching skill for each domain
+- Use `interface` over `type` for objects (TypeScript)
+- No `ts-ignore`, `any`, `# type: ignore`
+- Log every POA item as you complete it
+
+---
+
+## Stage 5: Verify
+**Purpose:** Prove the code works and doesn't break existing functionality.
+
+**Artifact:** `VERIFICATION.md` — verification results.
+
+**Commands to run (all must pass):**
+1. **Lint:** `npm run lint` / `flake8` / `golint`
+2. **Type check:** `npx tsc --noEmit` / `pyright`
+3. **Tests:** `npm test` / `pytest` / `go test ./...`
+4. **Build:** `npm run build` (if applicable)
+
+**Criteria:** All commands exit 0. Zero test failures.
+**Halt-on-defect:** If ANY check fails → STOP → return to Stage 3 (plan fix) or Stage 4 (implement fix).
+Never declare success with failing checks.
+
+---
+
+## Stage 6: Review
+**Purpose:** Human review for quality, security, and maintainability.
+
+**Artifact:** `REVIEW.md` — review findings.
+
+**Checklist (from `rules/code_review_checklist.md`):**
+- Security: no hardcoded secrets, input validated, parameterized queries
+- Logic: edge cases handled, error paths covered, no silent failures
+- Performance: no N+1 queries, no expensive operations in loops
+- Maintainability: single responsibility, descriptive names, no magic numbers
+
+**Criteria:** Reviewer signs off OR all must-fix items resolved.
+**Exit gate:** Reviewer approval → proceed to Stage 7.
+
+---
+
+## Stage 7: Archive
+**Purpose:** Preserve the outcome and update institutional memory.
+
+**Artifact:** `ARCHIVE.md` — final handoff document:
+- What was built
+- Files changed (list with roles)
+- Key decisions made (and why)
+- Open questions / next steps
+
+**Memory update:**
+- Write key lesson to `memory/lessons_learned.md` (post-session hook)
+- If new pattern discovered → create `feedback_*.md` with **Why:** + **How to apply:**
+- Update `current_sprint.md` (move to Last Completed)
+
+---
+
+## Stage Flow Diagram
+
+```
+Brainstorm → Specification → Plan → Implement → Verify → Review → Archive
+    ↓            ↓             ↓         ↓         ↓         ↓
+  [gate]       [gate]        [gate]   [gate]    [gate]    [gate]
+                                         ↓
+                                    [HALT: defect]
+                                         ↓
+                                      ← ← ← ← ← ←
+                                         Plan
+```
+
+## Halt-on-Defect Enforcement
+
+**Definition:** Any failed criterion in Stages 1-6 triggers a halt.
+
+| Stage | Failure | Response |
+|-------|---------|----------|
+| 1 | No alternatives identified | Return to brainstorm |
+| 2 | Spec incomplete | Return to specification |
+| 3 | POA missing files | Return to plan (add items) |
+| 4 | Scope creep | STOP → update POA → get approval |
+| 5 | Any test/lint/build failure | Return to implement (fix) |
+| 6 | Must-fix findings | Return to implement (fix) |
+
+**Escalation after 3 retries on same stage:** STOP → report to user with diagnosis.
+
+---
+
+## Role Handoffs
+
+| Stage | Primary Role | Secondary |
+|-------|-------------|-----------|
+| 1 (Brainstorm) | @architecture-advisor | user |
+| 2 (Specification) | @code-builder | user |
+| 3 (Plan) | @code-builder | @architecture-advisor |
+| 4 (Implement) | @code-builder | — |
+| 5 (Verify) | @code-builder | — |
+| 6 (Review) | @code-review skill | @code-analyzer |
+| 7 (Archive) | @code-builder | @main-coordinator |
+
+Each agent outputs results in the contract format:
+```json
+{
+  "role": "",
+  "input_received": "",
+  "output_produced": "",
+  "constraints_followed": [],
+  "issues_detected": []
+}
+```

@@ -1,0 +1,42 @@
+name: project-generator
+version: 1.0.0
+description: "Full multi-agent project generator — runs structured discovery, architecture, planning, and prompt generation"
+model_tier: 3
+model: opencode-go/minimax-m2.7
+capabilities:
+  - scaffold_project
+  - generate_plan
+  - create_structure
+  - orchestrate_build
+  - discovery_phase
+  - architecture_phase
+  - deploy_plan
+skills_used:
+  - database-patterns
+  - api-patterns
+  - auth-patterns
+  - deployment-patterns
+  - testing-standards
+  - security-basics
+  - ui-design
+mcp_tools_allowed:
+  - bash
+  - write
+  - edit
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - task
+dependencies:
+  - architecture-advisor
+  - code-builder
+role: generator
+guardrails:
+  - poa_required
+  - no_existing_project_mods
+  - completion_audit_required
+  - user_confirmation_before_build
+  - scope_lock

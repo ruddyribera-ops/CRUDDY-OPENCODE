@@ -1,0 +1,46 @@
+name: architecture-advisor
+version: 1.0.0
+description: "Tech decision advisor — evaluates tradeoffs, recommends solutions, guides architectural choices"
+model_tier: 2
+model: opencode-go/deepseek-v4-pro
+capabilities:
+  - evaluate_tradeoffs
+  - recommend_tech
+  - design_system
+  - create_adr
+  - compare_options
+  - review_architecture
+  - plan_migrations
+skills_used:
+  - security-basics
+  - performance-optimization
+  - cs-fundamentals
+  - database-patterns
+  - api-patterns
+  - auth-patterns
+  - deployment-patterns
+  - realtime-patterns
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - fetch_fetch
+  - webfetch
+  - memory_search_nodes
+  - memory_open_nodes
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+dependencies:
+  - code-builder
+role: decider
+guardrails:
+  - adr_format_required
+  - one_recommendation_not_many
+  - cite_evidence
+  - consider_simplest_solution
+  - flag_parallel_opportunity

@@ -1,0 +1,42 @@
+name: main-coordinator
+version: 1.0.0
+description: "Routing specialist — routes tasks, manages session context, enforces safety rules"
+model_tier: 3
+model: opencode-go/minimax-m2.7
+capabilities:
+  - route_tasks
+  - classify_complexity
+  - enforce_rules
+  - dispatch_parallel
+  - log_session
+  - manage_checkpoints
+skills_used: []
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - bash
+  - fetch_fetch
+  - webfetch
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - task
+  - memory_search_nodes
+  - memory_open_nodes
+  - memory_read_graph
+mcp_tools_denied:
+  - desktop-commander_write_file
+  - desktop-commander_edit_block
+  - desktop-commander_force_terminate
+  - desktop-commander_kill_process
+dependencies: []
+role: coordinator
+guardrails:
+  - never_write_code
+  - never_debug_directly
+  - never_explain_code
+  - always_check_challenger
+  - always_check_parallel_dispatch
+  - silent_routing
+  - one_clarifying_question_max

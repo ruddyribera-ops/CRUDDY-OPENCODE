@@ -1,0 +1,177 @@
+---
+name: deploy-verify
+description: Repeatable post-deploy verification workflow for Railway deployments. Verifies SHA match, app health, and key routes after any git push.
+version: 1.0.0
+type: workflow
+triggers:
+  - run deploy check
+  - verify deploy
+  - railway deploy
+  - post-push verify
+  - deploy status
+  - after push
+---
+
+# Deploy Verify Workflow
+
+## When to Use
+
+After any `git push` to a branch that auto-deploys on Railway. This workflow verifies:
+1. The correct commit SHA is running (not a stale build)
+2. The app is responding (not a pink 404 from container crash)
+3. Key routes return 200/302 (not error pages)
+
+## Prerequisites
+
+- Railway project with auto-deploy on push configured
+- `$env:RAILWAY_PUBLIC_DOMAIN` or deploy URL known
+- `$env:RAILWAY_GIT_COMMIT_SHA` available (Railway injects this)
+
+## Steps
+
+### Step 1 — Wait for deploy to complete
+
+Railway deploys take **30s to 5 minutes** depending on build time.
+
+```powershell
+$deployUrl = "https://priav5-production.up.railway.app"
+$commitSha = git log -1 --format=%H  # local SHA
+
+Write-Host "Waiting for deploy to complete..."
+Start-Sleep -Seconds 90  # conservative cold start buffer
+
+# Alternative: poll Railway status API
+$maxWait = 300  # 5 minutes
+$elapsed = 0
+while ($elapsed -lt $maxWait) {
+    try {
+        $status = Invoke-WebRequest -Uri "$deployUrl/api/health" -TimeoutSec 5 -UseBasicParsing
+        if ($status.StatusCode -eq 200) { break }
+    } catch {}
+    Start-Sleep -Seconds 15
+    $elapsed += 15
+}
+```
+
+### Step 2 — Verify SHA match (critical anti-caching check)
+
+```powershell
+# Railway caches builds aggressively. The deployed SHA might NOT match your push.
+# This step detects stale deploys.
+
+$actualSha = Invoke-WebRequest -Uri "$deployUrl/version" -TimeoutSec 10 -UseBasicParsing | ForEach-Object {
+    $_.Content | ConvertFrom-Json | Select-Object -ExpandProperty commit_sha
+}
+
+if ($actualSha -ne $commitSha) {
+    Write-Host "STALE BUILD DETECTED"
+    Write-Host "  Expected: $commitSha"
+    Write-Host "  Actual:   $actualSha"
+    Write-Host "Trigger a new deploy via: railway up --prod"
+    exit 1
+} else {
+    Write-Host "SHA verified: $commitSha"
+}
+```
+
+### Step 3 — Health check key routes
+
+```powershell
+function Test-Route {
+    param([string]$Url, [string]$Name, [int[]]$ExpectedCodes = @(200, 302))
+
+    try {
+        $resp = Invoke-WebRequest -Uri $Url -TimeoutSec 15 -UseBasicParsing -SessionVariable sv
+        $status = $resp.StatusCode
+        if ($status -in $ExpectedCodes) {
+            Write-Host "  [OK] $Name → $status"
+            return $true
+        } else {
+            Write-Host "  [WARN] $Name → $status (expected $($ExpectedCodes -join ','))"
+            return $false
+        }
+    } catch {
+        Write-Host "  [FAIL] $Name → ERROR: $($_.Exception.Message)"
+        return $false
+    }
+}
+
+Write-Host "`nRoute checks:"
+$ok = @(
+    (Test-Route "$deployUrl/" "Root"),
+    (Test-Route "$deployUrl/version" "Version endpoint"),
+    (Test-Route "$deployUrl/health" "Health endpoint")
+)
+```
+
+### Step 4 — E2E smoke test (optional but recommended)
+
+```powershell
+# Only run if playwright MCP is available
+python -c "
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    page = browser.new_page()
+
+    # Test login page loads
+    page.goto('$deployUrl')
+    page.wait_for_selector('input[type=\"text\"]', timeout=20000)
+    print('Login page OK')
+
+    # Test login flow
+    page.fill('input[type=\"text\"]', 'test@school.bo')
+    page.fill('input[type=\"password\"]', 'testpass')
+    page.click('button:has-text(\"Ingresar\")')
+    page.wait_for_url('**/dashboard**', timeout=15000)
+    print('Login flow OK')
+
+    browser.close()
+"
+```
+
+### Step 5 — Report
+
+```
+===================================
+DEPLOY VERIFY REPORT
+===================================
+URL:        https://priav5-production.up.railway.app
+Commit:     a3f1b2c...
+SHA Match:  YES
+Routes:     3/3 OK
+E2E:        PASS
+Status:     ✅ READY
+===================================
+```
+
+## Error Responses
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| Pink 404 on Railway | Container not serving | `railway logs` — app crashed at startup |
+| SHA mismatch | Stale build cache | Trigger fresh deploy: `railway up --prod` |
+| Timeout on `/version` | App not initialized | Wait 30s more, check Railway logs |
+| 502 from root | Port mismatch | Check `PORT` env var matches what app listens on |
+
+## Automation
+
+This workflow can be registered as a `post-push` hook:
+
+```powershell
+# In project .git/hooks/post-push
+$branch = git branch --show-current
+if ($branch -eq "main") {
+    powershell -File "$env:USERPROFILE\.config\opencode\scripts\Verify-Deploy.ps1" `
+        -Url "https://priav5-production.up.railway.app"
+}
+```
+
+See `scripts/Verify-Deploy.ps1` for the existing implementation — this workflow formalizes it as a repeatable recipe.
+
+## Related
+
+- `feedback_e2e_waits.md` — why timers flake on Railway
+- `reference_railway.md` — Railway deploy quirks
+- `feedback_palma_lessons.md` — Railway ephemeral fs lessons

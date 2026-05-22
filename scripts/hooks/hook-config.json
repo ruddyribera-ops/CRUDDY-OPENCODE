@@ -1,0 +1,34 @@
+{
+  "postEdit": {
+    "enabled": true,
+    "testTimeoutMs": 60000,
+    "codeExtensions": [
+      ".py",
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx",
+      ".go",
+      ".php",
+      ".rs",
+      ".sh"
+    ]
+  },
+  "onStop": {
+    "skillProposal": {
+      "enabled": true,
+      "toolCallThreshold": 5,
+      "description": "Suggest saving workflows as reusable skills when session uses ≥5 tool calls"
+    },
+    "lessonTrigger": {
+      "enabled": true,
+      "errorFixPattern": true,
+      "complexSessionThreshold": 8,
+      "description": "Suggest documenting lessons when error-fix pattern detected or ≥8 tool calls"
+    },
+    "sprintUpdate": {
+      "enabled": true,
+      "description": "Update current_sprint.md with today's date at session end"
+    }
+  }
+}

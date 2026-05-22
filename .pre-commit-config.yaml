@@ -1,0 +1,71 @@
+# Pre-commit hooks for OpenCode configuration
+# Install: pip install pre-commit
+# Run: pre-commit install
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  - repo: https://github.com/jumanjihouse/pre-commit-hook-validate-json-schema
+    rev: 3.1.1
+    hooks:
+      - id: validate-json-schema
+        files: \.(json)$
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.43.0
+    hooks:
+      - id: markdownlint
+        args: ['--config', '.markdownlint.yaml']
+        files: \.md$
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        types: [bash, sh]
+
+  - repo: local
+    hooks:
+      # Validate JSONC files
+      - id: jsonc-validator
+        name: Validate JSONC
+        entry: node scripts/validate-jsonc.js
+        language: node
+        files: \.jsonc$
+        pass_filenames: true
+
+      # Validate SKILL.md files have required fields
+      - id: skill-validator
+        name: Validate SKILL.md
+        entry: node scripts/validate-skills.js
+        language: node
+        files: SKILL\.md$
+        pass_filenames: true
+
+      # Check TypeScript syntax
+      - id: tsc-check
+        name: TypeScript Syntax Check
+        entry: npx tsc --noEmit
+        language: node
+        files: \.ts$
+        pass_filenames: true
+
+      # Validate shell scripts with PowerShell syntax check
+      - id: ps-script-analyzer
+        name: PowerShell Script Analysis
+        entry: powershell
+        args: ['-Command', 'Invoke-ScriptAnalyzer -Path']
+        language: system
+        types: [powershell]
+        pass_filenames: true

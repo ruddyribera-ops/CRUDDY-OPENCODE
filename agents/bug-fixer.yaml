@@ -1,0 +1,37 @@
+name: bug-fixer
+version: 1.0.0
+description: "Debug specialist — finds root causes, fixes errors, resolves broken functionality"
+model_tier: 2
+model: opencode-go/deepseek-v4-pro
+capabilities:
+  - diagnose_bugs
+  - fix_errors
+  - root_cause_analysis
+  - verify_fix
+  - write_regression_tests
+skills_used:
+  - testing-standards
+  - security-basics
+  - performance-optimization
+  - cs-fundamentals
+mcp_tools_allowed:
+  - bash
+  - write
+  - edit
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+dependencies:
+  - code-analyzer
+role: executor
+guardrails:
+  - max_3_iterations
+  - must_verify_with_proof
+  - never_silent_failure_swallowing
+  - root_cause_before_fix
+  - write_failing_test_first
+  - escalate_after_3_attempts
+  - flag_parallel_opportunity

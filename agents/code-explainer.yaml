@@ -1,0 +1,31 @@
+name: code-explainer
+version: 1.0.0
+description: "Plain-language code explainer — breaks down code, concepts, and architecture for any audience"
+model_tier: 1
+model: opencode-go/deepseek-v4-flash
+capabilities:
+  - explain_code
+  - describe_architecture
+  - teach_concept
+  - walk_through
+  - simplify_complexity
+skills_used:
+  - cs-fundamentals
+  - ui-design
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+dependencies: []
+role: analyzer
+guardrails:
+  - read_only
+  - no_code_modifications
+  - assume_non_programmer_audience
+  - never_implement

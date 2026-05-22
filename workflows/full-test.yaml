@@ -1,0 +1,269 @@
+---
+name: full-test
+description: Complete test cycle combining lint, type-check, unit tests, and E2E smoke. Use after any significant code change or before merging.
+version: 1.0.0
+type: workflow
+triggers:
+  - run all tests
+  - full test cycle
+  - test everything
+  - pre-merge test
+  - ci quality gate
+---
+
+# Full Test Cycle Workflow
+
+## When to Use
+
+- Before merging a PR
+- After any multi-file feature change
+- As a CI quality gate (before deploy)
+- When `code-builder` completes a POA
+
+## Principle
+
+Run **all** verification layers. One passing layer doesn't prove the others pass.
+
+```
+lint → type-check → unit-tests → build → e2e
+```
+
+If **any** layer fails → STOP. Fix before continuing.
+
+## Auto-Detection
+
+The workflow auto-detects the project stack from file presence:
+
+| Files found | Stack | Layers to run |
+|---|---|---|
+| `package.json` | Node/JS/TS | lint, type-check, unit, build |
+| `requirements.txt` / `pyproject.toml` | Python | lint, type-check, unit |
+| `Cargo.toml` | Rust | clippy, test, build |
+| `Dockerfile` | Docker | docker build |
+
+## Step 1 — Detect Stack
+
+```powershell
+$hasPackage = Test-Path "package.json"
+$hasPyproject = (Test-Path "requirements.txt") -or (Test-Path "pyproject.toml")
+$hasCargo = Test-Path "Cargo.toml"
+$hasDockerfile = Test-Path "Dockerfile"
+
+Write-Host "Detected stack:"
+if ($hasPackage) { Write-Host "  [+] Node/JS/TS" }
+if ($hasPyproject) { Write-Host "  [+] Python" }
+if ($hasCargo) { Write-Host "  [+] Rust" }
+if ($hasDockerfile) { Write-Host "  [+] Docker" }
+```
+
+## Step 2 — Lint
+
+### Node/JS/TS
+
+```powershell
+if ($hasPackage) {
+    Write-Host "`n[LINT] Running ESLint..."
+    npm run lint --if-present
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[FAIL] Lint failed"
+        exit 1
+    }
+}
+```
+
+### Python
+
+```powershell
+if ($hasPyproject) {
+    Write-Host "`n[LINT] Running ruff..."
+    ruff check .
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+
+    Write-Host "[LINT] Running flake8..."
+    flake8 --max-line-length=120 .
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+}
+```
+
+## Step 3 — Type Check
+
+### Node/JS/TS
+
+```powershell
+if ($hasPackage) {
+    Write-Host "`n[TYPE] Running TypeScript..."
+    npx tsc --noEmit
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[FAIL] Type check failed"
+        exit 1
+    }
+}
+```
+
+### Python
+
+```powershell
+if ($hasPyproject) {
+    Write-Host "`n[TYPE] Running PyRight..."
+    pyright .
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[WARN] PyRight found type errors — review and fix"
+        exit 1
+    }
+}
+```
+
+## Step 4 — Unit Tests
+
+### Node/JS/TS
+
+```powershell
+if ($hasPackage) {
+    Write-Host "`n[TEST] Running Jest/Vitest..."
+    npm test
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+}
+```
+
+### Python
+
+```powershell
+if ($hasPyproject) {
+    Write-Host "`n[TEST] Running pytest..."
+    pytest -v --tb=short
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+}
+```
+
+### Rust
+
+```powershell
+if ($hasCargo) {
+    Write-Host "`n[TEST] Running cargo test..."
+    cargo test --all-targets
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+
+    Write-Host "`n[CLIPPY] Running clippy..."
+    cargo clippy --all-targets -- -D warnings
+    if ($LASTEXITCODE -ne 0) { exit 1 }
+}
+```
+
+## Step 5 — Build
+
+```powershell
+if ($hasPackage) {
+    Write-Host "`n[BUILD] Running production build..."
+    npm run build
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[FAIL] Build failed"
+        exit 1
+    }
+}
+```
+
+## Step 6 — E2E Smoke (Playwright)
+
+```powershell
+# Only if playwright is installed
+$playwrightAvailable = Get-Command playwright -ErrorAction SilentlyContinue
+
+if ($playwrightAvailable) {
+    Write-Host "`n[E2E] Running Playwright smoke tests..."
+
+    # Check if we're in the right directory
+    if (-not (Test-Path "tests/e2e")) {
+        Write-Host "[SKIP] No e2e tests found"
+    } else {
+        playwright test tests/e2e --reporter=list
+        if ($LASTEXITCODE -ne 0) { exit 1 }
+    }
+} else {
+    Write-Host "`n[E2E] Playwright not available — skipping"
+}
+```
+
+## Step 7 — Dependency Audit
+
+```powershell
+if ($hasPackage) {
+    Write-Host "`n[AUDIT] Running npm audit..."
+    npm audit --audit-level=high
+    # Only fail on high/critical — low is informational
+}
+
+if ($hasPyproject) {
+    Write-Host "`n[AUDIT] Running pip audit..."
+    pip-audit -r requirements.txt --fail-on high,critical
+}
+```
+
+## Full Report
+
+```
+============================================
+FULL TEST REPORT — $(Get-Date -Format "yyyy-MM-dd HH:mm")
+============================================
+Stack:        Node/TS + Python (hybrid)
+Lint:         PASS  (ruff, eslint)
+Type-check:   PASS  (pyright, tsc)
+Unit tests:   PASS  (22/22 passed)
+Build:        PASS  (dist/ built)
+E2E:          PASS  (5/5 smoke tests)
+Dependency:   PASS  (0 high/critical vulns)
+============================================
+RESULT: ✅ ALL CHECKS PASSED
+============================================
+```
+
+## Quick Abort on First Failure
+
+```powershell
+function Invoke-Step {
+    param([string]$Name, [scriptblock]$Cmd)
+    Write-Host "`n=== $Name ==="
+    & $Cmd
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[ABORT] $Name failed — stopping here"
+        exit 1
+    }
+    Write-Host "[OK] $Name passed"
+}
+
+Invoke-Step "Lint" { npm run lint }
+Invoke-Step "Type-check" { npx tsc --noEmit }
+Invoke-Step "Unit tests" { npm test }
+Invoke-Step "Build" { npm run build }
+Invoke-Step "E2E" { playwright test }
+```
+
+## CI Integration
+
+```yaml
+# .github/workflows/full-test.yml
+name: Full Test Cycle
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps
+      - run: playwright test
+```
+
+## When to Skip Layers
+
+| Situation | Skip |
+|-----------|------|
+| Only changed Markdown/docs | Skip lint, type-check, tests, build |
+| Only changed CSS | Skip Python/Go tests |
+| Hotfix with no test coverage | Run at minimum: lint + type-check |
+| Dependency-only change | Run full audit, skip E2E |
