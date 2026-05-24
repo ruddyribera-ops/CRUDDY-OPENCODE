@@ -149,6 +149,18 @@ Single-file trivial edits → skip to Step 3. Otherwise produce this code block 
 
 **Scope lock:** These are ALL files. If more are needed mid-execution → STOP, update POA, ask user. Never expand silently.
 
+### STEP 2.5: Compact Plan (Mickey Pattern)
+
+Before coding, review your own POA. Ask:
+
+1. **Is this too big for one session?** If the POA has 5+ files or spans multiple concerns, split it. Move unrelated items to a second POA.
+2. **Can any item be simpler?** Is there a file that only needs 2 lines changed? That's not a "CREATE src/module/" — it's a one-line edit.
+3. **Is everything necessary?** Are all these files really needed for THIS feature, or are you gold-plating?
+
+**Output:** Either confirm the POA stands, or produce a reduced POA with fewer/smaller items.
+
+**Why:** Big POAs = bloated context window = dumber agent. Small POAs = clean context = better code.
+
 ---
 
 ### STEP 3: Implement
@@ -206,6 +218,23 @@ Before declaring done, run these gates on EVERY file you created or modified. If
 | 10 | **Consistent style** | Code matches project style (check `.opencode/constitution.md` if present) | Run formatter. Fix naming mismatches. |
 
 **Hard rule:** If any gate flags a file, fix it before moving to STEP 5. Do NOT report "done" with gate failures.
+
+---
+
+### STEP 4.7: Post-Feature Dedup (Mickey Pattern)
+
+After building, before declaring done, scan for code duplication. The agent tends to write new functions instead of reusing existing ones — this step cleans that up.
+
+Run these checks on ALL files you created or modified:
+
+1. **Duplicate functions:** Any function that does the same thing as another? Merge them.
+2. **Repeated patterns:** Same 3+ lines appearing in multiple files? Extract to a helper/service.
+3. **Orphaned code:** Functions no longer called from anywhere? Remove them.
+4. **Service layer opportunity:** Is there a cohesive set of functions that should live in a shared module? Extract them.
+
+**Only refactor what you created.** Don't touch existing code that was already there unless your new code obviously duplicates it.
+
+**Hard rule:** If you find duplicates, fix them before STEP 5. Don't ship technical debt the agent created.
 
 ---
 

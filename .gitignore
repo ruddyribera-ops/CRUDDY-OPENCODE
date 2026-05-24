@@ -74,6 +74,8 @@ _*_backup_*/
 
 # Tool output (runtime artifacts)
 tool-output/
+_source/
+_source_test/
 
 # Extracted MCP tools
 playwright-browsers/
@@ -95,3 +97,5 @@ __pycache__/
 # OS files
 Thumbs.db
 .DS_Store
+
+memory/reviews/

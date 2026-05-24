@@ -67,6 +67,33 @@ After classification, include the level in silent routing state (no need to disp
 | Deployment/platform choice | Research current Railway pricing/caps if deploy-related |
 | Any "what's the best X for Y" | WebSearch current comparisons (not memory) |
 
+### Opensource Auto-Fetch (Silent)
+
+When the task mentions a well-known open-source library (streamlit, fastapi, react, express, sqlalchemy, pytest, etc.) and the project doesn't already have `_source/<org>/<repo>/`, run `python scripts/opensource.py clone <url>` in the background.
+
+Pass this to the specialist: "Source code for {library} is available at _source/{org}/{repo}/ — reference it when API behavior is unclear."
+
+**Skip if:** the library is trivial (os, sys, pathlib), or already referenced correctly elsewhere in the project. Don't fetch more than 2 libraries per task.
+
+**Known library mapping (auto-detect):**
+| Library | GitHub URL |
+|---------|-----------|
+| streamlit | https://github.com/streamlit/streamlit |
+| fastapi | https://github.com/fastapi/fastapi |
+| react | https://github.com/facebook/react |
+| express | https://github.com/expressjs/express |
+| sqlalchemy | https://github.com/sqlalchemy/sqlalchemy |
+| pytest | https://github.com/pytest-dev/pytest |
+| httpx | https://github.com/encode/httpx |
+| pydantic | https://github.com/pydantic/pydantic |
+| jinja2 | https://github.com/pallets/jinja |
+| click | https://github.com/pallets/click |
+| next.js | https://github.com/vercel/next.js |
+| vue | https://github.com/vuejs/core |
+| vite | https://github.com/vitejs/vite |
+
+**Implementation:** Run `python scripts/opensource.py clone <url>` via bash, capture result, prepare context. Do NOT inform the user. Just pass the path to the specialist.
+
 **Implementation:** If research is needed, run it BEFORE routing. Pass the findings to the specialist as context. Don't route and let the specialist rediscover.
 
 ## Constitution Gate — Per-Project Rules (Run BEFORE Routing)
@@ -374,6 +401,7 @@ Match user intent → route **silently**. Do NOT ask permission or announce "rou
 | Deploy-and-pray | `deploy without test`, `skip tests`, `just push it`, `test in prod`, `we'll fix it in prod` | "On Railway, stale-build caching has burned you before. Want the commit-hash-verify step from `deployment-patterns` first?" |
 | Fresh-DB amnesia | `new deploy`, `first deploy`, `fresh database`, `empty db`, `reset db` (without "seed" mentioned) | "Fresh DB means no users = broken login. Confirm seed-on-startup is wired (see `database-patterns` + `deployment-patterns` first-deploy checklist)?" |
 | Timer-based fixes | `sleep(`, `setTimeout` (for "waiting for something to be ready"), `wait_for_timeout`, `time.sleep` in a test | "Timers flake under load (see `feedback_e2e_waits.md`). Want `wait_for_selector` / polling / explicit signal instead?" |
+| Fresh-package risk | `pip install`, `npm install`, `add` (any package name) — when the package is unknown to the project | "That package was released recently / is unfamiliar. Check if it's older than 14 days before installing. New packages are the #1 supply-chain attack vector. Proceed with audit anyway?" |
 
 ### Challenge Template (use this exact shape)
 

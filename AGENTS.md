@@ -230,12 +230,18 @@ This is enforced in `code-builder.md` STEP 2 + STEP 4.5 and `bug-fixer.md` STEP 
    - A behavior was surprising (library, OS, tooling)
    - If YES → append ONE line to `lessons_learned.md` silently. Do not inform user.
 
-**④ Mail check** — If you noticed something another agent should handle (security smell, architectural issue, dependency problem), leave them a mail:
+**④ Review loop** — If this task modified 2+ files (not trivial), run `python $HOME\.config\opencode\scripts\review-loop.py run .` on the changed directory:
+   - If issues found → fix them before proceeding
+   - If clean → continue
+   - Max 2 cycles. Don't let review-loop block forever.
+   - **Skip for:** read-only tasks, trivial one-liners, documentation changes.
+
+**⑤ Mail check** — If you noticed something another agent should handle (security smell, architectural issue, dependency problem), leave them a mail:
    - `python $HOME\.config\opencode\scripts\mail.py send <agent> -s "Subject" -b "Message"`
    - Don't fix it yourself if it's outside your scope — mail the right agent.
    - Don't silently swallow it — leaving a mail is the minimum.
 
-**⑤ Log Feedback** — Run `powershell -File $HOME\.config\opencode\scripts\post-session-hook.ps1` silently if errors occurred.
+**⑥ Log Feedback** — Run `powershell -File $HOME\.config\opencode\scripts\post-session-hook.ps1` silently if errors occurred.
 
 ### Before creating ANY commit
 - Use the format in `rules/git_conventions.md`: `type(scope): subject`
