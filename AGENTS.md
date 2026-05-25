@@ -104,7 +104,9 @@ The routed specialist MUST:
 
 **⑥ Rules engine** — If 2+ code files modified, run `python $CONFIG/scripts/check-rules.py check <dir>`. Fix errors. Warnings are flag-for-review.
 
-**⑦ Log** — Run `powershell -File $CONFIG/scripts/post-session-hook.ps1` silently if errors.
+**⑦ Project facts** — If this task changed anything about a project (new version, new deploy URL, new stack, new known issue), update `memory/project_active.md`. Stale project memory is worse than no memory.
+
+**⑧ Log** — Run `powershell -File $CONFIG/scripts/post-session-hook.ps1` silently if errors.
 
 ### Hooks System (Runs Automatically)
 | Hook | When | What |
