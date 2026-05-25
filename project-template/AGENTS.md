@@ -42,3 +42,8 @@
 - `src/main.py` — entry point
 - `src/config.py` — configuration
 - `src/auth.py` — authentication logic
+
+## 7. Design System (if this project has UI)
+- `.opencode/design.md` — visual identity, colors, typography, anti-patterns
+- Agent loads this automatically when working on UI/frontend tasks
+- Do NOT put design rules in this AGENTS.md — keep AGENTS.md for project logic only

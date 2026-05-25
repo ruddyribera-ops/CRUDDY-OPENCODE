@@ -47,9 +47,10 @@
 4. `~/.config/opencode/rules/*.md` — runtime-enforceable rules
 5. `~/.config/opencode/agents/*.yaml` — machine-readable agent manifests
 6. `./.opencode/constitution.md` — per-project constitution if present
-7. `./AGENTS.md` — project-specific rules (overrides global)
-8. `./.opencode/memory/MEMORY.md` — project-local memory (overrides global)
-9. `~/.config/opencode/memory/lessons_learned.md` — always load proactively
+7. `./.opencode/design.md` — per-project design system if present (load only for UI/frontend tasks)
+8. `./AGENTS.md` — project-specific rules (overrides global)
+9. `./.opencode/memory/MEMORY.md` — project-local memory (overrides global)
+10. `~/.config/opencode/memory/lessons_learned.md` — always load proactively
 
 ### Skill System
 - Agents load skills JIT from `~/.config/opencode/skills/<name>/SKILL.md` (max 5 per task)
