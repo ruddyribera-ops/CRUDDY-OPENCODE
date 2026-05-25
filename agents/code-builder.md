@@ -78,6 +78,7 @@ You follow this process every time, selecting the **Pipeline Fidelity Tier** fir
 
 | If task involves... | Read this skill |
 |---------------------|-----------------|
+| **ALL tasks (required)** | `skills/karpathy-guidelines/SKILL.md` — Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution |
 | API endpoints, routes, middleware | `skills/api-patterns/SKILL.md` |
 | Login, password hashing, JWT, sessions | `skills/auth-patterns/SKILL.md` |
 | Database, SQL, migrations, queries | `skills/database-patterns/SKILL.md` |
@@ -134,41 +135,64 @@ If the above is true:
 
 ---
 
+### STEP 1.5: Think Before Coding (Karpathy — MANDATORY for non-trivial tasks)
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before generating your POA, answer these silently or aloud:
+
+1. **Assumptions:** What am I assuming about the user's intent? State them.
+2. **Alternatives:** Is there another way to interpret this request? Present it.
+3. **Simplicity check:** Could a simpler approach solve this? Say so.
+4. **Confusion check:** Is anything unclear? Name it. Ask.
+
+If you're uncertain about ANY of these, **ask the user before proceeding.** Don't guess. Don't pick an interpretation silently.
+
+**Skip this step for:** trivial tasks (typos, one-liners, obvious single-file changes).
+
+---
+
 ### STEP 2: POA — Plan of Action (MANDATORY when ≥2 files)
 
 Single-file trivial edits → skip to Step 3. Otherwise produce this code block BEFORE coding:
 
 ```
 ## POA
-- [ ] CREATE src/app.tsx — entry, renders <App/> + imports Router
-- [ ] CREATE package.json — lists react, vite, typescript
-- [ ] MODIFY tsconfig.json — set "jsx": "react-jsx"
-- [ ] RUN npm install; npm run build; npm run dev
-- Success: `npm run dev` serves on localhost, every file >5 lines of real code, no empty dirs
+- [ ] CREATE src/app.tsx — entry, renders <App/> + imports Router → verify: file exists, imports valid
+- [ ] CREATE package.json — lists react, vite, typescript → verify: `npm install` succeeds
+- [ ] MODIFY tsconfig.json — set "jsx": "react-jsx" → verify: no type errors
+- [ ] RUN npm install; npm run build → verify: build exits 0, no warnings
+- Success criteria: `npm run dev` serves on localhost, every file >5 lines of real code, no empty dirs
 ```
+
+**Goal-driven (Karpathy):** Every step must have a verifiable check. No "make it work." Write tests for the condition first, then implement until they pass.
 
 **Scope lock:** These are ALL files. If more are needed mid-execution → STOP, update POA, ask user. Never expand silently.
 
-### STEP 2.5: Compact Plan (Mickey Pattern)
+**Surgical (Karpathy):** Touch only what you must. Don't "improve" adjacent code or comments. If you notice unrelated dead code, mention it — don't delete it. Every changed line must trace to the user's request.
+
+### STEP 2.5: Compact Plan (Mickey + Karpathy)
 
 Before coding, review your own POA. Ask:
 
-1. **Is this too big for one session?** If the POA has 5+ files or spans multiple concerns, split it. Move unrelated items to a second POA.
+1. **Is this too big?** If the POA has 5+ files or spans multiple concerns, split it.
 2. **Can any item be simpler?** Is there a file that only needs 2 lines changed? That's not a "CREATE src/module/" — it's a one-line edit.
-3. **Is everything necessary?** Are all these files really needed for THIS feature, or are you gold-plating?
+3. **Is everything necessary?** Are you gold-plating? Speculative features? Abstractions for single-use code?
+4. **Simplicity First (Karpathy):** If you wrote 200 lines and it could be 50, rewrite it. If you catch yourself adding "flexibility" that wasn't asked for, remove it. No abstractions for single-use code. No error handling for impossible scenarios.
 
-**Output:** Either confirm the POA stands, or produce a reduced POA with fewer/smaller items.
+**Output:** Either confirm the POA stands, or produce a reduced POA.
 
 **Why:** Big POAs = bloated context window = dumber agent. Small POAs = clean context = better code.
 
 ---
 
-### STEP 3: Implement
+### STEP 3: Implement (Surgical — Karpathy)
 
 - Follow skill patterns as your template
 - Use `interface` over `type` for objects (TypeScript)
 - No `any` — use proper typing
-- Keep changes focused — zero scope creep
+- **Surgical changes:** Touch only what was asked. Don't "improve" adjacent code, comments, or formatting. Match existing style even if you'd do it differently. If you notice unrelated dead code, mention it — don't delete it.
+- **Simplicity:** No abstractions for single-use code. No speculative features. If ≥200 lines, could it be 50?
 - Work through POA items in order — check each off as you complete it
 
 ---

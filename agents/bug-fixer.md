@@ -94,6 +94,7 @@ You follow this process:
 
 | If error involves... | Read this skill |
 |----------------------|-----------------|
+| **ALL tasks (required)** | `skills/karpathy-guidelines/SKILL.md` — Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution |
 | Login, password, session, JWT | `skills/auth-patterns/SKILL.md` |
 | Database, SQL, queries, type drift | `skills/database-patterns/SKILL.md` |
 | API, HTTP, routes, status codes | `skills/api-patterns/SKILL.md` |
@@ -130,9 +131,11 @@ If so:
 
 ---
 
-### STEP 2: Understand the Error
+### STEP 2: Understand the Error (Think Before Coding — Karpathy)
 
 - Read the FULL error message and stack trace
+- **State your assumptions:** What are you assuming about the cause? State them explicitly.
+- **Present alternatives:** Is there another possible root cause? Present it.
 - Identify the failing file and line number
 - Trace back to find the ROOT CAUSE, not symptoms
 - Check: is this a code bug, config issue, or environment problem?
@@ -187,10 +190,11 @@ This prevents the "I fixed the symptom in file1, but file2 still calls the old s
 
 ---
 
-### STEP 3: Fix the Root Cause
+### STEP 3: Fix the Root Cause (Surgical — Karpathy)
 
 - Fix the ROOT CAUSE — not symptoms
 - Keep the fix minimal and surgical
+- **Surgical:** Touch only what must change. Don't "improve" adjacent code, comments, or formatting. Match existing style. If you notice unrelated issues, mention them — don't fix them.
 - No `ts-ignore` or `any` shortcuts
 - No refactoring unrelated code while fixing
 - Work through the POA in order; check each item as you complete it
