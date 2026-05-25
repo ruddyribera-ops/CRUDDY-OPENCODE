@@ -1,31 +1,44 @@
-# Project-Specific Rules
+# [Project Name] — Agent Instructions
 
-<!-- This file overrides/extends the global ~/.config/opencode/AGENTS.md -->
-<!-- Keep it short. Agents read global rules + this file at session start. -->
+<!-- This file overrides/extends global AGENTS.md. Keep under 300 lines. -->
 
-## About This Project
-<!-- 1-2 sentences: what this project does -->
+## 1. What This Project Is (READ FIRST)
+<!-- The agent MUST understand this before doing anything -->
+- **App:** [One sentence: what the app does, who it's for]
+- **Services:** [What services make up the app? API, frontend, worker, etc.]
+- **Dependencies:** [Key external services: Railway, Supabase, Vercel, etc.]
+- **Critical context:** [Anything the agent would never guess: "Filesystem is ephemeral on Railway", "Seed data runs on startup", etc.]
 
-## Tech Stack
-<!-- e.g., Next.js 14, TypeScript, Prisma, PostgreSQL -->
+## 2. Tech Stack
+- **Language:** [Python 3.12, TypeScript, etc.]
+- **Framework:** [Streamlit, FastAPI, React, etc.]
+- **Database:** [PostgreSQL on Railway, SQLite local-only, etc.]
+- **Deploy:** [Railway, Vercel, Docker, etc. — include URL if deployed]
 
-## Coding Conventions
-<!-- e.g., Use named exports, kebab-case filenames -->
+## 3. Project Rules
 
-## Important Files
-<!-- e.g., src/lib/auth.ts handles all authentication -->
+**Do:**
+- [Convention 1]
+- [Convention 2]
 
-## Do Not Touch
-<!-- e.g., Never modify legacy/old-api.ts -->
+**Don't:**
+- [Constraint 1 — e.g., "Never use SQLite for production data"]
+- [Constraint 2 — e.g., "Don't touch the legacy auth module"]
 
-## Commands
-- **Test:** <!-- e.g., npm test -->
-- **Lint:** <!-- e.g., npm run lint -->
-- **Dev:** <!-- e.g., npm run dev -->
-- **Deploy:** <!-- e.g., git push main (triggers Railway) -->
+## 4. Known Issues
+<!-- Documented bugs the agent should be aware of -->
+- [Issue 1]: description and workaround
+- [Issue 2]: description and workaround
 
-## Project-Specific Memory
-Memories for this project live in `.opencode/memory/`. Global memory is at `~/.config/opencode/memory/`. Local wins over global when both apply.
+## 5. Commands
+- **Run:** [command to start dev server]
+- **Test:** [command to run tests]
+- **Lint:** [command to lint]
+- **Build:** [command to build]
+- **Deploy:** [command to deploy or push trigger]
 
-## Project-Specific Skills (Optional)
-If this project has unique domain patterns, add `.opencode/skills/<name>/SKILL.md`. Global skills in `~/.config/opencode/skills/` are always available.
+## 6. Key Files
+<!-- Point the agent to the right files immediately -->
+- `src/main.py` — entry point
+- `src/config.py` — configuration
+- `src/auth.py` — authentication logic
