@@ -84,6 +84,10 @@ def _parse_rule_frontmatter(content, name):
             rule["condition"] = value
         elif key == "multiline":
             rule["multiline"] = value.lower() in ("true", "yes", "1")
+        elif key == "check":
+            rule["check"] = value
+        elif key == "threshold":
+            rule["threshold"] = value
         elif key == "severity":
             rule["severity"] = value
         elif key == "scope":
@@ -146,6 +150,25 @@ def _check_file(filepath, rules):
         if not _scope_matches(rule, filepath):
             continue
 
+        # === SPECIAL CHECKS (non-regex) ===
+        check_type = rule.get("check")
+
+        # File length check
+        if check_type == "file_length":
+            threshold = int(rule.get("threshold", 0))
+            total_lines = len(lines)
+            if total_lines > threshold:
+                violations.append({
+                    "file": filepath,
+                    "line": threshold,
+                    "rule": rule["name"],
+                    "severity": rule.get("severity", "warning"),
+                    "message": f"file has {total_lines} lines (limit: {threshold})",
+                    "fix_hint": rule.get("fix", "")[:100],
+                })
+            continue
+
+        # Regex-based checks
         condition = rule.get("condition")
         if not condition:
             continue
