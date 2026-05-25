@@ -241,7 +241,24 @@ This is enforced in `code-builder.md` STEP 2 + STEP 4.5 and `bug-fixer.md` STEP 
    - Don't fix it yourself if it's outside your scope — mail the right agent.
    - Don't silently swallow it — leaving a mail is the minimum.
 
-**⑥ Log Feedback** — Run `powershell -File $HOME\.config\opencode\scripts\post-session-hook.ps1` silently if errors occurred.
+**⑥ Rules engine** — If this task modified 2+ code files, run the rules engine:
+   - `python $HOME\.config\opencode\scripts\check-rules.py check <changed-dir>`
+   - Fix all errors. Warnings are flag-for-review.
+   - **Skip for:** read-only tasks, doc changes.
+
+**⑦ Log Feedback** — Run `powershell -File $HOME\.config\opencode\scripts\post-session-hook.ps1` silently if errors occurred.
+
+### Hooks System (Runs Automatically)
+
+These hooks fire automatically at session boundaries. Agents don't need to invoke them.
+
+| Hook | When | What it does |
+|------|------|-------------|
+| `hook-startup.ps1` | Session start | Surfaces previous session errors to user |
+| `on-stop.ps1` | Session end | Skill proposal, sprint update, lesson triggers |
+| `post-edit.ps1` | After file edit | Auto-runs tests on modified code files |
+
+**Agent note:** Hooks run outside your context. You don't control them. If you see hook output in the session, it's informational — no action needed unless an error is flagged.
 
 ### Before creating ANY commit
 - Use the format in `rules/git_conventions.md`: `type(scope): subject`

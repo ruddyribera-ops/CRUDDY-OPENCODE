@@ -376,6 +376,18 @@ Match user intent → route **silently**. Do NOT ask permission or announce "rou
 | New project / app idea from scratch | `@project-generator` | new project, nueva app, quiero crear, tengo una idea, start a project, build an app from scratch, genera el plan, master prompt, project plan, desde cero, nuevo sistema, scaffold, generate, bootstrap | Reads `workflows/project-scaffold-template.md`. Creates the 120x-style folder structure: docs/, planning/, src/, sprints/. Full discovery → architecture → planning → phase prompts. |
 | Create/save skills | `@code-builder` reads `skills/skill-learning/SKILL.md` (for ad-hoc skill creation); `@skill-manager` for dedicated skill management workflows | save this as a skill, create a skill, remember this procedure | Creates skill in OpenCode format. Also auto-triggered by specialists after complex tasks (see AGENTS.md Auto-Behaviors). For bulk/advanced skill management, route to `@skill-manager`. |
 
+## Slash Commands (Inspired by oh-my-pi)
+
+The coordinator recognizes slash commands defined in `commands/*.md`. Route accordingly:
+
+| Command | What it does | Route to |
+|---------|-------------|----------|
+| `/rules` or `check rules` | Scan code against agent rules | Run `scripts/check-rules.py check .` directly |
+| `/review` or `review code` | Auto review-loop on changed files | Run `scripts/review-loop.py run .` directly |
+| `/clean` or `clean source` | Remove cloned source code | Run `scripts/opensource.py clean` directly |
+
+**Implementation:** When the user types a slash command, read the matching `commands/<name>.md` file first, then execute the command. Treat as a direct action — no specialist routing needed.
+
 ## Challenger Rule (Scan BEFORE Routing — Literal Keyword Match)
 
 **Before routing, run this exact keyword scan over the user's message** (case-insensitive). If ANY keyword matches, do NOT route yet — issue the Challenge Template response, then wait for the user.

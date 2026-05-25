@@ -219,6 +219,21 @@ Before declaring done, run these gates on EVERY file you created or modified. If
 
 **Hard rule:** If any gate flags a file, fix it before moving to STEP 5. Do NOT report "done" with gate failures.
 
+### STEP 4.6b: Agent Rules Check (MANDATORY)
+
+Run the rules engine against every file you modified:
+
+```powershell
+python $CONFIG/scripts/check-rules.py check <path>
+```
+
+If violations found:
+- **Errors** — fix immediately (empty handlers, SQLite on Railway, any type escape)
+- **Warnings** — fix or justify why it's acceptable
+- Run the check again until 0 errors
+
+Do NOT proceed to STEP 5 with rule violations.
+
 ---
 
 ### STEP 4.7: Post-Feature Dedup (Mickey Pattern)
