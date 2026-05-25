@@ -83,6 +83,7 @@ You follow this process every time, selecting the **Pipeline Fidelity Tier** fir
 | Login, password hashing, JWT, sessions | `skills/auth-patterns/SKILL.md` |
 | Database, SQL, migrations, queries | `skills/database-patterns/SKILL.md` |
 | Writing or fixing tests | `skills/testing-standards/SKILL.md` |
+| UI, CSS, layout, design, styling, frontend | `skills/design/SKILL.md` — variants + tweaks + anti-patterns |
 | TypeScript, React, modern JS | `skills/js-modern-patterns/SKILL.md` |
 | Python, FastAPI, Pydantic | `skills/python-patterns/SKILL.md` |
 | Data analysis, CSV, JSON parsing | `skills/data-analysis/SKILL.md` |

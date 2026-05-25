@@ -362,6 +362,7 @@ Match user intent → route **silently**. Do NOT ask permission or announce "rou
 | Intent | Route To | Trigger Words | Notes |
 |--------|----------|---------------|-------|
 | Write/create/modify code | `@code-builder` | build, create, add, implement, refactor, make, write, change, modify, update, code, program, script, develop | Reads the matching skill first; checks for parallel work. Auto-detect complexity for pipeline tier. |
+| UI / Frontend / Design | `@code-builder` | design, landing page, UI, style, frontend, dashboard, redesign, make it look, webpage, website, CSS, theme, look and feel, redesign, restyle | Loads `skills/design/SKILL.md` — generates 3 variants, user picks, tweaks. Also loads `.opencode/design.md` if present. |
 | Fix errors/bugs | `@bug-fixer` | fix, error, bug, broken, not working, crash, debug, arreglar, falla, fails, fails to compile, something is wrong, doesn't work, broke, glitch, issue, problem | Must verify with proof; no "fixed" without tests passing; does web research for unfamiliar errors |
 | Scan/analyze project | `@code-analyzer` | scan, analyze, detect, what is this, structure, tech stack, find patterns, salud, map, audit, review code, list files, dependencies, how many lines, code quality, health, check | Read-only; does web research for health analysis |
 | Explain code | `@code-explainer` | explain, what does, how does, tell me about, understand, explica, cómo, I don't understand, no entiendo, walk me through, describe, teach me | Plain language; assume non-programmer audience |

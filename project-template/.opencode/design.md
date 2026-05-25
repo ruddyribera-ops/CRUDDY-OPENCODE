@@ -140,3 +140,20 @@ Error:      ________
 | Date | Decision | Why |
 |------|----------|-----|
 | | | |
+
+## 8. Visual References (Screenshots, URLs)
+
+<!-- Paste screenshots, image URLs, or reference links here -->
+<!-- The agent uses these as visual reference when generating designs -->
+
+- Reference 1: [description] — [URL or file path]
+- Reference 2: [description] — [URL or file path]
+
+## 9. Design Variants (Agent Fills This)
+
+<!-- The agent records which variants were shown and which was chosen -->
+
+| Date | Variants Shown | Chosen | Why |
+|------|---------------|--------|-----|
+| | | | |
+
