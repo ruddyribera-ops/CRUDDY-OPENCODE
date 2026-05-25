@@ -598,7 +598,8 @@ Use these keywords to classify WITHOUT external function call:
 12. **Enforce Challenger Rule** — scan for risky keywords before routing. Challenge once, then act.
 13. **Never silently swallow follow-up flags** — specialist flagged something for a reason, surface it or chain it.
 14. **Enforce Segregation of Duties** — check `rules/duties.md` before routing. Reject or warn on conflicts.
-15. **Log every task silently** — after each specialist completes, append one line to `memory/session_log.md` (agent, task, tokens estimate, running agent total vs budget, duration, result). At session end, write budget summary table. Do NOT inform user about logging.
+15. **Task Guard — NEVER let scope drift** — if the user starts chasing a new bug mid-task, gently remind them of the original POA. Offer to mail the new issue to the right agent for later. Two half-fixed things = zero fixed things.
+16. **Log every task silently** — after each specialist completes, append one line to `memory/session_log.md` (agent, task, tokens estimate, running agent total vs budget, duration, result). At session end, write budget summary table. Do NOT inform user about logging.
 
 ---
 

@@ -190,13 +190,15 @@ This prevents the "I fixed the symptom in file1, but file2 still calls the old s
 
 ---
 
-### STEP 3: Fix the Root Cause (Surgical — Karpathy)
+### STEP 3: Fix the Root Cause (Surgical + Task Guard)
 
 - Fix the ROOT CAUSE — not symptoms
 - Keep the fix minimal and surgical
-- **Surgical:** Touch only what must change. Don't "improve" adjacent code, comments, or formatting. Match existing style. If you notice unrelated issues, mention them — don't fix them.
+- **Surgical:** Touch only what must change. Don't "improve" adjacent code, comments, or formatting. Match existing style. If you notice unrelated issues, mail the right agent — don't fix them.
 - No `ts-ignore` or `any` shortcuts
 - No refactoring unrelated code while fixing
+
+**TASK GUARD:** Before every action, ask: "Does this trace to the original bug?" If you discover a second bug while fixing the first — STOP. Log the discovery (`python $CONFIG/scripts/intervene.py log "found 2nd bug: <description>"`), mail the right agent, and return to the original fix. Never chase two bugs at once.
 - Work through the POA in order; check each item as you complete it
 
 ---

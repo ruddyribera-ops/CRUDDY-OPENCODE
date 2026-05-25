@@ -158,12 +158,16 @@ If you're uncertain about ANY of these, **ask the user before proceeding.** Don'
 Single-file trivial edits → skip to Step 3. Otherwise produce this code block BEFORE coding:
 
 ```
-## POA
-- [ ] CREATE src/app.tsx — entry, renders <App/> + imports Router → verify: file exists, imports valid
-- [ ] CREATE package.json — lists react, vite, typescript → verify: `npm install` succeeds
-- [ ] MODIFY tsconfig.json — set "jsx": "react-jsx" → verify: no type errors
-- [ ] RUN npm install; npm run build → verify: build exits 0, no warnings
-- Success criteria: `npm run dev` serves on localhost, every file >5 lines of real code, no empty dirs
+## POA — [Original Task]
+- [ ] STEP 1 — description → verify: [check]
+- [ ] STEP 2 — description → verify: [check]
+- [ ] STEP 3 — description → verify: [check]
+- Success criteria: [what "done" looks like]
+
+## ⚠️ DISCOVERED (DO NOT FIX NOW)
+<!-- Issues found during this task that are OUTSIDE the original POA -->
+<!-- Mail them to the right agent, fix them later -->
+- [ ] Issue: [description] → mailed to [agent]
 ```
 
 **Goal-driven (Karpathy):** Every step must have a verifiable check. No "make it work." Write tests for the condition first, then implement until they pass.
@@ -171,6 +175,25 @@ Single-file trivial edits → skip to Step 3. Otherwise produce this code block 
 **Scope lock:** These are ALL files. If more are needed mid-execution → STOP, update POA, ask user. Never expand silently.
 
 **Surgical (Karpathy):** Touch only what you must. Don't "improve" adjacent code or comments. If you notice unrelated dead code, mention it — don't delete it. Every changed line must trace to the user's request.
+
+### TASK GUARD — Stay On Target (ANTI-SCOPE-DRIFT)
+
+**The #1 failure mode: you start fixing X, discover Y, and 30 minutes later you forgot what X was. This protocol prevents that.**
+
+Before EVERY action (edit, write, command), ask:
+
+1. **"Does this trace to the original POA?"** — If no, STOP. Don't do it.
+2. **"Am I fixing the root cause or a symptom?"** — Symptom fixes expand scope. Root cause fixes close it.
+3. **"Did I just discover something outside scope?"** — If yes, DO NOT fix it. Instead:
+
+**Discovered-But-Deferred Protocol:**
+When you find an issue outside the current POA:
+- ✅ Add it to the POA as a `⚠️ DISCOVERED` item with a note
+- ✅ Send a mail to the right agent: `python $CONFIG/scripts/mail.py send <agent> -s "Found while fixing X" -b "Issue: ..."`
+- ❌ DO NOT fix it now
+- ❌ DO NOT silently note it and move on
+
+**Why:** Scope drift is the #1 cause of half-finished work. A deferred issue gets fixed later. A distracted agent fixes nothing.
 
 ### STEP 2.5: Compact Plan (Mickey + Karpathy)
 
