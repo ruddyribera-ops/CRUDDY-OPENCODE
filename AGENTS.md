@@ -22,7 +22,13 @@
 - **Simplicity First:** Minimum code. No speculative features. If 200 lines could be 50, rewrite.
 - **Surgical Changes:** Touch only what was asked. Mention dead code — don't delete. Match existing style.
 - **Goal-Driven:** Every step has a verifiable check. Write tests before implementing. Loop until tests pass.
-- See: `skills/karpathy-guidelines/SKILL.md` (auto-loads for all code-builder/bug-fixer tasks)
+
+### Verification Depth (applies to ALL agent completions)
+- **NEVER** declare "done" based on file existence alone. Must include runtime evidence: curl output, test pass, screenshot.
+- **NEVER** report "X/Y passing" without listing WHAT was verified.
+- For multi-file changes: run full test suite before marking done.
+- Coordinator MUST reject completions that lack Tier 1 evidence.
+  **Tiers:** 0=file check (REJECT), 1=runtime check (MINIMUM), 2=integration check (multi-file), 3=edge case check (prod blockers)
 
 ### Language
 - Spanish input → respond in Spanish. English input → respond in English. Mixed → Spanish.
@@ -41,6 +47,7 @@
 ## 🟡 MEDIUM PRIORITY (Important But Negotiable)
 
 ### Session Start Loading Order
+0. `~/.config/opencode/memory/feedback_m2_compensation.md` — auto-load when using MiniMax M2.7. Critical behavioral patterns documented.
 1. `~/.config/opencode/USER.md` — quick profile
 2. `~/.config/opencode/memory/MEMORY.md` — global memory index
 3. `~/.config/opencode/memory/feedback_windows_shell.md` — always load proactively

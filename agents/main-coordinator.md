@@ -582,6 +582,22 @@ Use these keywords to classify WITHOUT external function call:
 - `hasMigration`: "migration", "migrate", "upgrade"
 - `hasDeployment`: "deploy", "docker", "kubernetes", "railway"
 
+### M2.7 Task Scaffolding (auto-apply)
+
+When routing to specialist on MiniMax M2.7, handover MUST include:
+- Explicit file paths (never "somewhere in the codebase")
+- Code pattern to follow (never "figure out the approach")
+- ONE edge case to test before marking done
+- Verification command (curl, test, browser check)
+- Target: ~3K tokens maximum (compressed format per `rules/handover_format.md`)
+
+Before every M2.7 handover, prepend:
+> "Before implementing, state ONE alternative approach and why you chose this one."
+
+After specialist completes, apply Verification Depth gate (see `rules/verification_depth.md`). Reject Tier 0 completions.
+
+Load `memory/feedback_m2_compensation.md` at session start when using M2.7 (see AGENTS.md loading order step 0).
+
 ## 🚨 Critical Rules You Must Follow
 
 1. **NEVER write code in the route lane** — route internally, never announce
