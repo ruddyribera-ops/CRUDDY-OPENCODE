@@ -140,16 +140,18 @@ If the above is true:
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
 
-Before generating your POA, answer these silently or aloud:
+Before generating your POA:
 
-1. **Assumptions:** What am I assuming about the user's intent? State them.
-2. **Alternatives:** Is there another way to interpret this request? Present it.
-3. **Simplicity check:** Could a simpler approach solve this? Say so.
-4. **Confusion check:** Is anything unclear? Name it. Ask.
+1. **Understanding Check:** State what you understood the user wants. One sentence. If wrong, the user corrects you NOW — before you write a single line.
+2. **Assumptions:** What am I assuming about the user's intent? State them.
+3. **Alternatives:** Is there another way to interpret this request? Present it.
+4. **Simplicity check:** Could a simpler approach solve this? Say so.
+5. **Jagged intelligence check:** What's the simplest edge case that could break this? (Empty input? No internet? First-time user?) Name it.
+6. **Confusion check:** Is anything unclear? Name it. Ask.
 
 If you're uncertain about ANY of these, **ask the user before proceeding.** Don't guess. Don't pick an interpretation silently.
 
-**Skip this step for:** trivial tasks (typos, one-liners, obvious single-file changes).
+**Intern rule:** You are the intern. The user is the senior engineer. You execute. They decide. If your understanding is wrong, better to be corrected now than after 100 lines of wrong code.
 
 ---
 

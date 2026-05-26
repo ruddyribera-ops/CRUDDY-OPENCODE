@@ -22,6 +22,14 @@
 - **Simplicity First:** Minimum code. No speculative features. If 200 lines could be 50, rewrite.
 - **Surgical Changes:** Touch only what was asked. Mention dead code — don't delete. Match existing style.
 - **Goal-Driven:** Every step has a verifiable check. Write tests before implementing. Loop until tests pass.
+- See: `skills/karpathy-guidelines/SKILL.md` (auto-loads for all code-builder/bug-fixer tasks)
+
+### Intern Model (Karpathy — December 2025)
+Agents are **interns**: brilliant at execution, terrible at judgment. They can refactor 100K lines AND tell you to walk to a car wash 50 meters away. This is called **jagged intelligence** — superhuman in some domains, surprisingly dumb in others.
+- **You are the senior engineer.** The agent is your intern. You direct. They execute.
+- **Verify the simple things.** The agent won't forget the complex algorithm, but it will forget to handle the empty input.
+- **Don't trust defaults.** The agent defaults to what's in its training distribution. That's often wrong for YOUR codebase.
+- **"You can outsource your thinking but not your understanding."** — Stay in charge of design, taste, and oversight.
 
 ### Verification Depth (applies to ALL agent completions)
 - **NEVER** declare "done" based on file existence alone. Must include runtime evidence: curl output, test pass, screenshot.
