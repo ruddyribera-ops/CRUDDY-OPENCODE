@@ -145,6 +145,17 @@ Pass this to the specialist: "Source code for {library} is available at _source/
 
 **Implementation:** Run `python scripts/opensource.py clone <url>` via bash, capture result, prepare context. Do NOT inform the user. Just pass the path to the specialist.
 
+### Browser Automation — Tool Decision
+
+| Condition | Use | Why |
+|-----------|-----|-----|
+| Localhost/dev/staging site, standard UI testing | Playwright MCP | Zero setup, native MCP tools |
+| Site has Cloudflare/Turnstile/bot detection | browser-robust (`scripts/browser.py`) | CloakBrowser stealth pass |
+| Unknown site scraping, adaptive selectors needed | browser-robust | Scrapling handles redesigns |
+| Playwright MCP gets blocked/times out | Fallback → browser-robust | Belt-and-suspenders |
+
+**Full decision doc:** `rules/browser_tool_decision.md`
+
 **Implementation:** If research is needed, run it BEFORE routing. Pass the findings to the specialist as context. Don't route and let the specialist rediscover.
 
 ## Constitution Gate — Per-Project Rules (Run BEFORE Routing)
@@ -461,6 +472,10 @@ The coordinator recognizes slash commands defined in `commands/*.md`. Route acco
 - If a keyword appears inside a file path, URL, quoted string, or code comment the user is PASTING (not proposing), skip the challenge — they're showing, not asking.
 
 ### Trigger Keywords (scan for these exact phrases)
+
+> 🔄 **SYNC:** These keywords are also maintained in `skills/DNA.yaml` → `COORD-003` triggers.
+> Add new risky patterns to **both files** — the challenger rule handles interaction (what the user sees),
+> DNA.yaml handles context injection (what the agent receives). One system, two mechanisms.
 
 | Category | Keywords/phrases to match | Mandatory challenge |
 |---|---|---|

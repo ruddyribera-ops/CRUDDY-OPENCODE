@@ -150,4 +150,13 @@ At next session start, Claude should review and write a lessons_learned.md entry
     Log-HookError "Behavior C (lesson-trigger) error: $_"
 }
 
+# =========================================================
+# Behavior D — Session Log Rotation (monthly archive)
+# =========================================================
+try {
+    & "$configDir\scripts\rotate-session-log.ps1" -ErrorAction Stop
+} catch {
+    Log-HookError "Behavior D (rotate-session-log) error: $_"
+}
+
 exit 0

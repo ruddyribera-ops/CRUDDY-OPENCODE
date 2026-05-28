@@ -237,7 +237,19 @@ genes:
       Template: "WARNING: [risk]. Better: [alternative]. Proceed as-is? (yes/no)"
       Do NOT re-challenge same category in same session after user confirmation.
       Skip challenge if keyword in paste/quote/path or user pre-overrides.
-    triggers: [md5, sha1, skip-auth, bypass, except-pass, ts-ignore, force-push, sleep(, setTimeout, skip-tests, add-redis, add-kafka, kubernetes]
+      ⚠️ SYNC: triggers MUST match main-coordinator.md Challenger Rule keyword list.
+         Add new patterns to BOTH files or the other system drifts.
+    triggers: [md5, sha1, sha-1, plain-text-password, encrypt-password, custom-hash, obfuscate-password,
+               skip-auth, disable-auth, bypass-login, no-auth, trust-client, skip-jwt,
+               except-pass, catch-e, swallow-error, ignore-error,
+               ts-ignore, any-type, noqa, type-ignore,
+               force-push, no-verify, reset-hard, git-force, skip-hooks,
+               add-redis, add-kafka, add-microservice, kubernetes, add-rabbitmq, add-elasticsearch,
+               rewrite-in, migrate-to, new-framework,
+               deploy-without-test, skip-tests, test-in-prod, just-push, fix-in-prod,
+               new-deploy, fresh-database, empty-db, reset-db,
+               sleep(, setTimeout, wait-for-timeout, time-sleep,
+               pip-install, npm-install]
 
   # ── MINIMAX: Media generation, Office files ─────────────
   - id: MMX-001
