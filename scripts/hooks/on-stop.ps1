@@ -159,4 +159,13 @@ try {
     Log-HookError "Behavior D (rotate-session-log) error: $_"
 }
 
+# =========================================================
+# Behavior E — Config Validation (quiet, failures only)
+# =========================================================
+try {
+    & "$configDir\scripts\validate-config.ps1"
+} catch {
+    Log-HookError "Behavior E (validate-config) error: $_"
+}
+
 exit 0

@@ -243,7 +243,7 @@ genes:
                skip-auth, disable-auth, bypass-login, no-auth, trust-client, skip-jwt,
                except-pass, catch-e, swallow-error, ignore-error,
                ts-ignore, any-type, noqa, type-ignore,
-               force-push, no-verify, reset-hard, git-force, skip-hooks,
+               force-push, git-force, no-verify, reset-hard, skip-hooks,
                add-redis, add-kafka, add-microservice, kubernetes, add-rabbitmq, add-elasticsearch,
                rewrite-in, migrate-to, new-framework,
                deploy-without-test, skip-tests, test-in-prod, just-push, fix-in-prod,
