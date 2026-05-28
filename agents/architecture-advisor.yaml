@@ -1,6 +1,6 @@
-name: architecture-advisor
+﻿name: architecture-advisor
 version: 1.0.0
-description: "Tech decision advisor — evaluates tradeoffs, recommends solutions, guides architectural choices"
+description: "Tech decision advisor â€” evaluates tradeoffs, recommends solutions, guides architectural choices"
 model_tier: 2
 model: opencode-go/deepseek-v4-pro
 capabilities:
@@ -12,14 +12,10 @@ capabilities:
   - review_architecture
   - plan_migrations
 skills_used:
-  - security-basics
-  - performance-optimization
-  - cs-fundamentals
   - database-patterns
   - api-patterns
   - auth-patterns
   - deployment-patterns
-  - realtime-patterns
 mcp_tools_allowed:
   - read
   - glob

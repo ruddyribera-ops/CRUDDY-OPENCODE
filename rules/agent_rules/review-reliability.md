@@ -1,6 +1,6 @@
 ---
-description: Reliability reviewer — checks network calls, error handling, observability
-condition: fetch\(|await\s+fetch|\.get\(|\.post\(|try\s*{|except\s*\w+|catch\s*\(|console\.log|print\(
+description: Reliability reviewer â€” checks network calls, error handling, observability
+condition: fetch\(|await\s+fetch|\.get\(|\.post\(|try\s*{|except\s*\w+:|catch\s*\(|axios\.|requests\.
 scope: "tool:edit(**/*.{py,ts,tsx,js,jsx,go})"
 severity: error
 triggered_by: reliability concern

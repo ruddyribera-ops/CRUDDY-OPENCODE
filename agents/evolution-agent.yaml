@@ -12,8 +12,7 @@ capabilities:
   - sync_to_graph
   - evolve_config
 skills_used:
-  - skill-learning
-  - batch-skill-enrichment
+  - api-patterns
 dna_families_monitored: [all]
 mcp_tools_allowed:
   - read

@@ -29,6 +29,26 @@
 - `lessons_learned.md` — self-improvement log; key decisions, failures, and session lessons
 - `reference_links.md` — live URLs, GitHub, Railway, library docs
 
+## 🚨 Session Triggers (MANDATORY — Load & Follow)
+
+**File:** `TRIGGERS.md` — session lifecycle protocol (T1-T8).
+
+**Must follow at every:**
+- Session start → T1 (load handover, create session state, create KG entity)
+- Task completion → T2 (append log, update yaml, 3-question check)
+- Lesson discovered → T5 (write file + KG + notify)
+- Decision made → T6 (append yaml + KG)
+- State change → T7 (update project_active + KG + notify)
+- Session end → T3 (write handover, archive, stamp sprint, finalize KG)
+- Status query → T4 (aggregate and display)
+
+**Scripts:**
+- `scripts/append-session-log.ps1` — append task entry to session_log.md
+- `scripts/update-session-yaml.ps1` — update session.yaml fields
+- `scripts/write-handover.ps1` — generate handover/latest.md from session.yaml
+
+---
+
 ## Rules for Writing Memory
 
 1. **Keep it short.** Each file should fit on one screen.

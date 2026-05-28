@@ -37,6 +37,7 @@ Respond compressed. Drop all filler, hedging, and pleasantries. Keep technical a
 - Negation ("not", "n't") — changes meaning
 - Security warnings
 - Confirmation after destructive actions
+- **Session start / status responses** — first response in a conversation MUST include session context for OpenCode auto-naming
 
 ### When to Temporarily Drop Caveman
 - Security warnings → always full and clear

@@ -1,6 +1,6 @@
-name: code-analyzer
+﻿name: code-analyzer
 version: 1.0.0
-description: "Project scanner — analyzes structure, tech stack, dependencies, and code patterns"
+description: "Project scanner â€” analyzes structure, tech stack, dependencies, and code patterns"
 model_tier: 1
 model: opencode-go/deepseek-v4-flash
 capabilities:
@@ -12,11 +12,8 @@ capabilities:
   - security_review
   - find_patterns
 skills_used:
-  - security-basics
-  - performance-optimization
-  - code-review
-  - cs-fundamentals
-  - pr-review
+  - api-patterns
+  - database-patterns
 mcp_tools_allowed:
   - read
   - glob

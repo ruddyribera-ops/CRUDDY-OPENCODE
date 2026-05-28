@@ -207,7 +207,8 @@ This prevents the "I fixed the symptom in file1, but file2 still calls the old s
 
 1. **Run the failing test from Step 2.5** → it must now PASS
 2. **Reproduce:** Run the action that caused the error → confirm it's gone
-3. **Full test suite:** `npm test` / `pytest` / `go test ./...` → nothing else regressed
+3. **Review loop:** `python $CONFIG/scripts/review-loop.py run .` — check for debug artifacts, empty handlers, placeholders left in modified files
+4. **Full test suite:** `npm test` / `pytest` / `go test ./...` → nothing else regressed
 4. **Lint:** `npm run lint` / `flake8` (make sure fix didn't break lint)
 5. **Iteration cap — MAX 3 attempts.** If still broken after 3 fix+verify cycles:
    - STOP. Do NOT loop further.

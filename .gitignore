@@ -67,6 +67,9 @@ skills/LEGACY_VAULT.zip
 skills/.archive/frontend-dev/canvas-fonts/*.ttf
 *.zip
 
+# Python package (should be installed via pip, not tracked)
+lib/
+
 # Backup files
 *.bak
 _*_backup_*/**
@@ -98,5 +101,18 @@ __pycache__/
 Thumbs.db
 .DS_Store
 
-memory/reviews/memory/interventions.json
+# Intervention tracker logs
+memory/interventions.json
+
+# Runtime state files (auto-generated, session-specific)
+memory/session.yaml
+memory/token_budget.yaml
+memory/kg_queue.json
+memory/auto-memory.log
+hook-errors.log
+
+# Handover files (auto-generated)
+memory/handover/
+
+# Review artifacts
 memory/reviews/

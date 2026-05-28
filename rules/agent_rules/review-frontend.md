@@ -1,6 +1,6 @@
 ---
-description: Frontend reviewer — checks component size, accessibility, performance
-condition: className=|styled\.|useState|useEffect|useMemo|useCallback|memo\(|forwardRef|aria-|role=|\.css|\.scss|\.module\.css
+description: Frontend reviewer â€” checks component size, accessibility, performance
+condition: useState\(\s*\[\s*\]\s*\)|useEffect\(\s*\(\s*\)\s*=>\s*\{\s*\}\s*,\s*\[\s*\]\)|memo\(\s*\(\s*\)\s*=>\s*\{
 scope: "tool:edit(**/*.{tsx,jsx,js,ts,css,scss})"
 severity: warning
 triggered_by: frontend concern

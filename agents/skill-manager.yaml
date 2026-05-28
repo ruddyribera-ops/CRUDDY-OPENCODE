@@ -12,11 +12,7 @@ capabilities:
   - enrich_skills
   - deduplicate_skills
 skills_used:
-  - skill-learning
-  - batch-skill-enrichment
-  - hermes-integration
-  - hermes-agent
-  - progressive-disclosure
+  - api-patterns
 mcp_tools_allowed:
   - read
   - write

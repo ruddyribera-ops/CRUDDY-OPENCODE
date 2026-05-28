@@ -227,10 +227,11 @@ Before coding, review your own POA. Ask:
 
 Run ALL of these that exist in the project:
 
-1. **Lint:** `npm run lint` / `flake8` / `golint`
-2. **Type check:** `npx tsc --noEmit` / `pyright`
-3. **Tests:** `npm test` / `pytest` / `go test ./...`
-4. **Build:** `npm run build` (if applicable)
+1. **Review loop:** `python $CONFIG/scripts/review-loop.py run .` — auto-review changed files for debug artifacts, empty handlers, placeholders, long functions (max 3 cycles)
+2. **Lint:** `npm run lint` / `flake8` / `golint`
+3. **Type check:** `npx tsc --noEmit` / `pyright`
+4. **Tests:** `npm test` / `pytest` / `go test ./...`
+5. **Build:** `npm run build` (if applicable)
 
 **If anything fails:**
 - ❌ DON'T just report failure

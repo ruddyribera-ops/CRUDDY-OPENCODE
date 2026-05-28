@@ -55,11 +55,12 @@ Agents are **interns**: brilliant at execution, terrible at judgment. They can r
 ## 🟡 MEDIUM PRIORITY (Important But Negotiable)
 
 ### Session Start Loading Order
+-1. `rules/m27-compensation.md` — M2.7 hard rules (mandatory, always loads first for coordinator)
 0. `~/.config/opencode/memory/feedback_m2_compensation.md` — auto-load when using MiniMax M2.7. Critical behavioral patterns documented.
 1. `~/.config/opencode/USER.md` — quick profile
 2. `~/.config/opencode/memory/MEMORY.md` — global memory index
 3. `~/.config/opencode/memory/feedback_windows_shell.md` — always load proactively
-4. `~/.config/opencode/rules/*.md` — runtime-enforceable rules
+4. `~/.config/opencode/rules/*.md` — runtime-enforceable rules (including `rules/auto_memory.md`)
 5. `~/.config/opencode/agents/*.yaml` — machine-readable agent manifests
 6. `./.opencode/constitution.md` — per-project constitution if present
 7. `./.opencode/design.md` — per-project design system if present (load only for UI/frontend tasks)
@@ -82,7 +83,10 @@ Agents are **interns**: brilliant at execution, terrible at judgment. They can r
 ### MCP Servers
 - `context7` — library docs (enabled). `brave-search` — web search (enabled).
 - `playwright` — browser automation (enabled). `fetch` — URL fetch (enabled).
-- `sequential-thinking` — reasoning (enabled). `memory` — knowledge graph (enabled).
+- `sequential-thinking` — reasoning (enabled).
+- `desktop-commander` — file ops, processes, search (enabled).
+- `filesystem` — file access (enabled).
+- `memory` — knowledge graph (disabled — use file-based memory in `memory/` instead).
 - Use Context7 for unfamiliar libraries. Skip for one-line obvious calls.
 
 ### Web Research (Run BEFORE routing)
@@ -107,7 +111,10 @@ The routed specialist MUST:
 
 ### END-OF-TASK CHECKLIST (run silently, do not display to user)
 
-**① Sprint stamp** — Update `current_sprint.md` with today's date + last completed line (keep 3 most recent).
+**① Sprint stamp** — Run automatically after task completes:
+```powershell
+powershell -File $CONFIG/scripts/stamp-sprint.ps1 -TaskDescription "<task summary>" -SprintPath "<project>/.opencode/memory/current_sprint.md"
+```
 
 **② Skill proposal** — If task required multiple steps/iteration, note internally. Don't ask user.
 
@@ -121,9 +128,24 @@ The routed specialist MUST:
 
 **⑦ Project facts** — If this task changed anything about a project (new version, new deploy URL, new stack, new known issue), update `memory/project_active.md`. Stale project memory is worse than no memory.
 
-**⑧ Log** — Run `powershell -File $CONFIG/scripts/post-session-hook.ps1` silently if errors.
+**⑧ Log** — Run automatically after every specialist completes:
+```powershell
+powershell -File $CONFIG/scripts/auto-memory.ps1 -TaskName "<task>" -Agent "<agent>" -Result "<result>" -TokensEst "~N" -ProjectDir "<pwd>" -SprintNumber "<N>" -TaskDescription "<summary>"
+```
 
-### Hooks System (Runs Automatically)
+**⑨ Track tokens** — After every task, update token budget:
+```powershell
+powershell -File $CONFIG/scripts/track-tokens.ps1 -Action "add" -Agent "<agent>" -Tokens <estimated>
+```
+
+**⑩ Post-edit hook** — If code files were modified, run post-edit validation:
+```powershell
+powershell -File $CONFIG/scripts/post-edit.ps1 -FilesModified "<file1,file2>" -ProjectDir "<pwd>"
+```
+Skip for read-only/trivial tasks.
+
+**Rule:** `rules/auto_memory.md` — memory is AUTOMATIC. Never ask the user. Never skip. Run `auto-memory.ps1` after every task completion.
+
 | Hook | When | What |
 |------|------|------|
 | `hook-startup.ps1` | Session start | Surfaces previous errors |
