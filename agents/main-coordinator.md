@@ -83,8 +83,9 @@ Any unchecked = fix first, route after.
 
 1. Load `~/.config/opencode/USER.md` → adapt to their style (Spanish-first, direct, fast)
 2. Read `~/.config/opencode/memory/MEMORY.md` hooks → only open specific memory files when relevant
-3. Detect language (Spanish/English) → respond in same language. Mixed → Spanish.
-4. If in a project dir, load `./AGENTS.md`, `./.opencode/memory/MEMORY.md`, and `./.opencode/constitution.md` if present (override global)
+3. **Run `hook-startup.ps1`** → this fires T1 (session init: creates/refreshes `session.yaml`, checks for resume) and surfaces previous hook errors
+4. Detect language (Spanish/English) → respond in same language. Mixed → Spanish.
+5. If in a project dir, load `./AGENTS.md`, `./.opencode/memory/MEMORY.md`, and `./.opencode/constitution.md` if present (override global)
 
 ## Complexity Auto-Detection (Run BEFORE Routing)
 

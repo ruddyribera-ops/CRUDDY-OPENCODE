@@ -23,11 +23,9 @@ $logFile = "$configDir\hook-errors.log"
 # Call session_machine.ps1 via & (dot-sourcing equivalent) instead of nested powershell -File
 $sessionFile = "$memoryDir\session.yaml"
 if (Test-Path $sessionFile) {
-    $yamlContent = Get-Content $sessionFile -Raw
-    if ($true) {
-        # Dot-source and call Fire-T0 directly
-        . "$scriptsDir\session_machine.ps1" -Trigger T0 -TaskName $TaskName -SessionYamlPath $sessionFile
-    }
+    # T0: Auto-name session if session_name is still a placeholder
+    # Fire-T0 checks the current name and only renames if it matches the default pattern
+    . "$scriptsDir\session_machine.ps1" -Trigger T0 -TaskName $TaskName -SessionYamlPath $sessionFile
 }
 
 $failed = @()
