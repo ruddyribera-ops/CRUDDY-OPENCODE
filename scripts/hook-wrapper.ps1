@@ -75,6 +75,51 @@ if ($null -eq $matchedPattern) {
   exit 0
 }
 
+# ── Bash-Guardian checks (SP-3 AST-based) ──
+$guardianDir = "$configDir\scripts\bash-guardian"
+$guardianBlocked = $false
+$guardianReason = ""
+
+if (Test-Path $guardianDir) {
+    # Run each guardian check
+    $checks = @(
+        @{ Name = "EnvVar"; Script = "EnvironmentVarCheck.ps1" }
+        @{ Name = "Blacklist"; Script = "BlacklistCheck.ps1" }
+        @{ Name = "VariableCommand"; Script = "VariableCommandCheck.ps1" }
+        @{ Name = "PathAccess"; Script = "PathAccessCheck.ps1" }
+    )
+
+    foreach ($check in $checks) {
+        $checkScript = Join-Path $guardianDir $check.Script
+        if (Test-Path $checkScript) {
+            try {
+                $resultJson = & powershell -File $checkScript -Command $Command 2>$null
+                if ($resultJson) {
+                    $result = $resultJson | ConvertFrom-Json
+                    if (-not $result.Allowed) {
+                        $guardianBlocked = $true
+                        $guardianReason = "Bash-Guardian [$($check.Name)]: $($result.Reason)"
+                        break
+                    }
+                }
+            } catch {
+                # Non-blocking: guardian check failed, don't block on guardian error
+            }
+        }
+    }
+}
+
+if ($guardianBlocked) {
+    Write-Host ""
+    Write-Host "BASH-GUARDIAN BLOCKED" -ForegroundColor Red -BackgroundColor Black
+    Write-Host "  Reason: $guardianReason" -ForegroundColor Red
+    Write-Host "  Command: $Command" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "This command was blocked by bash-guardian security policy." -ForegroundColor Yellow
+    Write-Host ""
+    exit 1
+}
+
 # ── Match found — warn and prompt ──
 Write-Host ""
 Write-Host "DESTRUCTIVE COMMAND DETECTED" -ForegroundColor Red -BackgroundColor Black
