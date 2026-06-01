@@ -2,7 +2,6 @@
 name: frontend-dev
 description: Full-stack frontend development combining premium UI design, cinematic animations, AI-generated media assets, persuasive copywriting, and visual art. Builds complete, visually striking web pages.
 tags: [frontend, react, ui, web]
-tags: [frontend, react, animation, ui, assets, web, css, javascript]
 ---
 
 ## When to Use

@@ -2,7 +2,6 @@
 name: mmx-cli
 description: Use mmx to generate text, images, video, speech, and music via the MiniMax AI platform. Chat, web search, and API resource management from the terminal.
 tags: [minimax, ai, media, cli]
-tags: [mmx, minimax, cli, text-generation, image-generation, video, music, ai]
 ---
 
 ## When to Use

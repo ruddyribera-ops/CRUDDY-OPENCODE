@@ -2,7 +2,6 @@
 name: shader-dev
 description: Comprehensive GLSL shader techniques — ray marching, SDF modeling, fluid simulation, particle systems, procedural generation, lighting, post-processing.
 tags: [graphics, shader, glsl, webgl]
-tags: [shader, glsl, webgl, visual-effects, graphics, gpu, real-time]
 ---
 
 ## When to Use

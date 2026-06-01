@@ -2,7 +2,6 @@
 name: android-native-dev
 description: Android native application development and UI design guide. Covers Material Design 3, Kotlin/Compose development, project configuration, accessibility, and build troubleshooting. Read this before Android native application development.
 tags: [mobile, android, kotlin, compose]
-tags: [android, kotlin, compose, material-design, mobile, gradle]
 ---
 
 ## When to Use

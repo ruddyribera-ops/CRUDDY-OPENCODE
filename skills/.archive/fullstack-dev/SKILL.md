@@ -2,7 +2,6 @@
 name: fullstack-dev
 description: Full-stack backend architecture and frontend-backend integration guide. Covers REST API design, service layers, error handling, auth, file uploads, and real-time features (SSE/WebSocket).
 tags: [fullstack, backend, frontend, api, web]
-tags: [fullstack, rest-api, backend, frontend, architecture, nodejs, python, go]
 ---
 
 ## When to Use

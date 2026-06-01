@@ -2,7 +2,6 @@
 name: minimax-pdf
 description: Professional PDF document creation and reformatting with token-based design system. Covers generation from scratch, form field filling, and restyling existing documents.
 tags: [pdf, document, minimax, office]
-tags: [pdf, document-generation, minimax, design, report, print, typography]
 ---
 
 ## When to Use

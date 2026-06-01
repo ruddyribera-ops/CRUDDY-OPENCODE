@@ -2,7 +2,6 @@
 name: caveman
 description: Ultra-compressed communication mode — DEFAULT for all responses. Cuts token usage ~75% by dropping filler, hedging, and pleasantries while keeping full technical accuracy.
 tags: [communication, prompt, efficiency]
-tags: [communication, efficiency, token-optimization, format, prose-style]
 ---
 
 ## When to Use

@@ -2,7 +2,6 @@
 name: slide-making-skill
 description: Implement single-slide PowerPoint pages with PptxGenJS. Covers dimensions, positioning, text/image/chart APIs, styling rules, and export expectations for native .pptx output.
 tags: [ppt, slide, presentation, office]
-tags: [powerpoint, pptx, slide, pptxgenjs, presentation, javascript]
 ---
 
 ## When to Use
