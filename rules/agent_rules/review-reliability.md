@@ -1,4 +1,4 @@
----
+﻿---
 description: Reliability reviewer â€” checks network calls, error handling, observability
 condition: fetch\(|await\s+fetch|\.get\(|\.post\(|try\s*{|except\s*\w+:|catch\s*\(|axios\.|requests\.
 scope: "tool:edit(**/*.{py,ts,tsx,js,jsx,go})"
@@ -26,3 +26,4 @@ Checks every change for reliability patterns. Triggered on every push.
 - Every catch: log the error with context before handling
 - Every feature: add at least one structured log line
 - Timeouts: use env vars or config, not hardcoded values
+

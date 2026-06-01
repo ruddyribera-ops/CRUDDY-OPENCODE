@@ -1,16 +1,19 @@
-# Token Budgets — Per-Agent Cost Enforcement
+﻿# Per-agent token budgets
+# IMPORTANT: Enforcement is via scripts/track-tokens.ps1 -Action check
+# Coordinator MUST call track-tokens.ps1 -Action check BEFORE routing to any agent
+# with estimated tokens. Exit codes: 0=GO, 1=REJECT, 2=WARN
+#
+# How enforcement works:
+#   1. Coordinator calls: track-tokens.ps1 -Action check -Agent <agent> -Tokens <estimated>
+#   2. Script reads budgets.yaml for limits
+#   3. Script reads token_budget.yaml for current usage
+#   4. Returns REJECT (exit 1) for hard limits, WARN (exit 2) for soft limits
+#
+# enforcement modes:
+#   hard = reject the task (exit 1)
+#   soft = warn but allow (exit 2)
+#   reset: daily at midnight
 
-**Purpose:** Track token usage per agent per session. Set hard/soft budget limits. Reject or warn when exceeded.
-
-**Location:** `~/.config/opencode/rules/budgets.yaml`
-**Consumer:** Enforced by main-coordinator before routing.
-
----
-
-## Budget Configuration
-
-```yaml
-# Per-agent token budgets
 budgets:
   per_session:
     code-builder: 50000
@@ -26,57 +29,18 @@ budgets:
 
   per_task:
     default: 8000
-    code-builder: 12000  # complex tasks can use more
+    code-builder: 12000
     project-generator: 15000
 
-  # Behavior when budget exceeded
   enforcement:
-    per_session: hard    # hard = reject | soft = warn
-    per_task: soft       # hard = reject | soft = warn
-    reset: daily         # daily | weekly | per_session
+    per_session: hard
+    per_task: soft
+    reset: daily
 
-# Token estimation (rough): characters ÷ token_ratio
 estimation:
-  token_ratio: 4.0       # 4 chars ≈ 1 token
-  overhead_per_call: 500  # overhead per task() invocation
+  token_ratio: 4.0
+  overhead_per_call: 500
 
-# Tracking method
 tracking:
-  method: session_log    # derived from memory/session_log.md
-  minimal_overhead: true # don't do extra token counting, estimate from log
-```
-
----
-
-## Enforcement Flow
-
-```
-Agent request arrives at coordinator
-  → Check budget for this agent
-  → Calculate running total from session_log.md (this session)
-  → Add estimated tokens for this task
-  → If over per_session budget AND enforcement=hard → REJECT
-  → If over per_session budget AND enforcement=soft → WARN, proceed
-  → If over per_task budget AND enforcement=hard → REJECT
-  → If over per_task budget AND enforcement=soft → WARN, proceed
-  → Route normally
-```
-
----
-
-## Reduction Strategies (when budget low)
-
-When an agent is at 80%+ of its budget, coordinator can:
-1. Route to **Tier 1 model** (flash) instead of Tier 2/3
-2. Suggest **smaller scope** for the task
-3. Defer to **next session** (next day)
-4. **Batch** multiple small tasks into one call
-
----
-
-## Budget Log
-
-Budget status appended to `memory/session_log.md`:
-```
-| 15:00 | main-coordinator | [budget] code-builder 42k/50k (84%) | ~0 | 0.1s | ⚠️ |
-```
+  method: token_budget_yaml
+  minimal_overhead: true

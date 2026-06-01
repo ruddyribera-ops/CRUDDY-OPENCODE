@@ -1,6 +1,6 @@
-# M2.7 Compensation Rules — Hard System Rules
+# M3 Compensation Rules — Hard System Rules
 
-**Purpose:** MiniMax M2.7 four behavioral failure modes, countered by mandatory pre-route actions.
+**Purpose:** MiniMax M3 four behavioral failure modes, countered by mandatory pre-route actions.
 **These are NOT suggestions. They fire on every routing decision.**
 
 ---
@@ -135,7 +135,7 @@ Before every route, coordinator verifies ALL of:
 
 ## Escalation Rule
 
-Route to DeepSeek V4 Pro (NOT M2.7) when task involves:
+Route to DeepSeek V4 Pro (NOT M3) when task involves:
 - Architecture decisions with multiple valid approaches
 - Refactoring with ambiguous scope
 - Debugging without clear error message

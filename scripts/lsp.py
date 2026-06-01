@@ -1,16 +1,12 @@
-"""
-LSP Wrapper — Give the agent IDE-level code intelligence.
-Uses pyright for Python, tsc for TypeScript.
+﻿"""
+Diagnostics wrapper â€” runs pyright type checker.
 
 Usage:
-  python lsp.py definition <file> <line> [<col>]    # Go to definition
-  python lsp.py references <file> <line> [<col>]    # Find references
-  python lsp.py hover <file> <line> [<col>]         # Show type info
-  python lsp.py check <file-or-dir>                 # Run type checker
+  python lsp.py check <file-or-dir>    # Run type checker
+  python lsp.py status                  # Check if pyright is available
 
 Returns JSON with results.
 """
-
 import argparse
 import json
 import os
@@ -19,8 +15,6 @@ import sys
 from pathlib import Path
 
 
-def _find_pyright():
-    """Find the pyright executable."""
     # Try pip-installed pyright
     for path_env in os.environ.get("PATH", "").split(";"):
         for name in ("pyright", "pyright.exe", "pyright.cmd"):

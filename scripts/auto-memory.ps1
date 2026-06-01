@@ -88,45 +88,7 @@ if (-not $NoLesson -and $TaskName -and $TokensEst) {
     }
 }
 
-# -- 5. KG queue flush (retry pending writes) --
-$kgQueuePath = "$memoryDir\kg_queue.json"
-if (Test-Path $kgQueuePath) {
-    try {
-        $queueContent = Get-Content $kgQueuePath -Raw | ConvertFrom-Json
-        if ($queueContent -and $queueContent.count -gt 0) {
-            $retryCount = 0
-            $maxRetries = 3
-            $kgScript = "$scriptsDir\kg_write_proxygen.py"
-            $flushed = @()
-            $remaining = @()
-
-            foreach ($item in $queueContent) {
-                $retryCount++
-                $cmd = "python `"$kgScript`" $($item.command) 2>`$null"
-                $result = Invoke-Expression $cmd | Out-String
-                if ($result -match '"ok":\s*true' -or $result -match 'queued') {
-                    $flushed += $item
-                } else {
-                    $remaining += $item
-                }
-                if ($retryCount -ge $maxRetries) { break }
-            }
-
-            if ($remaining.Count -gt 0) {
-                $remaining | ConvertTo-Json -Depth 10 | Set-Content $kgQueuePath -Encoding UTF8
-            } else {
-                Remove-Item $kgQueuePath -Force -ErrorAction SilentlyContinue
-            }
-            if ($flushed.Count -gt 0) {
-                Log-AutoMemError "KG flush: $($flushed.Count) queued → flushed, $($remaining.Count) remain"
-            }
-        }
-    } catch {
-        Log-AutoMemError "KG queue flush failed: $_"
-    }
-}
-
-# -- 6. Post-edit hook (auto-test after file changes) --
+# -- 5. Post-edit hook (auto-test after file changes) --
 if ($FilesModified -and $FilesModified.Trim() -ne '') {
     try {
         $filesArray = $FilesModified -split ','
@@ -141,7 +103,7 @@ if ($FilesModified -and $FilesModified.Trim() -ne '') {
     }
 }
 
-# -- 7. Self-audit --
+# -- 6. Self-audit --
 $ts = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 $status = if ($failed.Count -eq 0) { "OK" } else { "FAILED:$($failed -join ',')" }
 "$ts auto-memory: task='$TaskName' agent='$Agent' result='$Result' tokens=$TokensEst status=$status" | Out-File -FilePath "$memoryDir\auto-memory.log" -Append -Encoding UTF8

@@ -289,6 +289,45 @@ genes:
       Never modify application code. Config-only. User approval required.
     triggers: [post-session, evolution-check, analyze-performance]
 
+  # ── COORDINATION: Identity injection ──────────────────
+  - id: COORD-004
+    name: inject_agent_identity
+    description: |
+      Before routing ANY task to a sub-agent, inject ID-JAG identity block.
+      Identity is scoped per-task: one task = one identity. TTL 5min.
+      No identity injection for Trivial (score 0) tasks.
+    triggers: [dispatch, route, handover, delegate, task, sub-agent, specialist]
+
+  # ── COORDINATION: Graph consultation ──────────────────
+  - id: COORD-005
+    name: consult_context_graph
+    description: |
+      Before routing Moderate+ tasks (score 4+), consult context graph
+      for relevant decisions, lessons, and blockers.
+      Query: graph-memory.js query --type recent --domain "domain from task"
+      Skip gracefully if no graph engine installed.
+    triggers: [route, moderate, complex, dispatch, decision, task-graph]
+
+  # ── TRIGGERS: Graph writes ────────────────────────────
+  - id: TRIGGER-002
+    name: write_decisions_to_graph
+    description: |
+      On T6 (Decision made), T2 (Task completes), T5 (Lesson discovered):
+      ALSO write to context graph in addition to flat files.
+      Fire-and-forget — do NOT block task flow on graph writes.
+      Fallback: skip if graph-memory.js not available.
+    triggers: [t2, t5, t6, decision, lesson, task-complete, session-end]
+
+  # AUTO-GENERATED GENE
+  # Retro-analyze: 1 tasks blocked on step 'verify' (3+ attempts each)
+  - id: CODE-AUTO-001
+    name: CODE_gate_blocked_verify
+    description: |
+      Gate system: step 'verify' blocked 3+ times. Pattern: 1 tasks blocked on step 'verify' (3+ attempts each). Reason: test_integration. Tasks: integration-test-task. Auto-created by retro-analyze after 10-task scan.
+    triggers: ["verify", "gate", "blocked", "attempts"]
+    auto_generated: true
+    auto_date: "2026-06-01T08:16:43.0205288-04:00"
+    auto_reason: "test_integration"
 # ── GENE LOADER — How agents load genes ──────────────────
 gene_loader:
   algorithm: |

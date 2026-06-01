@@ -1,0 +1,72 @@
+# Graph Memory Schema — Node and Edge Type Definitions
+# Referenced by scripts/graph-memory.js, scripts/graph-query.js
+# Version: 1.0.0
+
+nodes:
+  session:
+    description: "A work session — created at T1 (session start)"
+    properties:
+      - name: session_name
+        required: true
+      - name: projects_touched
+        type: array
+      - name: purpose
+      - name: status
+        default: in_progress
+
+  task:
+    description: "A completed task — created at T2 (task complete)"
+    properties:
+      - name: agent
+      - name: files
+        type: array
+      - name: result
+      - name: tokens_est
+        type: number
+
+  decision:
+    description: "An architectural or design decision — created at T6"
+    properties:
+      - name: context
+      - name: decision
+      - name: alternatives
+      - name: rationale
+
+  lesson:
+    description: "A discovered lesson — created at T5"
+    properties:
+      - name: what_happened
+      - name: correct_approach
+      - name: category
+      - name: applied
+        type: boolean
+
+  project:
+    description: "A project — created on first touch"
+    properties:
+      - name: stack
+        type: array
+      - name: deploy_url
+      - name: known_issues
+        type: array
+
+edge_types:
+  touches:
+    description: "Session → Project (worked on this project)"
+    direction: session -> project
+
+  makes:
+    description: "Session → Decision (made this decision)"
+    direction: session -> decision
+
+  discovers:
+    description: "Session → Lesson (learned this lesson)"
+    direction: session -> lesson
+
+  completes:
+    description: "Session → Task (finished this task)"
+    direction: session -> task
+
+  triggers:
+    description: "Decision → Gene (decision resulted in a gene)"
+    direction: decision -> gene

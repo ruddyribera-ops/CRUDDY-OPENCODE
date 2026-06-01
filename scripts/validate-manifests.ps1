@@ -25,7 +25,7 @@ $ValidMcpPatterns = @(
 $TierModelMap = @{
     1 = "opencode-go/deepseek-v4-flash"
     2 = "opencode-go/deepseek-v4-pro"
-    3 = "opencode-go/minimax-m2.7"
+    3 = "minimax/minimax-m2.7"
 }
 
 $errors = [System.Collections.ArrayList]::new()

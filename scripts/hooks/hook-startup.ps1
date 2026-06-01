@@ -1,4 +1,4 @@
-# hook-startup.ps1 — Session-start handler
+﻿# hook-startup.ps1 â€” Session-start handler
 # Surfaces any hook errors from previous session to user's attention
 # Also initializes session state via T1 trigger
 
@@ -20,6 +20,9 @@ if (Test-Path $sessionMachine) {
     }
 }
 
+# T0 removed from hook-startup - session-title-guard.js handles first-rename.
+# auto-memory.ps1 T0 fires on first task via coordinator end-of-task checklist.
+
 # --- Surface previous hook errors ---
 if (Test-Path $logFile) {
     $errors = Get-Content $logFile -Raw
@@ -27,7 +30,7 @@ if (Test-Path $logFile) {
 
     if ($errorLines.Count -gt 0) {
         Write-Host ""
-        Write-Host "⚠️  OpenCode Hook Errors from Previous Session:" -ForegroundColor Yellow
+        Write-Host "âš ï¸  OpenCode Hook Errors from Previous Session:" -ForegroundColor Yellow
         Write-Host "   (Review and delete $logFile when fixed)" -ForegroundColor DarkYellow
         Write-Host ""
 
@@ -44,9 +47,3 @@ if (Test-Path $logFile) {
     }
 }
 
-        $tail | ForEach-Object {
-            Write-Host "   $_" -ForegroundColor DarkYellow
-        }
-        Write-Host ""
-    }
-}

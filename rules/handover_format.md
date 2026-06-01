@@ -3,7 +3,7 @@
 ## Rule
 
 All coordinator-to-specialist handovers MUST use this format.
-No exceptions for M2.7 agents. Strongly recommended for all agents.
+No exceptions for M3 agents. Strongly recommended for all agents.
 
 ## Structure
 

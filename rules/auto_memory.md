@@ -25,7 +25,7 @@
 
 - **Coordinator:** after specialist returns → `powershell .../auto-memory.ps1 -TaskName "..." -Agent "code-builder" -Result "..." -TokensEst "~N"`
 - **code-builder:** after POA audit passes → same call
-- **M2.7 agent:** in END-OF-TASK block → same call with sprint number
+- **M3 agent:** in END-OF-TASK block → same call with sprint number
 
 ## Never Ask The User
 

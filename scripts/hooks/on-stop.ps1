@@ -168,4 +168,21 @@ try {
     Log-HookError "Behavior E (validate-config) error: $_"
 }
 
+# =========================================================
+# Behavior F — Flush Auto-Memory
+# =========================================================
+try {
+    $counterFile = "$configDir\gates\.task-counter.json"
+    $taskCount = 0
+    if (Test-Path $counterFile) {
+        $counter = Get-Content $counterFile -Raw | ConvertFrom-Json
+        $taskCount = $counter.count
+    }
+    if ($taskCount -gt 0) {
+        & "$configDir\scripts\auto-memory.ps1" -TaskName "session-end-flush" -Agent "gate-system" -Result "summary" -TokensEst "~$taskCount"
+    }
+} catch {
+    Log-HookError "Behavior F (auto-memory-flush) error: $_"
+}
+
 exit 0

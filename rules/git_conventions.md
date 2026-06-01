@@ -13,7 +13,7 @@ source: feedback_commit_convention.md + git-workflow/SKILL.md
 ```
 type(scope): subject in imperative mood
 
-optional body explaining WHY (not WHAT — the diff shows what)
+optional body explaining WHY (not WHAT â€” the diff shows what)
 ```
 
 **Types (pick one):**
@@ -27,7 +27,7 @@ optional body explaining WHY (not WHAT — the diff shows what)
 | `docs` | README, inline docs, comments |
 | `ops` | Railway/Docker/infra/env config |
 | `ci` | GitHub Actions / pipeline only |
-| `chore` | Deps bump, lockfile, formatting — nothing else |
+| `chore` | Deps bump, lockfile, formatting â€” nothing else |
 
 **Scope (optional but helpful):**
 - Omit if change is cross-cutting
@@ -69,11 +69,11 @@ release/v1.2.0
 - `git clean`
 
 **Never use without asking:**
-- `git push --force` — use `--force-with-lease` instead
+- `git push --force` â€” use `--force-with-lease` instead
 - `git clean -fdx`
 
 **Commit message rules:**
-- Subject line ≤72 characters
+- Subject line â‰¤72 characters
 - Use imperative mood: "add feature" not "added feature"
 - Body explains WHY, not WHAT
 - Reference issues: `Closes #123`
@@ -82,13 +82,14 @@ release/v1.2.0
 
 ## Why
 
-PRIA's git history stays scannable at a glance. `git log --oneline --grep='fix'` becomes useful. Release notes generate themselves.
+Git history stays scannable at a glance. `git log --oneline --grep='fix'` becomes useful. Release notes generate themselves.
 
 ---
 
 ## How to Apply
 
 1. Before creating ANY commit, the coordinator or specialist must follow this format
-2. If the commit doesn't fit one type, the change probably does more than one thing — split it first
-3. The `feedback_commit_convention.md` hook is loaded at session start — this rules file formalizes it
-4. Pre-commit hook (if configured) can enforce format — see `ci-cd-patterns/SKILL.md`
+2. If the commit doesn't fit one type, the change probably does more than one thing â€” split it first
+3. The `feedback_commit_convention.md` hook is loaded at session start â€” this rules file formalizes it
+4. Pre-commit hook (if configured) can enforce format â€” see `ci-cd-patterns/SKILL.md`
+

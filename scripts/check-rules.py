@@ -1,5 +1,5 @@
-"""
-Agent Rules Checker — Scan code against time-traveling rules.
+﻿"""
+Agent Rules Checker â€” Scan code against time-traveling rules.
 Inspired by oh-my-pi's .omp/rules/ pattern.
 
 Usage:
@@ -55,7 +55,7 @@ def _load_rules():
         return rules
 
     for f in sorted(RULES_DIR.glob("*.md")):
-        content = f.read_text(encoding="utf-8", errors="ignore")
+        content = f.read_text(encoding="utf-8-sig")
         rule = _parse_rule_frontmatter(content, f.stem)
         if rule:
             rules.append(rule)
@@ -139,7 +139,7 @@ def _check_file(filepath, rules):
     """Check a single file against all matching rules."""
     violations = []
     try:
-        with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+        with open(filepath, "r", encoding="utf-8-sig") as f:
             content = f.read()
     except Exception:
         return violations
@@ -325,3 +325,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
