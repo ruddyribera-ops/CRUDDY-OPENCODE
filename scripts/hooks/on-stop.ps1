@@ -185,4 +185,15 @@ try {
     Log-HookError "Behavior F (auto-memory-flush) error: $_"
 }
 
+# =========================================================
+# Behavior G — Auto-Correction Capture (SP-1)
+# =========================================================
+try {
+    if ($transcriptPath -and (Test-Path $transcriptPath)) {
+        & "$configDir\scripts\auto-correction-capture.ps1" -TranscriptPath $transcriptPath -Verbose
+    }
+} catch {
+    Log-HookError "Behavior G (auto-correction-capture) error: $_"
+}
+
 exit 0
