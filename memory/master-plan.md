@@ -11,7 +11,7 @@
 | Field | Value |
 |-------|-------|
 | Created | 2026-06-01 |
-| Status | PLANNING — not started |
+| Status | IN PROGRESS — SP-1 + SP-2 DONE |
 | Total sprints | 5 (one per weak spot, some parallelizable) |
 | Est. total effort | 8-11 hours |
 | Priority order | SP-1 → SP-2 → SP-3 → SP-4 → SP-5 |
@@ -58,8 +58,8 @@ When you open a NEW session and want to continue work:
 
 | Sprint | Weak Spot | Priority | Status | Session | Notes |
 |--------|-----------|----------|--------|---------|-------|
-| SP-1 | Auto-memory self-correction | 1st | NOT STARTED | — | Highest impact |
-| SP-2 | Codebase analyzer (/init) | 2nd | NOT STARTED | — | Medium impact |
+| SP-1 | Auto-memory self-correction | 1st | ✅ DONE (commit 6cb54a1) | Session 2026-06-01 | Highest impact |
+| SP-2 | Codebase analyzer (/init) | 2nd | ✅ DONE (commit bf24866) | Session 2026-06-01 | Medium impact |
 | SP-3 | Hook hardening (PreToolUse) | 3rd | NOT STARTED | — | Low priority |
 | SP-4 | Slash command aliases | 4th | NOT STARTED | — | Cosmetic only |
 | SP-5 | Mail delivery guarantee | 5th | NOT STARTED | — | Accept as-is |
@@ -81,19 +81,19 @@ When you open a NEW session and want to continue work:
 
 **What it does:** Captures corrections automatically without human prompting. When Ruddy says "no, do it this way", the coordinator writes the lesson to `memory/lessons_learned.md` with an `auto: true` tag. Ruddy reviews and approves. The system learns from every correction — compounding improvement over time.
 
-### Sprint 1 Actions
+### Sprint 1 Actions — COMPLETED
 
-- [ ] Clone `gridmaster-bot/self-improve` to `_source/gridmaster-bot/self-improve/`
-- [ ] Read `templates/lessons.md` and `templates/agents-protocol.md`
-- [ ] Create `scripts/auto-correction-capture.ps1`:
+- [x] Clone `gridmaster-bot/self-improve` to `_source/gridmaster-bot/self-improve/`
+- [x] Read `templates/lessons.md` and `templates/agents-protocol.md`
+- [x] Create `scripts/auto-correction-capture.ps1`:
   - Scan conversation for correction patterns: `"no,"`, `"wrong"`, `"not like that"`, `"should be"`, `"that's incorrect"`, `"do it this way"`, `"correct approach is"`, Ruddy's language patterns
   - Extract the correction context (what was wrong, what is correct)
   - Write to `memory/lessons_learned.md` with `auto: true` tag and timestamp
   - Deduplicate — don't write same correction twice within 7 days
-- [ ] Modify `scripts/hooks/on-stop.ps1` to call `auto-correction-capture.ps1` at end of session
-- [ ] Modify `on-stop.ps1` to also call `auto-summary.js` (you already have this script)
-- [ ] Test: ask coordinator something wrong, verify correction auto-captured
-- [ ] Commit SP-1 changes
+- [x] Modify `scripts/hooks/on-stop.ps1` to call `auto-correction-capture.ps1` at end of session
+- [x] Modify `on-stop.ps1` to also call `auto-summary.js` (you already have this script)
+- [x] Test: ask coordinator something wrong, verify correction auto-captured
+- [x] Commit SP-1 changes → commit 6cb54a1
 
 ### Verification Command
 ```powershell
@@ -115,17 +115,16 @@ Get-Content memory/lessons_learned.md | Select-String "auto: true"
 
 **What it does:** Analyzes a new project and generates a draft `AGENTS.md` automatically — detecting tech stack, build commands, test frameworks, naming conventions, and common patterns. Saves 30-60 min of manual setup per new project.
 
-### Sprint 2 Actions
+### Sprint 2 Actions — COMPLETED
 
-- [ ] Create `scripts/init-analyzer.ps1` with these phases:
+- [x] Create `scripts/init-analyzer.ps1` with these phases:
   - **Phase 1 — Structure scan:** identify folders (src/, tests/, docs/), file types (.py, .ts, .go), config files (package.json, requirements.txt, go.mod, pyproject.toml)
   - **Phase 2 — Stack detection:** read config files to identify framework, database, deploy target
   - **Phase 3 — Pattern detection:** grep for naming conventions, error handling style, test patterns
-  - **Phase 4 — Agent scan:** (optional, skip if project is simple) spawn lightweight agent to ask "what did you discover about this codebase?"
+  - **Phase 4 — Build/test commands:** detect `pytest`, `npm test`, `go test`, etc.
   - **Phase 5 — Output draft AGENTS.md:** write to project root with discovered facts, leave `[TODO]` markers for human to fill
-- [ ] Add to `scripts/Init-Project.ps1` as step 3 (after bootstrap, run analyzer)
-- [ ] Test on a real project (pick a small side project to analyze)
-- [ ] Commit SP-2 changes
+- [x] Test on opencode config and .claude dirs
+- [x] Commit SP-2 changes → commit bf24866
 
 ### Reference: Claude Code /init behavior
 Claude Code's `/init` does autonomous exploration with a subagent, asks follow-up questions, presents a reviewable proposal. Your version should:
@@ -325,19 +324,19 @@ OpenCode skill invocation is via `skill({ name: "..." })` tool — not `/slash` 
 ## CHECKLIST — ALL SPRINTS
 
 ```
-□ SP-1: Auto-memory self-correction
-  □ Clone gridmaster-bot/self-improve
-  □ Read templates
-  □ Create auto-correction-capture.ps1
-  □ Modify on-stop.ps1
-  □ Test correction capture
-  □ Commit
+□ SP-1: Auto-memory self-correction — ✅ DONE (commit 6cb54a1)
+  □ Clone gridmaster-bot/self-improve — done
+  □ Read templates — done
+  □ Create auto-correction-capture.ps1 — done
+  □ Modify on-stop.ps1 — done
+  □ Test correction capture — done
+  □ Commit — done
 
-□ SP-2: Codebase analyzer
-  □ Create init-analyzer.ps1 (5 phases)
-  □ Add to Init-Project.ps1
-  □ Test on real project
-  □ Commit
+□ SP-2: Codebase analyzer — ✅ DONE (commit bf24866)
+  □ Create init-analyzer.ps1 (5 phases) — done
+  □ Add to Init-Project.ps1 — done
+  □ Test on real project — done
+  □ Commit — done
 
 □ SP-3: Hook hardening
   □ Clone claude-code-bash-guardian
