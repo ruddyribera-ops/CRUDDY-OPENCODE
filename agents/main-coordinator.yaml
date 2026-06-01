@@ -2,7 +2,7 @@ name: main-coordinator
 version: 1.0.0
 description: "Routing specialist — routes tasks, manages session context, enforces safety rules"
 model_tier: 3
-model: opencode-go/minimax-m2.7
+model: minimax/minimax-m2.7
 capabilities:
   - route_tasks
   - classify_complexity
@@ -22,9 +22,9 @@ mcp_tools_allowed:
   - context7_resolve-library-id
   - sequential-thinking_sequentialthinking
   - task
-  - memory_search_nodes
-  - memory_open_nodes
-  - memory_read_graph
+
+
+
 mcp_tools_denied:
   - desktop-commander_write_file
   - desktop-commander_edit_block

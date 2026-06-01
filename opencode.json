@@ -1,172 +1,168 @@
-﻿{
-    "$schema":  "https://opencode.ai/config.json",
-    "model":  "minimax/minimax-m2.7",
-    "small_model":  "opencode-go/deepseek-v4-flash",
-    "instructions":  [
-                         "system-prepend.md",
-                         "AGENTS.md"
-                     ],
-    "permission":  {
-                       "bash":  {
-                                    "npm install*":  "ask",
-                                    "pip install*":  "ask",
-                                    "git push*":  "ask",
-                                    "git reset*":  "ask",
-                                    "git clean*":  "ask",
-                                    "git push --force*":  "deny",
-                                    "rm -rf*":  "deny",
-                                    "sudo*":  "deny"
-                                }
-                   },
-    "provider":  {
-                     "minimax":  {
-                                     "npm":  "@ai-sdk/openai-compatible",
-                                     "name":  "MiniMax",
-                                     "options":  {
-                                                     "baseURL":  "https://api.minimax.io/v1",
-                                                     "apiKey":  "{env:MINIMAX_API_KEY}"
-                                                 },
-                                     "models":  {
-                                                    "minimax-m2.7":  {
-                                                                         "name":  "minimax-m2.7"
-                                                                     }
-                                                }
-                                 },
-                     "opencode-go":  {
-                                         "name":  "OpenCode Go",
-                                         "options":  {
-                                                         "apiKey":  "{env:OPENCODE_API_KEY}"
-                                                     },
-                                         "models":  {
-                                                        "deepseek-v4-flash":  {
-                                                                                  "name":  "deepseek-v4-flash",
-                                                                                  "options":  {
-                                                                                                  "baseURL":  "https://opencode.ai/zen/go/v1/chat/completions",
-                                                                                                  "thinking":  {
-                                                                                                                   "type":  "enabled",
-                                                                                                                   "reasoningEffort":  "high"
-                                                                                                               }
-                                                                                              }
-                                                                              },
-                                                        "deepseek-v4-pro":  {
-                                                                                "name":  "deepseek-v4-pro",
-                                                                                "options":  {
-                                                                                                "baseURL":  "https://opencode.ai/zen/go/v1/chat/completions",
-                                                                                                "thinking":  {
-                                                                                                                 "type":  "enabled",
-                                                                                                                 "reasoningEffort":  "xhigh"
-                                                                                                             }
-                                                                                            }
-                                                                            },
-                                                        "minimax-m2.7":  {
-                                                                             "name":  "minimax-m2.7",
-                                                                             "options":  {
-                                                                                             "baseURL":  "https://opencode.ai/zen/go/v1/messages"
-                                                                                         }
-                                                                         }
-                                                    }
-                                     },
-                     "groq":  {
-                                  "npm":  "@ai-sdk/groq",
-                                  "name":  "Groq",
-                                  "apiKey":  "{env:GROQ_API_KEY}",
-                                  "models":  {
-                                                 "llama-3.3-70b-versatile":  {
-                                                                                 "name":  "llama-3.3-70b-versatile"
-                                                                             },
-                                                 "llama-3.1-8b-instant":  {
-                                                                              "name":  "llama-3.1-8b-instant"
-                                                                          }
-                                             }
-                              }
-                 },
-    "mcp":  {
-                "github":  {
-                               "type":  "local",
-                               "command":  [
-                                               "npx",
-                                               "-y",
-                                               "@modelcontextprotocol/server-github"
-                                           ],
-                               "enabled":  false,
-                               "env":  {
-                                           "GITHUB_PERSONAL_ACCESS_TOKEN":  "{env:GITHUB_TOKEN}"
-                                       }
-                           },
-                "brave-search":  {
-                                     "type":  "local",
-                                     "command":  [
-                                                     "npx",
-                                                     "-y",
-                                                     "@modelcontextprotocol/server-brave-search"
-                                                 ],
-                                     "enabled":  true,
-                                     "env":  {
-                                                 "BRAVE_API_KEY":  "{env:BRAVE_API_KEY}"
-                                             }
-                                 },
-                "filesystem":  {
-                                   "type":  "local",
-                                   "command":  [
-                                                   "npx",
-                                                   "-y",
-                                                   "@modelcontextprotocol/server-filesystem",
-                                                   "."
-                                               ],
-                                   "enabled":  true
-                               },
-                "context7":  {
-                                 "type":  "remote",
-                                 "url":  "https://mcp.context7.com/mcp",
-                                 "enabled":  true
-                             },
-                "sequential-thinking":  {
-                                            "type":  "local",
-                                            "command":  [
-                                                            "npx",
-                                                            "-y",
-                                                            "@modelcontextprotocol/server-sequential-thinking"
-                                                        ],
-                                            "enabled":  true
-                                        },
-"memory":  {
-                                "type":  "local",
-                                "command":  [
-                                                "npx",
-                                                "-y",
-                                                "@modelcontextprotocol/server-memory"
-                                            ],
-                                "enabled":  false
-                            },
-                "fetch":  {
-                              "type":  "local",
-                              "command":  [
-                                              "uvx",
-                                              "mcp-server-fetch"
-                                          ],
-                              "enabled":  true
-                          },
-                "desktop-commander":  {
-                                          "type":  "local",
-                                          "command":  [
-                                                          "npx",
-                                                          "-y",
-                                                          "@wonderwhy-er/desktop-commander"
-                                                      ],
-                                          "enabled":  true
-                                      },
-                "playwright":  {
-                                   "type":  "local",
-                                   "command":  [
-                                                   "npx",
-                                                   "-y",
-                                                   "@playwright/mcp@latest"
-                                               ],
-                                   "enabled":  true,
-                                   "env":  {
-                                               "PLAYWRIGHT_BROWSERS_PATH":  "D:\\Temp\\playwright-browsers",
-                                               "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD":  "false"
-                                           }
-                               }
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "minimax/minimax-m2.7",
+    "small_model": "opencode-go/deepseek-v4-flash",
+    "instructions": [
+        "system-prepend.md",
+        "AGENTS.md"
+    ],
+    "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "edit": "allow",
+        "bash": "allow",
+        "task": "allow",
+        "skill": "allow",
+        "lsp": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "external_directory": "allow",
+        "todowrite": "allow",
+        "question": "allow",
+        "doom_loop": "allow",
+        "repo_clone": "allow",
+        "repo_overview": "allow",
+        "context7": "allow",
+        "fetch": "allow",
+        "playwright": "allow",
+        "sequential-thinking": "allow",
+        "filesystem": "allow"
+    },
+    "provider": {
+        "minimax": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "MiniMax",
+            "options": {
+                "baseURL": "https://api.minimax.io/v1",
+                "apiKey": "{env:MINIMAX_API_KEY}"
+            },
+            "models": {
+                "minimax-m2.7": {
+                    "name": "minimax-m2.7"
+                },
+                "minimax-m3": {
+                    "name": "minimax-m3"
+                }
             }
+        },
+        "opencode-go": {
+            "name": "OpenCode Go",
+            "options": {
+                "apiKey": "{env:OPENCODE_API_KEY}"
+            },
+            "models": {
+                "deepseek-v4-flash": {
+                    "name": "deepseek-v4-flash",
+                    "options": {
+                        "baseURL": "https://opencode.ai/zen/go/v1/chat/completions",
+                        "thinking": "@{type=enabled; reasoningEffort=high}",
+                        "reasoningEffort": "low"
+                    }
+                },
+                "deepseek-v4-pro": {
+                    "name": "deepseek-v4-pro",
+                    "options": {
+                        "baseURL": "https://opencode.ai/zen/go/v1/chat/completions",
+                        "thinking": "@{type=enabled; reasoningEffort=xhigh}"
+                    }
+                },
+                "minimax-m3": {
+                    "name": "minimax-m3",
+                    "options": {
+                        "baseURL": "https://opencode.ai/zen/go/v1/messages"
+                    }
+                }
+            }
+        },
+        "groq": {
+            "models": {
+                "llama-3.3-70b-versatile": {
+                    "name": "llama-3.3-70b-versatile"
+                },
+                "llama-3.1-8b-instant": {
+                    "name": "llama-3.1-8b-instant"
+                }
+            }
+        }
+    },
+    "mcp": {
+        "sequential-thinking": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ],
+            "enabled": true
+        },
+        "context7": {
+            "type": "remote",
+            "url": "https://mcp.context7.com/mcp",
+            "enabled": true
+        },
+        "fetch": {
+            "type": "local",
+            "command": [
+                "uvx",
+                "mcp-server-fetch"
+            ],
+            "enabled": true
+        },
+        "playwright": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "@playwright/mcp@latest"
+            ],
+            "enabled": true,
+            "environment": {
+                "PLAYWRIGHT_BROWSERS_PATH": "D:\\Temp\\playwright-browsers",
+                "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false"
+            }
+        }
+    },
+    "default_agent": "main-coordinator",
+    "agent": {
+        "architecture-advisor": {
+            "steps": 50
+        },
+        "bug-fixer": {
+            "steps": 60
+        },
+        "code-analyzer": {
+            "steps": 30
+        },
+        "code-builder": {
+            "steps": 80
+        },
+        "code-explainer": {
+            "steps": 20
+        },
+        "evolution-agent": {
+            "steps": 30
+        },
+        "main-coordinator": {
+            "steps": 200
+        },
+        "project-generator": {
+            "steps": 60
+        },
+        "skill-manager": {
+            "steps": 30
+        },
+        "standup-summary": {
+            "steps": 15
+        }
+    },
+    "lsp": {},
+    "share": "manual",
+    "autoupdate": "notify",
+    "plugin": [
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\session-title-guard.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\memory-bridge.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\gate-system.js"
+    ]
 }

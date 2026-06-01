@@ -2,7 +2,7 @@ name: project-generator
 version: 1.0.0
 description: "Full multi-agent project generator — runs structured discovery, architecture, planning, and prompt generation"
 model_tier: 3
-model: opencode-go/minimax-m2.7
+model: minimax/minimax-m2.7
 capabilities:
   - scaffold_project
   - generate_plan

@@ -15,15 +15,12 @@ mcp_tools_allowed:
   - read
   - glob
   - grep
-  - memory_read_graph
-  - memory_open_nodes
-  - memory_search_nodes
 mcp_tools_denied:
   - write
   - edit
 dependencies: []
 role: reporter
 guardrails:
-  - read_only_except_memory_update
+  - read_only
   - no_code_changes
   - brief_reports

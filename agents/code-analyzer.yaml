@@ -1,6 +1,6 @@
-﻿name: code-analyzer
+name: code-analyzer
 version: 1.0.0
-description: "Project scanner â€” analyzes structure, tech stack, dependencies, and code patterns"
+description: "Project scanner — analyzes structure, tech stack, dependencies, and code patterns"
 model_tier: 1
 model: opencode-go/deepseek-v4-flash
 capabilities:
@@ -22,8 +22,8 @@ mcp_tools_allowed:
   - context7_resolve-library-id
   - sequential-thinking_sequentialthinking
   - fetch_fetch
-  - memory_search_nodes
-  - memory_open_nodes
+
+
 mcp_tools_denied:
   - write
   - edit

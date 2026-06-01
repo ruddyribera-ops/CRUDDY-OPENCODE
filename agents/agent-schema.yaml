@@ -64,7 +64,7 @@ dependencies:
 mcp_tools_allowed:
   type: "list of strings"
   description: "MCP tool names this agent is permitted to use"
-  validation: "Tool names must match available MCP tools (bash, read, write, edit, glob, grep, context7_query-docs, context7_resolve-library-id, sequential-thinking_sequentialthinking, fetch_fetch, webfetch, task, memory_*, desktop-commander_*, filesystem_*)"
+  validation: "Tool names must match available MCP tools (bash, read, write, edit, glob, grep, context7_query-docs, context7_resolve-library-id, sequential-thinking_sequentialthinking, fetch_fetch, webfetch, task, desktop-commander_*, filesystem_*)"
 
 mcp_tools_denied:
   type: "list of strings"
@@ -76,7 +76,7 @@ model:
   validation:
     tier_1: "opencode-go/deepseek-v4-flash"
     tier_2: "opencode-go/deepseek-v4-pro"
-    tier_3: "opencode-go/minimax-m2.7"
+    tier_3: "minimax/minimax-m2.7"
 
 trigger_keywords:
   type: "list of strings"

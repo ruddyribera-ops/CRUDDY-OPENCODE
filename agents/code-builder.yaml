@@ -1,6 +1,6 @@
-﻿name: code-builder
+name: code-builder
 version: 1.0.0
-description: "Implementation specialist â€” writes, modifies, and creates code across full-stack projects"
+description: "Implementation specialist — writes, modifies, and creates code across full-stack projects"
 model_tier: 2
 model: opencode-go/deepseek-v4-pro
 capabilities:

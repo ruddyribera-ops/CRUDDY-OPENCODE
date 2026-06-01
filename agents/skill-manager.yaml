@@ -11,8 +11,15 @@ capabilities:
   - manage_memory
   - enrich_skills
   - deduplicate_skills
+  - create_skill
+  - update_skill
+  - import_skill
+  - mirror_skill
+  - manage_memory
+  - enrich_skills
+  - deduplicate_skills
 skills_used:
-  - api-patterns
+  - skill-learning
 mcp_tools_allowed:
   - read
   - write
@@ -20,12 +27,12 @@ mcp_tools_allowed:
   - glob
   - grep
   - bash
-  - memory_create_entities
-  - memory_add_observations
-  - memory_create_relations
-  - memory_search_nodes
-  - memory_open_nodes
-  - memory_read_graph
+
+
+
+
+
+
 mcp_tools_denied: []
 dependencies: []
 role: curator
@@ -35,3 +42,5 @@ guardrails:
   - respect_progressive_disclosure
   - never_modify_application_code
   - always_create_from_template
+
+

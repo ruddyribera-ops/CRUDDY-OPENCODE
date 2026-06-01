@@ -12,7 +12,7 @@ capabilities:
   - sync_to_graph
   - evolve_config
 skills_used:
-  - api-patterns
+  - skill-learning
 dna_families_monitored: [all]
 mcp_tools_allowed:
   - read
@@ -21,12 +21,12 @@ mcp_tools_allowed:
   - write
   - edit
   - bash
-  - memory_search_nodes
-  - memory_open_nodes
-  - memory_read_graph
-  - memory_create_entities
-  - memory_add_observations
-  - memory_create_relations
+
+
+
+
+
+
 mcp_tools_denied: []
 dependencies: []
 role: curator
@@ -37,3 +37,5 @@ guardrails:
   - user_approval_required_for_changes
   - prefer_genes_over_skills
   - one_proposal_at_a_time
+
+

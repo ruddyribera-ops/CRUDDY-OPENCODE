@@ -1,6 +1,6 @@
-﻿name: bug-fixer
+name: bug-fixer
 version: 1.0.0
-description: "Debug specialist â€” finds root causes, fixes errors, resolves broken functionality"
+description: "Debug specialist — finds root causes, fixes errors, resolves broken functionality"
 model_tier: 2
 model: opencode-go/deepseek-v4-pro
 capabilities:

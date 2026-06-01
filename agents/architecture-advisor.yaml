@@ -1,6 +1,6 @@
-﻿name: architecture-advisor
+name: architecture-advisor
 version: 1.0.0
-description: "Tech decision advisor â€” evaluates tradeoffs, recommends solutions, guides architectural choices"
+description: "Tech decision advisor — evaluates tradeoffs, recommends solutions, guides architectural choices"
 model_tier: 2
 model: opencode-go/deepseek-v4-pro
 capabilities:
@@ -25,8 +25,8 @@ mcp_tools_allowed:
   - sequential-thinking_sequentialthinking
   - fetch_fetch
   - webfetch
-  - memory_search_nodes
-  - memory_open_nodes
+
+
 mcp_tools_denied:
   - write
   - edit
