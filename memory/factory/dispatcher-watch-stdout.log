@@ -1,0 +1,18 @@
+[2026-06-11T05:46:07Z] [INFO] Watching queue (poll every 3s). Ctrl+C to stop.
+[2026-06-11T05:46:07Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-11T05:46:07Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-11T05:46:08Z] [INFO] Session ses_149ecdae6ffeXvH20STlCQVFwP created
+[2026-06-11T05:56:08Z] [ERROR] Agent 'project-manager' failed: The request was canceled due to the configured HttpClient.Timeout of 600 seconds elapsing.
+[2026-06-11T05:56:08Z] [INFO] Enqueued: 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d stage=pm
+[2026-06-11T05:56:08Z] [INFO] Re-enqueued 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d (retry 2/3)
+[2026-06-11T05:56:11Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-11T05:56:11Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-11T05:56:11Z] [INFO] Session ses_149e3a5bdffeV6E9nYN1HDOash created
+[2026-06-11T06:06:11Z] [ERROR] Agent 'project-manager' failed: The request was canceled due to the configured HttpClient.Timeout of 600 seconds elapsing.
+[2026-06-11T06:06:11Z] [INFO] Enqueued: 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d stage=pm
+[2026-06-11T06:06:11Z] [INFO] Re-enqueued 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d (retry 3/3)
+[2026-06-11T06:06:15Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-11T06:06:15Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-11T06:06:15Z] [INFO] Session ses_149da7191ffet525Jj54XtvSfY created
+[2026-06-11T06:16:15Z] [ERROR] Agent 'project-manager' failed: The request was canceled due to the configured HttpClient.Timeout of 600 seconds elapsing.
+[2026-06-11T06:16:15Z] [ERROR] Item 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d exceeded max retries (3). Removing from queue.

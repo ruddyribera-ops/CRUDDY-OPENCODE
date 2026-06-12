@@ -74,8 +74,8 @@ model:
   type: string
   description: "Explicit model override; must match model_tier assignment"
   validation:
-    tier_1: "opencode-go/deepseek-v4-flash"
-    tier_2: "opencode-go/deepseek-v4-pro"
+    tier_1: "minimax/minimax-m2.7"
+    tier_2: "minimax/minimax-m2.7"
     tier_3: "minimax/minimax-m2.7"
 
 trigger_keywords:

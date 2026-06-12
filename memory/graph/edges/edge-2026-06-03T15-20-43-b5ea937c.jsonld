@@ -1,0 +1,10 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "Edge",
+  "edgeType": "completes",
+  "from": "Session-Windows",
+  "to": "Task-Test-T2-wiring-final",
+  "created": "2026-06-03T15:20:43.600Z"
+}

@@ -1,0 +1,12 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "test",
+  "name": "test-9a2e0c3c",
+  "created": "2026-06-03T14:19:37.778Z",
+  "data": {
+    "purpose": "verification",
+    "ts": "2026-06-03"
+  }
+}

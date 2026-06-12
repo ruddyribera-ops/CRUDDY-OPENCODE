@@ -1,8 +1,10 @@
-name: standup-summary
+﻿name: standup-summary
 version: 1.0.0
-description: "Daily standup reporter — summarizes git activity, project health, and deployment status"
+
+model_tier: 2
+mode: primary
 model_tier: 1
-model: opencode-go/deepseek-v4-flash
+model: minimax/minimax-m2.7
 capabilities:
   - summarize_git
   - report_status

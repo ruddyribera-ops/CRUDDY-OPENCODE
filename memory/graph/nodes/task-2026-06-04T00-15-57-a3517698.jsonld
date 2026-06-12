@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "task",
+  "name": "Task-Add-toucan-mascot-logo-to-side",
+  "created": "2026-06-04T00:15:57.437Z",
+  "data": {
+    "task": "Add-toucan-mascot-logo-to-side",
+    "agent": "coordinator",
+    "ts": "2026-06-04T00:15:57.342Z"
+  }
+}

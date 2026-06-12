@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "session",
+  "name": "Session-untitled",
+  "created": "2026-06-05T12:36:13.502Z",
+  "data": {
+    "title": "untitled",
+    "activity_count": 19,
+    "last_idle": "2026-06-05T12:36:13.395Z"
+  }
+}

@@ -50,6 +50,16 @@ nodes:
       - name: known_issues
         type: array
 
+  gene:
+    description: "An evolved improvement — created at T7 (evolution agent)"
+    properties:
+      - name: pattern
+        required: true
+      - name: improvement
+      - name: evidence
+      - name: applied
+        type: boolean
+
 edge_types:
   touches:
     description: "Session → Project (worked on this project)"

@@ -144,3 +144,4 @@ $sessionHeader
 $content = $content -replace "`n", "`r`n"
 Set-Content -Path $SessionLogPath -Value $content -Encoding UTF8
 Write-Host "OK session_log.md updated: $TaskName"
+exit 0

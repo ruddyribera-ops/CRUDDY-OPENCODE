@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "session",
+  "name": "Session-untitled",
+  "created": "2026-06-10T19:28:10.156Z",
+  "data": {
+    "title": "untitled",
+    "activity_count": 38,
+    "last_idle": "2026-06-10T19:28:10.026Z",
+    "citation": {
+      "valid_from": "2026-06-10T19:28:10.027Z",
+      "valid_until": "2026-07-08T19:28:10.027Z",
+      "confidence": 1
+    }
+  }
+}

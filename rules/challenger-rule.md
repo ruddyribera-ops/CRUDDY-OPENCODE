@@ -55,16 +55,19 @@
 
 ### Graph Write on Override (fire-and-forget)
 
-When the user overrides a challenge, ALSO log the override as a graph node
-to build an audit trail in the context graph. This supplements the
-existing session.yaml + lessons_learned.md audit trail.
+When the user overrides a challenge, the T6 trigger (session_machine.ps1) fires FIRST
+to create the Decision node. Then the graph write adds the RuleChallenge node and
+the overrides edge. Both are non-blocking — the override is already logged in session.yaml.
 
+**Sequence:**
+1. Challenger fires → capture `$decision_id = "Decision-$(Get-Date -Format 'yyyy-MM-dd-HHmmss')"`
+2. User confirms override → T6 fires: `session_machine.ps1 -Trigger T6 -Decision "Challenger-Override: $pattern" ...`
+3. Graph write (fire-and-forget):
 ```powershell
-# Graph write is fire-and-forget -- override audit trail is already in session.yaml
 try {
-  $challengeNode = & node "$CONFIG\scripts\graph-memory.js" create-node --type rule_challenge --name "RuleChallenge-$override_pattern" 2>$null
-  if ($challengeNode) {
-    & node "$CONFIG\scripts\graph-memory.js" create-edge --from "Decision-$decision_id" --to "$challengeNode" --relationship overrides 2>$null
+  $challengeNode = & node "$CONFIG\scripts\graph-memory.js" create-node --type rule_challenge --name "RuleChallenge-$override_pattern" --data '{"pattern":"$override_pattern","user_response":"proceed","timestamp":"'$(Get-Date -Format o)'"}' 2>$null
+  if ($challengeNode -and $decision_id) {
+    & node "$CONFIG\scripts\graph-memory.js" create-edge --from $decision_id --to $challengeNode --type overrides 2>$null
   }
 } catch {
   # Non-blocking -- the override is already logged in session.yaml
@@ -78,5 +81,5 @@ try {
 - `data.user_response`: "proceed" or the user's actual words
 - `data.timestamp`: ISO datetime
 
-Edge `overrides`: Decision-{id} → RuleChallenge-{pattern}-{timestamp}
+**Edge `overrides`:** Decision-{id} → RuleChallenge-{pattern}-{timestamp}
 

@@ -1,0 +1,9 @@
+Using Python 3.12.10 environment at: AppData\Local\Programs\Python\Python312
+warning: Ignoring dangling temporary directory: `C:\Users\Windows\AppData\Local\Programs\Python\Python312\Lib\site-packages\~ip-25.3.dist-info`
+Resolved 56 packages in 106ms
+Downloading litellm (16.3MiB)
+ Downloaded litellm
+Prepared 1 package in 7m 18s
+Installed 2 packages in 3.06s
+ + fastuuid==0.14.0
+ + litellm==1.87.0

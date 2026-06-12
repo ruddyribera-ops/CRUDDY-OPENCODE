@@ -1,0 +1,9 @@
+# Cross-Project Audit Log
+# Schema: {ts, project_id (or "factory"), agent, action_class, tier, message, duration_ms}
+# Append-only. Never edit, never delete.
+
+# Initial entries (factory bootstrap on 2026-06-08)
+{"ts":"2026-06-08T15:50:00Z","project_id":"factory","agent":"account-manager","action_class":"bootstrap","tier":"ACT","message":"Account Manager agent created (agents/account-manager.md, .yaml, skills/account-manager/SKILL.md)","duration_ms":0}
+{"ts":"2026-06-08T15:55:00Z","project_id":"factory","agent":"account-manager","action_class":"wiring","tier":"ACT","message":"Wired into opencode.json permission + agent blocks (steps: 80)","duration_ms":0}
+{"ts":"2026-06-08T16:00:00Z","project_id":"factory","agent":"account-manager","action_class":"command","tier":"ACT","message":"Created /factory-kickoff slash command (commands/factory-kickoff.md)","duration_ms":0}
+{"ts":"2026-06-08T16:05:00Z","project_id":"factory","agent":"account-manager","action_class":"memory_init","tier":"ACT","message":"Created memory/factory/ structure: budget.yaml, projects.yaml, audit/cross-project.jsonl, projects/_template/","duration_ms":0}

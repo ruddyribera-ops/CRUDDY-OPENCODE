@@ -1,0 +1,62 @@
+﻿
+[2026-06-09T12:52:48Z] [INFO] Watching queue (poll every 3s). Ctrl+C to stop.
+[2026-06-09T19:32:13Z] [INFO] Starting OpenCode server on port 4096...
+[2026-06-09T19:32:13Z] [INFO] Using executable: C:\Users\Windows\AppData\Roaming\npm\opencode.cmd
+[2026-06-09T19:32:13Z] [INFO] Server PID 17500 started
+[2026-06-09T19:32:17Z] [INFO] Server is healthy
+[2026-06-09T19:32:17Z] [INFO] Watching queue (poll every 3s). Ctrl+C to stop.
+[2026-06-09T19:52:08Z] [INFO] Project cleanup-2026-06 enqueued (cleanup). Brief: C:\Users\Windows\.config\opencode\memory\factory\projects\cleanup-2026-06\brief.md
+[2026-06-09T19:53:22Z] [INFO] Watching queue (poll every 3s). Ctrl+C to stop.
+[2026-06-09T19:54:15Z] [INFO] Watching queue (poll every 3s). Ctrl+C to stop.
+[2026-06-09T19:55:03Z] [INFO] Processing queue once
+[2026-06-09T20:38:08Z] [INFO] Processing queue once
+[2026-06-09T20:39:12Z] [INFO] Processing queue once
+[2026-06-09T20:39:12Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-09T20:39:12Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-09T20:39:13Z] [INFO] Session ses_15107ef32ffe8wA1sDhhEj7Sw8 created
+[2026-06-09T20:39:13Z] [ERROR] Agent 'project-manager' failed: {"name":"UnknownError","data":{"message":"Unexpected server error. Check server logs for details.","ref":"err_18af4bc0"}}
+[2026-06-09T20:39:13Z] [INFO] Enqueued: c1b17899-b539-4638-b392-17352290572f stage=pm
+[2026-06-09T20:39:13Z] [INFO] Re-enqueued c1b17899-b539-4638-b392-17352290572f (retry 1/3)
+[2026-06-09T20:39:55Z] [INFO] Processing queue once
+[2026-06-09T20:39:55Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-09T20:39:55Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-09T20:39:55Z] [INFO] Session ses_151074bafffes7ul6qd9l9pORe created
+[2026-06-09T20:39:55Z] [ERROR] Agent 'project-manager' failed: {"name":"UnknownError","data":{"message":"Unexpected server error. Check server logs for details.","ref":"err_8d0ff9b5"}}
+[2026-06-09T20:39:55Z] [INFO] Enqueued: c1b17899-b539-4638-b392-17352290572f stage=pm
+[2026-06-09T20:39:55Z] [INFO] Re-enqueued c1b17899-b539-4638-b392-17352290572f (retry 2/3)
+[2026-06-09T20:53:50Z] [INFO] Processing queue once
+[2026-06-09T20:53:51Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-09T20:53:51Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-09T20:53:51Z] [INFO] Session ses_150fa8a8cffeKw8tJuYo53iSSu created
+[2026-06-09T20:53:51Z] [ERROR] Agent 'project-manager' failed: {"name":"UnknownError","data":{"message":"Unexpected server error. Check server logs for details.","ref":"err_664c4c4a"}}
+[2026-06-09T20:53:51Z] [INFO] Enqueued: c1b17899-b539-4638-b392-17352290572f stage=pm
+[2026-06-09T20:53:51Z] [INFO] Re-enqueued c1b17899-b539-4638-b392-17352290572f (retry 3/3)
+[2026-06-09T20:59:11Z] [INFO] Processing queue once
+[2026-06-09T20:59:11Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-09T20:59:11Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-09T20:59:11Z] [INFO] Session ses_150f5a5e2ffejY4Khug9s6zuax created
+[2026-06-09T20:59:11Z] [ERROR] Agent 'project-manager' failed: {"name":"UnknownError","data":{"message":"Unexpected server error. Check server logs for details.","ref":"err_468bfbf6"}}
+[2026-06-09T20:59:11Z] [INFO] Enqueued: 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d stage=pm
+[2026-06-09T20:59:11Z] [INFO] Re-enqueued 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d (retry 1/3)
+[2026-06-11T05:37:37Z] [INFO] Starting OpenCode server on port 4096...
+[2026-06-11T05:37:37Z] [INFO] Using executable: C:\Users\Windows\AppData\Roaming\npm\opencode.cmd
+[2026-06-11T05:37:37Z] [INFO] Server PID 15004 started
+[2026-06-11T05:37:40Z] [INFO] Server is healthy
+[2026-06-11T05:46:07Z] [INFO] Watching queue (poll every 3s). Ctrl+C to stop.
+[2026-06-11T05:46:07Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-11T05:46:07Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-11T05:46:08Z] [INFO] Session ses_149ecdae6ffeXvH20STlCQVFwP created
+[2026-06-11T05:56:08Z] [ERROR] Agent 'project-manager' failed: The request was canceled due to the configured HttpClient.Timeout of 600 seconds elapsing.
+[2026-06-11T05:56:08Z] [INFO] Enqueued: 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d stage=pm
+[2026-06-11T05:56:08Z] [INFO] Re-enqueued 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d (retry 2/3)
+[2026-06-11T05:56:11Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-11T05:56:11Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-11T05:56:11Z] [INFO] Session ses_149e3a5bdffeV6E9nYN1HDOash created
+[2026-06-11T06:06:11Z] [ERROR] Agent 'project-manager' failed: The request was canceled due to the configured HttpClient.Timeout of 600 seconds elapsing.
+[2026-06-11T06:06:11Z] [INFO] Enqueued: 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d stage=pm
+[2026-06-11T06:06:11Z] [INFO] Re-enqueued 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d (retry 3/3)
+[2026-06-11T06:06:15Z] [STAGE] Running agent 'project-manager' (may take several minutes)...
+[2026-06-11T06:06:15Z] [STAGE] Spawning agent 'project-manager'
+[2026-06-11T06:06:15Z] [INFO] Session ses_149da7191ffet525Jj54XtvSfY created
+[2026-06-11T06:16:15Z] [ERROR] Agent 'project-manager' failed: The request was canceled due to the configured HttpClient.Timeout of 600 seconds elapsing.
+[2026-06-11T06:16:15Z] [ERROR] Item 20d299b9-7fc0-4f85-b3d5-eff2c227fe4d exceeded max retries (3). Removing from queue.

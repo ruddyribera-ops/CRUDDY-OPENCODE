@@ -103,7 +103,26 @@ if ($FilesModified -and $FilesModified.Trim() -ne '') {
     }
 }
 
-# -- 6. Self-audit --
+# -- 6. CASS auto-index (after session log, every 5 tasks) --
+$taskCount = 0
+$cassCounter = "$memoryDir\cass\.counter"
+if (Test-Path $cassCounter) {
+    $raw = (Get-Content $cassCounter -Raw).Trim()
+    $taskCount = [int]($raw -split "`n")[0]
+}
+$nextCount = $taskCount + 1
+$nextCount | Set-Content $cassCounter -Encoding UTF8
+if ($nextCount % 5 -eq 0) {
+    # Call with SilentlyContinue to avoid non-terminating errors poisoning $?
+    # We only care about $LASTEXITCODE = 0 as success
+    $cassOut = & "$scriptsDir\cass-index.ps1" -Verbose 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        $failed += "cass-index"
+        Log-AutoMemError "cass-index.ps1 failed (exit=$LASTEXITCODE)"
+    }
+}
+
+# -- 7. Self-audit --
 $ts = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 $status = if ($failed.Count -eq 0) { "OK" } else { "FAILED:$($failed -join ',')" }
 "$ts auto-memory: task='$TaskName' agent='$Agent' result='$Result' tokens=$TokensEst status=$status" | Out-File -FilePath "$memoryDir\auto-memory.log" -Append -Encoding UTF8

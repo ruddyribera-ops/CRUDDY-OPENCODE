@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "task",
+  "name": "Task-Start-NEW-SIS-locally",
+  "created": "2026-06-03T22:26:36.386Z",
+  "data": {
+    "task": "Start-NEW-SIS-locally",
+    "agent": "coordinator",
+    "ts": "2026-06-03T22:26:36.291Z"
+  }
+}

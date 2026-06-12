@@ -1,0 +1,1 @@
+{"ts":"2026-06-05T00:00:00.000Z","event":"tracking_initialized","format":"{gene_id, ts, activations, successes, cycles_since_seen}","formula":"weight = (successes/activations) * (1 - decay_rate * cycles_since_seen) * min(1, log10(activations)/2)"}

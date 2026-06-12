@@ -22,6 +22,8 @@ mcp_tools_allowed:
   - context7_resolve-library-id
   - sequential-thinking_sequentialthinking
   - task
+  - desktop-commander_read_file
+  - desktop-commander_list_directory
 
 
 

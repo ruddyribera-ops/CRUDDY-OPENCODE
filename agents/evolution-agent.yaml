@@ -1,8 +1,10 @@
-name: evolution-agent
+﻿name: evolution-agent
 version: 2.0.0
-description: "DNA auto-writer — scans session_log, detects patterns, auto-writes Genes to DNA.yaml + Graph entities"
+
 model_tier: 2
-model: opencode-go/deepseek-v4-pro
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
 capabilities:
   - analyze_performance
   - identify_patterns

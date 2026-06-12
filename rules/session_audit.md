@@ -10,7 +10,7 @@ Every answer and project output SHOULD include timestamp/date stamps to ensure s
 - Format: YYYY-MM-DD HH:mm UTC (or local timezone)
 - Example: 2026-05-10 14:30 UTC
 - **Note:** This is handled automatically by session-title-guard.js plugin for session names.
-  The coordinator adds timestamps to memory files (session.yaml, session_log.md) via uto-memory.ps1.
+  The coordinator adds timestamps to memory files (session.yaml, session_log.md) via auto-memory.ps1.
   Manual timestamp in responses is optional when infrastructure is active.
 
 ### Projects
@@ -25,6 +25,6 @@ Every answer and project output SHOULD include timestamp/date stamps to ensure s
 
 ## Compliance Note
 Timestamps in session state are maintained automatically:
-- memory/session.yaml — updated on every task via uto-memory.ps1
-- memory/session_log.md — appended on every task via ppend-session-log.ps1
-- Session title — managed by session-title-guard.js plugin
+- memory/session.yaml --> updated on every task via auto-memory.ps1
+- memory/session_log.md --> appended on every task via append-session-log.ps1
+- Session title --> managed by session-title-guard.js plugin

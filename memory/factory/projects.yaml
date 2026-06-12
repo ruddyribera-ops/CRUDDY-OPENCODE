@@ -1,0 +1,19 @@
+# AI Software Factory — Projects Index
+# Maintained by: Account Manager + Project Manager
+
+projects: []
+# (Will be populated when /factory-kickoff is invoked)
+
+# Schema for each project entry:
+#   - id: string (kebab-case, e.g. "plant-watering-2026-06")
+#   - name: string (human-readable)
+#   - created: ISO-8601 timestamp
+#   - status: discovery | in-progress | blocked | demo-ready | delivered | support | archived
+#   - client: string (client display name)
+#   - brief_path: path to brief.md
+#   - audit_path: path to audit.jsonl
+#   - autonomy_tier_current: ACT | ASK | ESCALATE
+#   - budget_spent_usd: number (cumulative)
+#   - hill_position: climbing | top | downhill
+#   - next_demo: ISO-8601 date
+#   - next_milestone: string

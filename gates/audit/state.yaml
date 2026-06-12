@@ -1,0 +1,59 @@
+task_id: "audit"
+description: "config-audit"
+project: "Windows"
+created: "2026-06-01T23:35:54.1833263-04:00"
+current_step: "implement"
+status: "in_progress"
+
+steps:
+  implement:
+    status: pending
+    proof_sha: null
+    proof_type: null
+    agent: null
+    completed: null
+    gate_passed: false
+    blocked_reason: null
+    attempts: 0
+    required_proof: "varies"
+
+  verify:
+    status: pending
+    proof_sha: null
+    proof_type: null
+    agent: null
+    completed: null
+    gate_passed: false
+    blocked_reason: null
+    attempts: 0
+    required_proof: "varies"
+
+  review:
+    status: pending
+    proof_sha: null
+    proof_type: null
+    agent: null
+    completed: null
+    gate_passed: false
+    blocked_reason: null
+    attempts: 0
+    required_proof: "manual"
+
+  close:
+    status: pending
+    proof_sha: null
+    proof_type: null
+    agent: null
+    completed: null
+    gate_passed: false
+    blocked_reason: null
+    attempts: 0
+    required_proof: "summary-sha"
+
+history: []
+
+metadata:
+  init_script: "task-init.ps1"
+  config_root: "C:\Users\Windows\.config\opencode"
+  closed_by: null
+  completion_note: null

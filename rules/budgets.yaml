@@ -1,4 +1,4 @@
-﻿# Per-agent token budgets
+# Per-agent token budgets
 # IMPORTANT: Enforcement is via scripts/track-tokens.ps1 -Action check
 # Coordinator MUST call track-tokens.ps1 -Action check BEFORE routing to any agent
 # with estimated tokens. Exit codes: 0=GO, 1=REJECT, 2=WARN
@@ -14,33 +14,36 @@
 #   soft = warn but allow (exit 2)
 #   reset: daily at midnight
 
-budgets:
-  per_session:
-    code-builder: 50000
-    bug-fixer: 30000
-    code-analyzer: 20000
-    architecture-advisor: 25000
-    project-generator: 40000
-    skill-manager: 15000
-    code-explainer: 10000
-    standup-summary: 5000
-    main-coordinator: 10000
-    default: 15000
+# Per-session limits per agent (tokens)
+per_session:
+  code-builder: 50000
+  bug-fixer: 30000
+  code-analyzer: 20000
+  architecture-advisor: 25000
+  project-generator: 40000
+  skill-manager: 15000
+  code-explainer: 10000
+  standup-summary: 5000
+  main-coordinator: 10000
+  default: 15000
 
-  per_task:
-    default: 8000
-    code-builder: 12000
-    project-generator: 15000
+# Per-task limits
+per_task:
+  default: 8000
+  code-builder: 12000
+  project-generator: 15000
 
-  enforcement:
-    per_session: hard
-    per_task: soft
-    reset: daily
+# Enforcement modes
+enforcement:
+  per_session: hard
+  per_task: soft
 
+# Token estimation
 estimation:
   token_ratio: 4.0
   overhead_per_call: 500
 
+# Tracking method
 tracking:
   method: token_budget_yaml
   minimal_overhead: true

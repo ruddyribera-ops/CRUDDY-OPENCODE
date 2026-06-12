@@ -10,8 +10,9 @@ if (!(Test-Path $skillsDir)) {
     exit 1
 }
 
-# Recursively find all SKILL.md files, excluding backup/phase dirs
+# Recursively find all SKILL.md files, excluding .archive and backup/phase dirs
 $skillFiles = Get-ChildItem -Path $skillsDir -Recurse -Filter "SKILL.md" | Where-Object {
+    $_.DirectoryName -notmatch '[\\\/]\.archive[\\\/]' -and
     $_.DirectoryName -notmatch '_phase\d+_backup_'
 }
 

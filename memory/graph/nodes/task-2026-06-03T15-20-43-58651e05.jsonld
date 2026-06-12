@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "task",
+  "name": "Task-Test-T2-wiring-final",
+  "created": "2026-06-03T15:20:43.503Z",
+  "data": {
+    "task": "Test-T2-wiring-final",
+    "agent": "main-coordinator",
+    "ts": "2026-06-03T15:20:43.423Z"
+  }
+}

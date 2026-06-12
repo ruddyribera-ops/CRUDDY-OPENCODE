@@ -1,0 +1,47 @@
+# AI Software Factory — Budget State
+# Tracked by: Account Manager (via T2 protocol + manual)
+# Reset: daily at 00:00 UTC, monthly at 00:00 UTC on the 1st
+
+# Daily budget (resets at 00:00 UTC)
+daily:
+  date: 2026-06-08
+  api_spend_usd: 0
+  staging_deploys: 0
+  production_deploys: 0
+  outbound_messages: 0
+  vendor_spend_usd: 0
+
+# Caps (autonomy tiers trigger at these)
+caps:
+  daily_api_spend_usd: 50
+  per_action_max_usd: 5
+  daily_staging_deploys: 5
+  daily_production_deploys: 1
+  daily_outbound_messages: 100
+  daily_vendor_spend_usd: 500
+
+# State machine transitions
+# When a sub-budget hits 80% of cap → shift from ACT to ASK for that category
+# When it hits 100% → shift to ESCALATE
+# When it hits 120% → work stops, audit required
+transitions:
+  act_to_ask_at: 0.80  # 80% of cap
+  ask_to_escalate_at: 1.00  # 100% of cap
+  work_stop_at: 1.20  # 120% of cap (audit required)
+
+# Autonomy tier definitions
+tiers:
+  ACT: "Proceed silently, log to audit. ~80% of decisions."
+  ASK: "Single yes/no question, cannot be batched. ~15%."
+  ESCALATE: "Hard block, work stops, client must resolve. ~5%."
+
+# Daily 9am digest format (sent to client)
+digest_format: |
+  > Yesterday: {1 line}
+  > Today: {1 line}
+  > Status: {Hill chart position}
+  > {No blockers | Blocked: {what's needed}}
+  > Friday: {what you'll see}
+
+# Last digest sent: never
+last_digest_date: null

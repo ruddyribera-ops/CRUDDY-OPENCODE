@@ -140,8 +140,26 @@ if (cmd === 'init') {
   const type = process.argv[3] === '--type' ? process.argv[4] : process.argv[3];
   const nameIdx = process.argv.indexOf('--name');
   const dataIdx = process.argv.indexOf('--data');
-  if (!type) { console.error('Usage: create-node <type> --name <name> [--data \'{"key":"val"}\']'); process.exit(1); }
+  const stdinIdx = process.argv.indexOf('--stdin');
+  if (!type) { console.error('Usage: create-node <type> --name <name> [--data \'{"key":"val"}\'] [--stdin]'); process.exit(1); }
   const name = nameIdx !== -1 ? process.argv[nameIdx + 1] : null;
+  if (stdinIdx !== -1) {
+    // Read JSON from stdin (avoids Windows CLI quoting issues with nested quotes)
+    let stdinData = '';
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', chunk => stdinData += chunk);
+    process.stdin.on('end', () => {
+      try {
+        const data = JSON.parse(stdinData);
+        createNode(type, name, data);
+        process.exit(0);
+      } catch (e) {
+        console.error('Invalid JSON from stdin: ' + e.message);
+        process.exit(1);
+      }
+    });
+    return; // Don't exit - wait for stdin
+  }
   const data = dataIdx !== -1 ? JSON.parse(process.argv[dataIdx + 1]) : null;
   createNode(type, name, data);
   process.exit(0);

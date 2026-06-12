@@ -33,6 +33,29 @@ $codeExts = @('.py', '.ts', '.tsx', '.js', '.jsx', '.go', '.php')
 $ext = [System.IO.Path]::GetExtension($FilePath).ToLower()
 if ($codeExts -notcontains $ext) { exit 0 }
 
+# ── Special case: OpenCode config file edit → run plugin test suite ──
+# Any edit in ~/.config/opencode/plugins/ means a plugin changed.
+# Run the regression test net to catch silent breakage immediately.
+$configDir = Join-Path $env:USERPROFILE ".config\opencode"
+$pluginsDir = Join-Path $configDir "plugins"
+if ($FilePath -like (Join-Path $pluginsDir "*")) {
+    $testScript = Join-Path $configDir "scripts\test-plugins.mjs"
+    if (Test-Path $testScript) {
+        Write-Host ""
+        Write-Host "[HOOK: post-edit] OpenCode plugin file changed: $([System.IO.Path]::GetFileName($FilePath))"
+        Write-Host "  → running plugin regression test..."
+        $proc = Start-Process -FilePath "node" -ArgumentList "--test", "`"$testScript`"" -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$env:TEMP\plugin-test-out.log" -RedirectStandardError "$env:TEMP\plugin-test-err.log"
+        if ($proc.ExitCode -ne 0) {
+            Write-Host "[PLUGIN TEST FAILURE] exit=$($proc.ExitCode)"
+            Get-Content "$env:TEMP\plugin-test-out.log" | Select-Object -Last 30 | ForEach-Object { Write-Host "  $_" }
+            exit 1
+        } else {
+            Write-Host "[PLUGIN TESTS PASS] exit=0"
+        }
+        exit 0
+    }
+}
+
 # Walk up directory tree to find project root
 $dir = [System.IO.Path]::GetDirectoryName($FilePath)
 $rootMarkers = @('package.json', 'pyproject.toml', 'pytest.ini', 'go.mod', 'composer.json')

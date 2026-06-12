@@ -1,0 +1,39 @@
+﻿name: support
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
+capabilities:
+  - triage
+  - response_drafting
+  - escalation
+  - knowledge_base_lookup
+  - bug_report_routing
+  - feature_request_routing
+skills_used:
+  - auth-patterns
+  - api-patterns
+  - deployment-patterns
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - list
+  - skill
+  - webfetch
+  - write
+mcp_tools_denied:
+  - edit
+  - bash
+  - lsp
+dependencies: []
+role: executor
+guardrails:
+  - no_lost_conversation_history
+  - no_template_apology
+  - no_answer_vs_kb_discrepancy
+  - no_escalate_without_best_guess
+  - no_bug_report_as_question
+  - log_every_interaction

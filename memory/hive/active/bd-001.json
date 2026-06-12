@@ -1,0 +1,1 @@
+﻿{"type":"feature","created_at":"2026-06-02T04:15:22.2012213Z","title":"Implement OAuth authentication","id":"bd-001","files_reserved":["src/auth/*","src/lib/jwt.ts"],"completed_at":"2026-06-02T04:16:33.2214469Z","agent":"worker-a","reason":"Done: OAuth implemented with JWT refresh tokens","outcome":"success","started_at":"2026-06-02T04:16:22.2093489Z","status":"completed"}

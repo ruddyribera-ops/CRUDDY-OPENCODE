@@ -14,6 +14,14 @@ Commands:
   cookies [--domain]                    Get cookies
   close                                 Close browser
   reset                                 Reset browser (new context)
+  auth save <profile>                   Save current session cookies as encrypted profile (auto-browser)
+  auth load <profile>                   Load saved profile (logs in)
+  auth list                              List available profiles
+  auth delete <profile>                 Delete a profile
+
+Auth profiles are encrypted with Fernet server-side by auto-browser
+(http://127.0.0.1:8000). Set AUTO_BROWSER_API_BEARER_TOKEN env var
+or fall back to a hardcoded dev token.
 
 All commands return JSON: {"ok": true, "data": ...} or {"ok": false, "error": "..."}
 """
@@ -213,6 +221,111 @@ def cmd_extract(prompt):
         return {"ok": False, "error": str(e)}
 
 
+# ── Auth profile bridge to auto-browser ────────────────────────────────────
+
+import urllib.request
+import urllib.error
+import urllib.parse
+import json as _json
+import tempfile
+
+AUTO_BROWSER_URL = os.environ.get("AUTO_BROWSER_URL", "http://127.0.0.1:8000")
+AUTO_BROWSER_BEARER = os.environ.get(
+    "AUTO_BROWSER_API_BEARER_TOKEN",
+    "v+DMT50yu4YR8R/hBkzFX17C2koieuiazSAJFjwvdS4="  # dev fallback
+)
+AUTO_BROWSER_OPERATOR = os.environ.get("AUTO_BROWSER_OPERATOR_ID", "ruddy")
+
+
+def _auto_browser_request(path, method="GET", data=None):
+    """Make authenticated request to auto-browser REST API."""
+    url = f"{AUTO_BROWSER_URL}{path}"
+    headers = {
+        "Authorization": f"Bearer {AUTO_BROWSER_BEARER}",
+        "X-Operator-Id": AUTO_BROWSER_OPERATOR,
+        "X-Operator-Name": "Ruddy Ribera",
+        "Content-Type": "application/json",
+    }
+    body = _json.dumps(data).encode() if data is not None else None
+    req = urllib.request.Request(url, data=body, headers=headers, method=method)
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return {"ok": True, "status": resp.status, "data": resp.read().decode()}
+    except urllib.error.HTTPError as e:
+        body_text = e.read().decode() if e.fp else ""
+        return {"ok": False, "status": e.code, "error": body_text}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+def cmd_auth_save(profile_name):
+    """Save current session cookies + storage state to auto-browser as encrypted profile.
+
+    Auto-browser encrypts with Fernet server-side. We just POST the storage state.
+    """
+    _ensure_page()
+    try:
+        # Export current context's storage state to a tempfile
+        state = _context.storage_state()
+        # POST to auto-browser
+        result = _auto_browser_request(
+            f"/auth-profiles/{urllib.parse.quote(profile_name)}/import",
+            method="POST",
+            data={"storage_state": state, "name": profile_name}
+        )
+        if result.get("ok"):
+            return {"ok": True, "data": {"profile": profile_name, "saved": True}}
+        return result
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+def cmd_auth_load(profile_name):
+    """Load a saved auth profile from auto-browser.
+
+    Returns the storage state so the caller can apply it to a new context.
+    Use via: python browser.py auth load <name> | jq -r .data.storage_state > /tmp/state.json
+    """
+    try:
+        result = _auto_browser_request(f"/auth-profiles/{urllib.parse.quote(profile_name)}/export")
+        if result.get("ok"):
+            return {
+                "ok": True,
+                "data": {
+                    "profile": profile_name,
+                    "storage_state_raw": result.get("data", ""),
+                }
+            }
+        return result
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+def cmd_auth_list():
+    """List all auth profiles in auto-browser."""
+    try:
+        result = _auto_browser_request("/auth-profiles")
+        if result.get("ok"):
+            return {"ok": True, "data": result.get("data", "")}
+        return result
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+def cmd_auth_delete(profile_name):
+    """Delete an auth profile from auto-browser."""
+    try:
+        result = _auto_browser_request(
+            f"/auth-profiles/{urllib.parse.quote(profile_name)}",
+            method="DELETE"
+        )
+        if result.get("ok"):
+            return {"ok": True, "data": {"profile": profile_name, "deleted": True}}
+        return result
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
 # ── CLI dispatch ────────────────────────────────────────────────────────────
 
 def main():
@@ -263,6 +376,17 @@ def main():
     # reset
     sub.add_parser("reset")
 
+    # auth subcommand group
+    p_auth = sub.add_parser("auth")
+    p_auth_sub = p_auth.add_subparsers(dest="auth_cmd", required=True)
+    p_auth_save = p_auth_sub.add_parser("save")
+    p_auth_save.add_argument("profile")
+    p_auth_load = p_auth_sub.add_parser("load")
+    p_auth_load.add_argument("profile")
+    p_auth_sub.add_parser("list")
+    p_auth_del = p_auth_sub.add_parser("delete")
+    p_auth_del.add_argument("profile")
+
     args = parser.parse_args()
 
     # Handle commands that don't need page init
@@ -272,6 +396,21 @@ def main():
     if args.cmd == "reset":
         print(json.dumps(_reset()))
         return
+
+    # Auth commands — don't need browser init
+    if args.cmd == "auth":
+        if args.auth_cmd == "save":
+            print(json.dumps(cmd_auth_save(args.profile)))
+            return
+        if args.auth_cmd == "load":
+            print(json.dumps(cmd_auth_load(args.profile)))
+            return
+        if args.auth_cmd == "list":
+            print(json.dumps(cmd_auth_list()))
+            return
+        if args.auth_cmd == "delete":
+            print(json.dumps(cmd_auth_delete(args.profile)))
+            return
 
     # All others need the browser
     cmd_map = {

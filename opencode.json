@@ -1,34 +1,44 @@
 {
     "$schema": "https://opencode.ai/config.json",
     "model": "minimax/minimax-m2.7",
-    "small_model": "opencode-go/deepseek-v4-flash",
+    "small_model": "minimax/minimax-m2.5",
     "instructions": [
-        "system-prepend.md",
         "AGENTS.md"
     ],
+    "experimental": {
+        "outputTokenMax": 128000
+    },
     "permission": {
         "read": "allow",
         "glob": "allow",
         "grep": "allow",
         "list": "allow",
-        "edit": "allow",
-        "bash": "allow",
+        "edit": "ask",
+        "write": "ask",
+        "bash": "ask",
         "task": "allow",
         "skill": "allow",
         "lsp": "allow",
-        "webfetch": "allow",
+        "webfetch": "ask",
         "websearch": "allow",
         "external_directory": "allow",
         "todowrite": "allow",
         "question": "allow",
-        "doom_loop": "allow",
-        "repo_clone": "allow",
+        "doom_loop": "ask",
+        "repo_clone": "ask",
         "repo_overview": "allow",
         "context7": "allow",
         "fetch": "allow",
         "playwright": "allow",
         "sequential-thinking": "allow",
-        "filesystem": "allow"
+        "filesystem": "allow",
+        "auto-browser": "allow",
+        "account-manager": "allow",
+        "project-manager": "allow",
+        "solutions-architect": "allow",
+        "tech-lead": "allow",
+        "delivery-engineer": "allow",
+        "qa-engineer": "allow"
     },
     "provider": {
         "minimax": {
@@ -36,14 +46,16 @@
             "name": "MiniMax",
             "options": {
                 "baseURL": "https://api.minimax.io/v1",
-                "apiKey": "{env:MINIMAX_API_KEY}"
+                "apiKey": "{env:MINIMAX_API_KEY}",
+                "timeout": 300000
             },
             "models": {
                 "minimax-m2.7": {
                     "name": "minimax-m2.7"
                 },
                 "minimax-m3": {
-                    "name": "minimax-m3"
+                    "name": "minimax-m3",
+                    "description": "High-reasoning burst mode only \u2014 token intensive, use sparingly for complex tasks \u22645min"
                 }
             }
         },
@@ -115,54 +127,123 @@
             "command": [
                 "npx",
                 "-y",
-                "@playwright/mcp@latest"
+                "@playwright/mcp@latest",
+                "--extension"
             ],
             "enabled": true,
             "environment": {
                 "PLAYWRIGHT_BROWSERS_PATH": "D:\\Temp\\playwright-browsers",
-                "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false"
+                "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false",
+                "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "{env:PLAYWRIGHT_MCP_TOKEN}"
+            }
+        },
+        "MiniMax": {
+            "type": "local",
+            "command": [
+                "uvx",
+                "minimax-coding-plan-mcp",
+                "-y"
+            ],
+            "enabled": true
+        },
+        "chrome-devtools": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "chrome-devtools-mcp",
+                "--browserUrl",
+                "http://127.0.0.1:9222"
+            ],
+            "enabled": false
+        },
+        "desktop-commander": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "D:\\Temp\\opencode"
+            ],
+            "enabled": true
+        },
+        "auto-browser": {
+            "type": "remote",
+            "url": "http://127.0.0.1:8000/mcp",
+            "enabled": false,
+            "headers": {
+                "Authorization": "Bearer {env:AUTO_BROWSER_TOKEN}",
+                "X-Operator-Id": "{env:OPERATOR_ID}",
+                "X-Operator-Name": "{env:OPERATOR_NAME}"
             }
         }
     },
     "default_agent": "main-coordinator",
     "agent": {
+        "account-manager": {
+            "steps": 80,
+            "model": "minimax/minimax-m2.7"
+        },
+        "project-manager": {
+            "steps": 100,
+            "model": "minimax/minimax-m2.7"
+        },
+        "solutions-architect": {
+            "steps": 80
+        },
+        "tech-lead": {
+            "steps": 100
+        },
+        "delivery-engineer": {
+            "steps": 60
+        },
+        "qa-engineer": {
+            "steps": 60
+        },
         "architecture-advisor": {
             "steps": 50
         },
         "bug-fixer": {
-            "steps": 60
+            "steps": 20
         },
         "code-analyzer": {
-            "steps": 30
+            "steps": 25
         },
         "code-builder": {
-            "steps": 80
+            "steps": 30
         },
         "code-explainer": {
             "steps": 20
         },
         "evolution-agent": {
-            "steps": 30
+            "steps": 25
         },
         "main-coordinator": {
-            "steps": 200
+            "steps": 250
         },
         "project-generator": {
-            "steps": 60
+            "steps": 40
         },
         "skill-manager": {
-            "steps": 30
+            "steps": 20
         },
         "standup-summary": {
-            "steps": 15
+            "steps": 20
         }
     },
-    "lsp": {},
+    "shell": "pwsh",
+    "lsp": true,
     "share": "manual",
     "autoupdate": "notify",
     "plugin": [
-        "C:\\Users\\Windows\\.config\\opencode\\plugins\\session-title-guard.js",
         "C:\\Users\\Windows\\.config\\opencode\\plugins\\memory-bridge.js",
-        "C:\\Users\\Windows\\.config\\opencode\\plugins\\gate-system.js"
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\gate-system.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\post-turn-biome.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\compaction-survival.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\session-title-guard.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\pre-tool-guard.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\post-tool-guard.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\sub-agent-guard.js",
+        "C:\\Users\\Windows\\.config\\opencode\\plugins\\checkpoint-guard.js"
     ]
 }

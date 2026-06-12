@@ -88,6 +88,10 @@ ms-playwright/
 *.env
 .env.*
 **/*.env
+opencode.local.json
+
+# EC private keys — NEVER commit
+.well-known/ec-*.pem
 
 # Node modules
 node_modules/
@@ -116,3 +120,15 @@ memory/handover/
 
 # Review artifacts
 memory/reviews/
+
+# ── Backup setup additions (Priority 2) ─────────────────────────
+# Large regenerable memory logs
+memory/session_events.jsonl
+memory/gate-system.log
+memory/biome-check.log
+memory/compaction-survival.log
+memory/security-scan.log
+memory/sessions/
+
+# Temp / scratch files
+*.tmp

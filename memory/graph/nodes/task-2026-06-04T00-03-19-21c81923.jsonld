@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "task",
+  "name": "Task-Dashboard-polish-drill-down-co",
+  "created": "2026-06-04T00:03:19.471Z",
+  "data": {
+    "task": "Dashboard-polish-drill-down-co",
+    "agent": "coordinator",
+    "ts": "2026-06-04T00:03:19.370Z"
+  }
+}

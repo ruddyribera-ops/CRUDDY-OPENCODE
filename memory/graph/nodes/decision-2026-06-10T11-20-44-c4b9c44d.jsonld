@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "decision",
+  "name": "Routing-graph_consultation-1781090444495",
+  "created": "2026-06-10T11:20:44.594Z",
+  "data": {
+    "task": "graph consultation",
+    "agent": "code-builder",
+    "score": 5,
+    "timestamp": "2026-06-10T11:20:44.494Z"
+  }
+}

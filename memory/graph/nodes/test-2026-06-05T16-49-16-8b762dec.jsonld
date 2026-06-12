@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "test",
+  "name": "empty-stdin-1780678156309",
+  "created": "2026-06-05T16:49:16.444Z",
+  "data": {}
+}

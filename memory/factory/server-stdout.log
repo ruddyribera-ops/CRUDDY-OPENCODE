@@ -1,0 +1,14 @@
+Warning: OPENCODE_SERVER_PASSWORD is not set; server is unsecured.
+opencode server listening on http://127.0.0.1:4096
+=== Test 1: Below threshold ===
+[sim] Threshold: 3
+[sim] After 2 tasks, count=2
+[sim] Would NOT trigger
+[sim] After 3 tasks, count=3
+[sim] Would trigger retro-analyze
+Result: triggered=true
+
+=== Test 2: With actual retro-analyze trigger ===
+[test] Reached count=10
+[test] Running retro-analyze.ps1...
+[test] retro-analyze: wroteGenes=false skipped=false (exit 1)

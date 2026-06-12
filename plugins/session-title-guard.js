@@ -1,120 +1,138 @@
-import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises"
+// session-title-guard.js
+// T0 Session Auto-Naming Plugin
+//
+// Hooks message.updated events to detect the first meaningful exchange.
+// When user sends first task → capture content
+// When assistant responds → derive session name via session_machine.ps1 T0
+//
+// Runs once per session. Uses session.yaml marker to prevent re-runs.
+
+import { existsSync, readFileSync, writeFileSync, appendFileSync, mkdirSync } from "node:fs"
 import path from "node:path"
 
-const CONFIG_ROOT = path.resolve(process.env.OPENCODE_CONFIG_HOME || process.env.OPENCODE_CONFIG || path.join(process.env.USERPROFILE || "", ".config", "opencode"))
-const MEMORY_DIR = path.join(CONFIG_ROOT, "memory")
+const CONFIG_ROOT = process.env.OPENCODE_CONFIG_HOME
+  || process.env.OPENCODE_CONFIG
+  || path.join(process.env.USERPROFILE || process.env.HOME || "", ".config", "opencode")
+
+const MEMORY_DIR  = path.join(CONFIG_ROOT, "memory")
 const SESSION_YAML = path.join(MEMORY_DIR, "session.yaml")
-const BAD_TITLE = /^(new session|untitled|session.*|opencode|fix auto-naming pipeline)$/i
+const SM_SCRIPT   = path.join(CONFIG_ROOT, "scripts", "session_machine.ps1")
+const MARKER_FILE = path.join(CONFIG_ROOT, "gates", ".session-title-guard.done")
 
-function cleanTitle(text) {
-  const raw = String(text || "")
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/[^\p{L}\p{N}\s:_-]/gu, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-  if (!raw) return ""
-  const words = raw.split(" ").slice(0, 8).join(" ")
-  return words.length > 72 ? words.slice(0, 69).trim() + "..." : words
+const TITLE_MAX = 48
+
+function safeReadFile(p) {
+  try { return readFileSync(p, "utf8") } catch { return null }
 }
 
-async function appendJsonl(name, payload) {
-  await mkdir(MEMORY_DIR, { recursive: true })
-  await appendFile(path.join(MEMORY_DIR, name), JSON.stringify({ ts: new Date().toISOString(), ...payload }) + "\n")
-}
-
-async function mirrorSessionTitle(title) {
-  await mkdir(MEMORY_DIR, { recursive: true })
-  let current = ""
+function safeWriteFile(p, content) {
   try {
-    current = await readFile(SESSION_YAML, "utf8")
-  } catch {}
-  if (/^session_name:/m.test(current)) {
-    current = current.replace(/^session_name:.*$/m, `session_name: "${title.replace(/"/g, "'")}"`)
-  } else {
-    current = `session_name: "${title.replace(/"/g, "'")}"\n` + current
+    mkdirSync(path.dirname(p), { recursive: true })
+    writeFileSync(p, content, "utf8")
+    return true
+  } catch { return false }
+}
+
+// Escape for YAML string value
+function yamlEscape(str) {
+  return str.replace(/"/g, '\\"').slice(0, TITLE_MAX)
+}
+
+// Derive a clean session name from first user message
+function deriveTitle(firstMessage) {
+  if (!firstMessage) return null
+
+  // Strip common prefixes
+  let text = firstMessage
+    .replace(/^(Load and execute:|Run:|Execute:|Start:|Begin:)\s*/i, "")
+    .replace(/^[\s\-\*]+/, "")
+    .trim()
+
+  // Remove file paths, URLs, code blocks
+  text = text.replace(/`[^`]*`/g, "").replace(/\$[^ ]*/g, "").replace(/https?:\/\/\S+/g, "").trim()
+
+  if (!text || text.length < 4) return null
+  if (text.length > TITLE_MAX) text = text.slice(0, TITLE_MAX - 3) + "..."
+
+  return text
+}
+
+// Call session_machine.ps1 T0 with the derived name
+// H5 fix: use execFile with args array — no string concatenation = no command injection
+function invokeT0(sessionName) {
+  try {
+    const { execFileSync: exec } = require("child_process")
+    const ps1Path = SM_SCRIPT
+    const args = [
+      "-NoProfile",
+      "-ExecutionPolicy", "Bypass",
+      "-File", ps1Path,
+      "-Trigger", "T0",
+      "-TaskName", sessionName
+    ]
+    exec("powershell.exe", args, { encoding: "utf8", timeout: 10000, windowsHide: true })
+    return true
+  } catch { return false }
+}
+
+// Check if session already has a descriptive name (not default "Session YYYY-MM-DD")
+function isSessionAlreadyNamed() {
+  try {
+    const content = safeReadFile(SESSION_YAML)
+    if (!content) return false
+    // If session_name exists and is NOT the default pattern, it's named
+    return /session_name:\s*"Session \d{4}-\d{2}-\d{2}/.test(content) === false
+      && /session_name:\s*"/.test(content)
+  } catch { return false }
+}
+
+export const SessionTitleGuard = async () => {
+  let firstUserMessage = null
+  let guardActive = false
+
+  // Read session.yaml to see if this session already has a name
+  const alreadyNamed = isSessionAlreadyNamed()
+
+  if (!alreadyNamed && !existsSync(MARKER_FILE)) {
+    guardActive = true
   }
-  await writeFile(SESSION_YAML, current)
-}
 
-async function listMessages(client, sessionID) {
-  const candidates = [
-    () => client.session.messages({ path: { id: sessionID }, query: { limit: 20 } }),
-    () => client.session.message.list({ path: { id: sessionID }, query: { limit: 20 } }),
-    () => client.session.message({ path: { id: sessionID }, query: { limit: 20 } }),
-  ]
-  for (const call of candidates) {
-    try {
-      const result = await call()
-      if (Array.isArray(result)) return result
-      if (Array.isArray(result?.data)) return result.data
-    } catch {}
-  }
-  return []
-}
-
-function firstUserText(messages) {
-  for (const msg of messages) {
-    const role = msg?.info?.role || msg?.role
-    if (role && role !== "user") continue
-    const parts = msg?.parts || msg?.content || []
-    if (typeof parts === "string") return parts
-    for (const part of parts) {
-      const text = part?.text || part?.content || part?.body
-      if (text) return text
-    }
-  }
-  return ""
-}
-
-async function patchTitle(client, sessionID, title) {
-  const calls = [
-    () => client.session.update({ path: { id: sessionID }, body: { title } }),
-    () => client.session.patch({ path: { id: sessionID }, body: { title } }),
-    () => client.session.update({ id: sessionID, title }),
-  ]
-  for (const call of calls) {
-    try {
-      await call()
-      return true
-    } catch {}
-  }
-  return false
-}
-
-
-async function fireT1() {
-    // Trigger hook-startup.ps1 T1 to reset session.yaml
-    const { execSync } = await import("node:child_process")
-    const hookScript = path.join(CONFIG_ROOT, "scripts", "hooks", "hook-startup.ps1")
-    try {
-        execSync(`powershell -File "${hookScript}" 2>&1`, { timeout: 10000, windowsHide: true })
-    } catch {}
-}
-export const SessionTitleGuard = async ({ client }) => {
   return {
-    event: async ({ event }) => {
-      if (!["session.created", "session.updated", "session.idle"].includes(event?.type)) return
-      // Fire T1 on session.created to reset session.yaml
-      if (event.type === "session.created") { await fireT1() }
-      const session = event.session || event.properties?.session || event
-      const sessionID = session.id || session.sessionID || event.sessionID
-      const currentTitle = session.title || ""
-      if (!sessionID || (currentTitle && !BAD_TITLE.test(currentTitle))) return
+    // Track session start
+    "event": async ({ event }) => {
+      if (!guardActive) return
 
-      const messages = await listMessages(client, sessionID)
-      let fallback = cleanTitle(firstUserText(messages))
-      if (!fallback) {
-        const cwd = process.cwd() || "session"
-        const project = cwd.split(/[/\\]/).pop() || "session"
-        fallback = project
+      if (event?.type === "session.status") {
+        // Session just started — record that we're tracking
+        return
       }
 
-      const patched = await patchTitle(client, sessionID, fallback)
-      await mirrorSessionTitle(fallback)
-      await appendJsonl("session_title_guard.jsonl", { sessionID, oldTitle: currentTitle, newTitle: fallback, patched })
-    },
+      // First user message → capture the task
+      if (event?.type === "message.updated" && guardActive) {
+        const props = event.properties || event
+        const info = props?.info || {}
+
+        // User role = first task content
+        if (info?.role === "user" && !firstUserMessage) {
+          const content = info?.content || info?.message?.content || ""
+          if (content && content.trim().length > 3) {
+            firstUserMessage = content.trim()
+          }
+        }
+
+        // Assistant role after user message → derive name and fire T0
+        if (info?.role === "assistant" && firstUserMessage && !existsSync(MARKER_FILE)) {
+          const derived = deriveTitle(firstUserMessage)
+          if (derived) {
+            const ok = invokeT0(derived)
+            if (ok) {
+              // Write marker so we don't re-run
+              safeWriteFile(MARKER_FILE, `session named: ${derived}\n`)
+            }
+          }
+          guardActive = false  // done
+        }
+      }
+    }
   }
 }
-
-
-

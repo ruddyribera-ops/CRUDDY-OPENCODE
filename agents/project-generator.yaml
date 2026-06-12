@@ -1,6 +1,8 @@
-name: project-generator
+﻿name: project-generator
 version: 1.0.0
-description: "Full multi-agent project generator — runs structured discovery, architecture, planning, and prompt generation"
+
+model_tier: 2
+mode: primary
 model_tier: 3
 model: minimax/minimax-m2.7
 capabilities:

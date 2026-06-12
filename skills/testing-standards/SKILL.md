@@ -1,10 +1,36 @@
 ---
 name: testing-standards
-description: Testing patterns, TDD approach, mocking, coverage standards, and test architecture for full-stack apps. Python (pytest) and TypeScript (vitest/jest) focused.
+description: Testing patterns, TDD approach, mocking, coverage standards, and test architecture for full-stack apps. Python (pytest) and TypeScript (vitest/jest) focused. MANDATORY: write tests BEFORE implementation code (red-green-refactor). Never declare done with 0% coverage on new features.
 triggers: [test, pytest, jest, vitest, coverage, tdd, mock, unittest, e2e, integration-test, unit-test, test-suite, test-file, assertion, describe, it, expect, assert, before-each, after-each, setup, teardown, fixture, spy, stub, snapshot, cypress, playwright, testing-library, react-testing-library]
+auto_load: code-builder
 ---
 
 # Testing Standards
+
+## ⚠️ MANDATORY TDD ENFORCEMENT (CODE-001 Gene)
+
+**For EVERY new feature, you MUST follow red-green-refactor:**
+
+```
+1. Write the test FIRST (it will fail — "red")
+2. Write the minimum code to make it pass ("green")
+3. Refactor for clarity ("refactor")
+4. Repeat until feature is complete
+```
+
+**Why this matters (research):**
+- "TDD prompting alone increased regressions (9.94%)" when models skip the test-first step (arxiv:2603.17973v1, Mar 2026)
+- Without TDD, agents default to "do everything in one go" (Reddit/C Claude Code, Jul 2025)
+- Test-first catches edge cases BEFORE they become bugs
+
+**What "no excuse" means:**
+- New feature = minimum 1 test covering the happy path
+- Bug fix = test that reproduces the bug before fixing
+- If you write implementation code before tests, you're doing it wrong
+
+**Verification:** `pytest tests/` / `vitest` must pass before you declare done.
+
+---
 
 ## Core Principles
 
@@ -317,6 +343,7 @@ def wait_for_condition():
 
 - [ ] Tests follow arrange-act-assert pattern
 - [ ] Pure business logic has full coverage (happy + edge + error paths)
+- [ ] **TDD enforced:** test written BEFORE implementation code (red-green-refactor)
 - [ ] Mocked external services (email, payments, third-party APIs)
 - [ ] No fixed timers / sleeps in tests
 - [ ] Tests are deterministic (same result every run)

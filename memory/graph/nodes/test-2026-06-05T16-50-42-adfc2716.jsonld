@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "test",
+  "name": "compat-test-1780678242844",
+  "created": "2026-06-05T16:50:42.981Z",
+  "data": {
+    "title": "compat"
+  }
+}

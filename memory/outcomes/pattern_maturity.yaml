@@ -1,0 +1,23 @@
+﻿# Pattern maturity scores - auto-generated
+generated: 2026-06-08T15:31:59.8900105Z
+patterns:
+  auth-implementation:
+    score: 0.714
+    maturity: candidate
+    successes: 3
+    failures: 0
+    total: 3
+    success_rate: 1
+    median_duration_s: 
+    speed_factor: 0.048
+    last_updated: 2026-06-08T15:32:00.0909225Z
+  db-migration:
+    score: 0.046
+    maturity: anti-pattern
+    successes: 0
+    failures: 2
+    total: 2
+    success_rate: 0
+    median_duration_s: 
+    speed_factor: 0.154
+    last_updated: 2026-06-08T15:32:00.0572431Z

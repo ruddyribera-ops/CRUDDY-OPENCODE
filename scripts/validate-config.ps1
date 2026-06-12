@@ -192,7 +192,7 @@ $ruleDir = "$configDir\rules"
 $referencedRules = @(
     'duties.md',
     'auto_memory.md',
-    'm27-compensation.md',
+    'M3-compensation.md',
     'browser_tool_decision.md'
 )
 $allRulesExist = $true

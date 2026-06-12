@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "task",
+  "name": "Task-Final-session-close-verificati",
+  "created": "2026-06-03T15:27:13.172Z",
+  "data": {
+    "task": "Final-session-close-verificati",
+    "agent": "main-coordinator",
+    "ts": "2026-06-03T15:27:13.088Z"
+  }
+}

@@ -63,8 +63,8 @@
 | # | Project | Stack | Status |
 |---|---------|-------|--------|
 | 1 | PRIA v10 | React+Vite+MiniMax+PptxGenJS | ✅ Complete |
-| 2 | Palma Coin | Node+React+WebSocket | 🟡 WebSocket broken |
-| 3 | Math Platform | FastAPI+Next.js+Redis | ✅ Phase 11 |
+| 2 | Palma Coin | Node+React+SSE+better-sqlite3 | ✅ Complete — all bugs fixed, 27 tests, Docker verified |
+| 3 | Math Platform | FastAPI+Next.js+Redis | 🔵 In progress — code fragments, no coherent project |
 | 4 | EduFlow | Laravel+Next.js+PostgreSQL | 🔵 Active |
 | 5 | BDM App | Vite+React+Express+Gemini | ✅ Phase A-F |
 | 6 | OpenCode Setup | Markdown+Python+PowerShell | 🔵 Active |

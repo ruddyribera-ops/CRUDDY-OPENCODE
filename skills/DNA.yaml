@@ -243,13 +243,15 @@ genes:
                skip-auth, disable-auth, bypass-login, no-auth, trust-client, skip-jwt,
                except-pass, catch-e, swallow-error, ignore-error,
                ts-ignore, any-type, noqa, type-ignore,
-               force-push, git-force, no-verify, reset-hard, skip-hooks,
+               force-push, git-force, no-verify, reset-hard, skip-hooks, --force, --no-verify,
                add-redis, add-kafka, add-microservice, kubernetes, add-rabbitmq, add-elasticsearch,
                rewrite-in, migrate-to, new-framework,
                deploy-without-test, skip-tests, test-in-prod, just-push, fix-in-prod,
                new-deploy, fresh-database, empty-db, reset-db,
-               sleep(, setTimeout, wait-for-timeout, time-sleep,
-               pip-install, npm-install]
+               sleep(, setTimeout, wait-for-timeout, wait_for_timeout, time.sleep, time-sleep, wait_for_selector,
+               pip-install, npm-install, add,
+               database-patterns, deployment-patterns,
+               COORD-003]
 
   # ── MINIMAX: Media generation, Office files ─────────────
   - id: MMX-001
@@ -328,6 +330,117 @@ genes:
     auto_generated: true
     auto_date: "2026-06-01T08:16:43.0205288-04:00"
     auto_reason: "test_integration"
+
+  # ── v3.1 OPERATIONAL GENES ────────────────────────────────
+    auto_approved: true
+    approved_date: "2026-06-04T11:27:32.6656742-04:00"
+    approved_by: "evolution-agent"
+  - id: COORD-006
+    name: evaluator_optimizer_trigger
+    description: |
+      Complexity >= 4 (Moderate/Complex) AND >= 3 files modified: trigger evaluator-optimizer loop.
+      code-builder implements -> code-reviewer reviews -> loop until PASS (max 3 iterations).
+
+      TIGHTENED PASS CRITERIA:
+      - If CRITICAL+HIGH issues fixed on iteration 2+ → AUTO-PASS (skip remaining MEDIUM/LOW)
+      - MEDIUM/LOW are recommendations only — NEVER block PASS
+      - After 3 FAIL iterations with no CRITICAL/HIGH progress → escalate to user
+      - On iteration 1 PASS: all issues resolved. On iteration 2+ PASS: only CRITICAL/HIGH required.
+
+      Loop: build → review → (if CRITICAL/HIGH) fix → review → ... → PASS or escalate
+    triggers: [complex, multi-file, refactor, feature, from-scratch, thorough, quality-gate, tier-3]
+
+  - id: COORD-007
+    name: record_outcome_post_task
+    description: |
+      After EVERY task completes, record to patterns.jsonl via outcome-record.ps1.
+      Skip for Trivial (score 0) tasks. Log silently — never announce to user.
+    triggers: [task-complete, done, finished, implemented, fixed]
+
+  - id: COORD-008
+    name: inject_pattern_maturity
+    description: |
+      Before routing Moderate+ task (score 4+), read pattern_maturity.yaml and inject scores.
+      Score > 1.0 (proven): "USE THIS PATTERN". Score < 0.5 (anti-pattern): "AVOID THIS".
+      No history: "No prior pattern data — proceed with best practices".
+    triggers: [route, moderate, complex, dispatch, decision, before-routing]
+
+  - id: BUDGET-001
+    name: token_budget_check
+    description: |
+      Before routing non-trivial task (score > 0), run track-tokens.ps1 -Action check.
+      REJECT (exit 1): budget hit. Options: defer / reduce scope / use flash model.
+      WARN (exit 2): log warning, proceed. GO (exit 0): proceed normally.
+    triggers: [route, dispatch, task, budget, tokens, quota]
+
+  - id: SESSION-001
+    name: direct_work_trivial_only
+    description: |
+      Handle task DIRECTLY only when: <=3 lines, not production code, does NOT touch
+      auth/crypto/DB/CI/deploy, reversible with git restore, matches allowed patterns.
+      Allowed direct-work: typo fix in comment, factual question, read file, rename unused variable.
+      ANYTHING ELSE → route to specialist. When in doubt, route.
+    triggers: [typo, read, rename, comment, docstring, trivial]
+
+  - id: SESSION-002
+    name: respond_in_user_language
+    description: |
+      Spanish input → respond in Spanish. English input → English. Mixed → Spanish.
+      Technical terms always in English. NEVER display internal routing, model names, or tier names.
+    triggers: [es, spanish, inglés, english, mixed, language]
+
+  - id: SESSION-003
+    name: discovery_before_build
+    description: |
+      For any task score >= 1, ask business questions BEFORE routing. One round max.
+      Score 0: execute immediately. Score 1-3: 1-2 questions. Score 4-6: 2-3 questions.
+      Score 7-10: 3-5 questions. Never ask tech stack questions — you decide those.
+    triggers: [build, create, add, implement, feature, fix, complex, new, vague]
+
+  - id: COORD-009
+    name: mail_system_inter_agent
+    description: |
+      Inter-agent communication via mail.py. Check inbox at task start. Send mail if another
+      agent should handle follow-up. NEVER silently swallow follow-up flags.
+    triggers: [mail, send, inbox, inter-agent, delegate, follow-up]
+
+  - id: EVO-002
+    name: evolution_trigger_retro_analyze
+    description: |
+      After every 10 completed tasks, run retro-analyze.ps1 -TaskCount 10 -WriteGenes.
+      Exit 2: genes auto-written → route to evolution-agent for approval.
+    triggers: [post-session, evolution-check, after-10-tasks, every-10]
+
+  # ── COMPLEXITY + FAILURE AWARENESS GENES (v3.1) ──────────
+  - id: SESSION-004
+    name: complexity_self_correct
+    description: |
+      If complexity score >= 4 but <3 files → likely underestimated. Bump score to 7 and trigger full loop.
+      Multi-file tasks often look simple until you realize the scope.
+      Signal: "add one function" or "quick fix" in a large project.
+    triggers: [quick-fix, add-one, simple, easy, small-change, just-one]
+
+  - id: SESSION-005
+    name: task_scope_before_routing
+    description: |
+      If user gives vague task ("fix auth bug", "improve performance") without file/endpoint scope:
+      1. Run: powershell -File $CONFIG/scripts/hooks/run-plan-mode.ps1 -TaskDescription "<task>" -ComplexityScore "<score>"
+      2. Display plan file to user
+      3. Wait for "yes/proceed" or "no/abort"
+      4. ONLY route to specialist after explicit approval
+      5. If user aborts → report what would be needed to proceed
+      This is SESSION-003 PLAN MODE — do NOT skip or proceed without approval.
+    triggers: [fix, improve, update, change, auth, performance, bug, vague]
+
+  - id: SESSION-006
+    name: failure_history_warning
+    description: |
+      Before routing, check patterns.jsonl for task_type failure rate.
+      If task_type has >50% failures or maturity score < 0.5 → warn user:
+      "This type of task has failed N times before. Proceed anyway?"
+      Pattern history exists to prevent repeated failures.
+    triggers: [build, create, add, implement, feature, new, from-scratch]
+
 # ── GENE LOADER — How agents load genes ──────────────────
 gene_loader:
   algorithm: |
@@ -342,6 +455,26 @@ gene_loader:
     - Prevents repetitive loading of identity genes.
   max_genes_per_load: 10
   fallback: If no genes match, proceed without DNA loading.
+
+# ── GENE FITNESS SCORING (v3.2) ─────────────────────────────
+# Adaptive confidence weighting: each gene's success rate × recency factor.
+# Pattern: fitness = success_rate * recency_factor * activation_boost
+# Auto-prune genes with weight < 0.3 after 20+ activations.
+# GA research: https://en.wikipedia.org/wiki/Fitness_function
+gene_fitness:
+  tracking_enabled: true
+  decay_rate: 0.05          # 5% decay per analysis cycle
+  alpha: 0.3                # New observations weight (1-alpha for prior)
+  min_activations: 5        # Don't score genes with fewer activations
+  prune_threshold: 0.3      # Below this weight -> mark as deprecated
+  # Fitness formula (see retro-analyze.ps1):
+  #   weight = (successes / activations) * (1 - decay_rate * cycles_since_seen) * activation_boost
+  #   activation_boost = min(1.0, log10(activations) / 2)  # diminishing returns
+  # Example: GENE-000 fired 100 times with 95% success, last seen 1 cycle ago
+  #   weight = 0.95 * 0.95 * 1.0 = 0.90 (high confidence)
+  tracking_file: memory/outcomes/gene_fitness.jsonl
+  # Format: { gene_id, ts, activations, successes, cycles_since_seen }
+
 
 # ── AGENT -> GENE MAPPING ───────────────────────────────
 # Families are derived from gene ID prefixes:
@@ -377,3 +510,125 @@ evolution:
       name: <behavior_name>
       description: | <10 lines max, concrete rule>
       triggers: [k1, k2, k3]
+
+# ── GENE LIFECYCLE (v3.1) ─────────────────────────────────
+gene_lifecycle:
+  deprecation:
+    trigger: When a gene is replaced, merged, or found harmful.
+    process: |
+      1. Mark gene with deprecated: true and deprecation_date: YYYY-MM-DD
+      2. Add deprecated_reason: "<why>" and successor_gene: <new-id>
+      3. Remove from agent_gene_map after 30-day transition period
+      4. Document in lessons_learned.md what went wrong
+    auto_deprecate: |
+      Genes with auto_generated: true and >90 days old with no trigger matches
+      are flagged for review. evolution-agent evaluates and removes if stale.
+
+  merging:
+    trigger: When two genes overlap significantly or one fully contains another.
+    process: |
+      1. Keep higher-ID gene (newer), mark other as merged_into: <id>
+      2. Merge triggers list (dedupe). Keep wider trigger set.
+      3. Combine descriptions — preserve unique rules from both.
+      4. Update agent_gene_map to use winning gene only.
+
+  versioning:
+    format: YYYY-MM-DD for changes. Major version bump on structural changes.
+    current_version: "3.1"
+    changelog_section: "CHANGELOG section at top of DNA.yaml"
+
+  gene_health:
+    metrics:
+      trigger_match_rate: "How often gene triggers when it should"
+      false_positive_rate: "How often gene triggers when it shouldn't"
+      conflict_rate: "How often gene conflicts with another loaded gene"
+    review_frequency: "Every 50 tasks, evolution-agent scans for stale genes"
+    removal_criteria: |
+      - trigger_match_rate < 10% over 20 tasks
+      - false_positive_rate > 50%
+      - Replaced by newer gene with better coverage
+
+# ── GENE INTERACTION RULES (v3.1) ──────────────────────────
+gene_interaction:
+  priority:
+    # Higher priority genes load last (override lower priority)
+    tiers:
+      - tier: 1-critical  # Security, auth — always loaded last
+        genes: [AUTH-001, AUTH-002, AUTH-003, SEC-001, SEC-002, SEC-003, SEC-004]
+      - tier: 2-mandatory  # Core behavior — route, build, test
+        genes: [COORD-001, COORD-002, COORD-003, COORD-004, COORD-005, COORD-006, COORD-007, COORD-008, COORD-009,
+               CODE-001, CODE-002, CODE-003, DB-001, DB-002, API-001, API-002]
+      - tier: 3-operational  # Session, budget, mail, evolution
+        genes: [BUDGET-001, SESSION-001, SESSION-002, SESSION-003, EVO-001, EVO-002]
+      - tier: 4-contextual  # Domain-specific, trigger on match
+        genes: [DEPLOY-001, DEPLOY-002, UI-001, UI-002, MMX-001, MMX-002, PERF-001]
+
+  conflict_resolution:
+    rules:
+      - when: Two genes have opposing rules (e.g., one says "do X", other says "don't do X")
+        resolution: "Higher tier wins (tier 1 critical > tier 2 mandatory > tier 3 operational > tier 4 contextual)"
+      - when: Gene A fully contains Gene B's triggers
+        resolution: "Keep more specific gene (narrower triggers). Broader gene deprioritized."
+      - when: Gene triggers overlap but have different rules
+        resolution: "Both load. Higher tier's rule takes precedence for conflicting aspects."
+      - when: Challenger gene (COORD-003) conflicts with another gene
+        resolution: "COORD-003 always fires first (user safety > implementation speed)"
+      - when: New gene (auto_generated) conflicts with existing curated gene
+        resolution: "Curated gene wins. Auto-gene marked for evolution-agent review."
+
+  load_order: |
+    COMPLEXITY PRE-FILTER (speed optimization):
+    - Score 0 (Trivial): load only GENE-000 + SESSION-001 (direct_work_trivial_only). Skip all others.
+    - Score 1-3 (Simple): load GENE-000 + tier 4 contextual genes only (DEPLOY, UI, MMX, PERF).
+    - Score 4-6 (Moderate): load GENE-000 + tier 2 mandatory + tier 3 operational. Skip tier 4.
+    - Score 7-10 (Complex): load ALL genes (full rig). No pre-filter.
+
+    GENE LOADING SEQUENCE:
+    1. Pre-load session_start_genes (always present, e.g., GENE-000)
+    2. Apply complexity pre-filter above → candidate set
+    3. Match task keywords against remaining triggers → final candidates
+    4. Sort by priority tier (lower tier number = higher priority = loaded last)
+    5. Inject top 10 matching genes max into agent prompt as "DNA CONTEXT" block
+    6. Within same tier, sort by specificity (narrower triggers first)
+    7. Fallback: if no genes match, load no DNA context (proceed without gene injection)
+
+# ── CHANGELOG ───────────────────────────────────────────────
+changelog:
+  - date: 2026-06-02
+    version: "3.3"
+    changes:
+      - added: pre-tool-check.ps1 (block destructive edits, sensitive file protection)
+      - added: post-tool-check.ps1 (auto-lint, format verification)
+      - added: hooks-config.md (hook system documentation)
+      - added: run-plan-mode.ps1 (Plan Mode UI for SESSION-003 enforcement)
+      - added: SESSION-005 update — now runs plan-mode.ps1 + awaits approval before routing
+      - added: code-reviewer.md context isolation section (fresh handover only)
+      - added: gene for plan-mode enforcement
+    reason: "Borrowed from Claude Code: deterministic hooks + Plan Mode + subagent context isolation"
+
+  - date: 2026-06-02
+    version: "3.2"
+    changes:
+      - added: gene pre-filter by complexity (speed optimization)
+      - added: SESSION-004 (complexity_self_correct)
+      - added: SESSION-005 (task_scope_before_routing)
+      - added: SESSION-006 (failure_history_warning)
+      - tightened: COORD-006 eval loop PASS criteria (auto-PASS after CRITICAL+HIGH fixed)
+      - added: pattern_maturity.yaml seeded with 9 known patterns
+    reason: "Optimize for complex-task usage: speed (pre-filter) + reliability (scope/failure awareness)"
+
+  - date: 2026-06-02
+    version: "3.1"
+    changes:
+      - added: COORD-006 (evaluator_optimizer_trigger)
+      - added: COORD-007 (record_outcome_post_task)
+      - added: COORD-008 (inject_pattern_maturity)
+      - added: BUDGET-001 (token_budget_check)
+      - added: SESSION-001 (direct_work_trivial_only)
+      - added: SESSION-002 (respond_in_user_language)
+      - added: SESSION-003 (discovery_before_build)
+      - added: COORD-009 (mail_system_inter_agent)
+      - added: EVO-002 (evolution_trigger_retro_analyze)
+      - added: gene_lifecycle section (deprecation, merging, versioning, health)
+      - added: gene_interaction section (priority tiers, conflict_resolution)
+    reason: "Strengthening operational coverage for evaluator-optimizer loop, pattern maturity, budget management, and session behavior"

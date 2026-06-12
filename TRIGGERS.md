@@ -80,7 +80,7 @@
 
 ---
 
-## T2 Ã¢â‚¬â€ Task COMPLETES (Fires: every time ANY agent returns a result)
+## T2 [UPDATED 2026-06-03: Use t2-complete.ps1] Ã¢â‚¬â€ Task COMPLETES (Fires: every time ANY agent returns a result)
 
 ### Compliance Checklist (3 mandatory questions):
 
@@ -422,6 +422,7 @@ These triggers override all other behavior. If a task completes and triggers T2 
 ```
 
 **User override:** If user says "skip triggers" or "don't log this" → respect it silently.
+
 
 
 

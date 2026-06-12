@@ -43,7 +43,7 @@ param(
     [string]$MemoryDir = ""
 )
 
-$ErrorActionPreference = "SilentlyContinue"
+$ErrorActionPreference = "Stop"
 $configDir = "$env:USERPROFILE\.config\opencode"
 $scriptsDir = "$configDir\scripts"
 $memoryDir = "$configDir\memory"
@@ -169,6 +169,19 @@ function Fire-T1 {
     $today = Get-Date -Format 'yyyy-MM-dd'
     $kgCmd = "entity `"$sessionId`" `"session`" `"date:$today,status:in_progress`""
     Invoke-Expression "python `"$scriptsDir\kg_write_proxygen.py`" $kgCmd" 2>$null | Out-Null
+
+    # T1.4: Auto-summary via context graph (fire-and-forget)
+    try {
+        $autoSummary = "$scriptsDir\auto-summary.js"
+        if (Test-Path $autoSummary) {
+            $summaryProject = if ($env:OPENCODE_PROJECT_NAME) { $env:OPENCODE_PROJECT_NAME } else { "default" }
+            $summaryCmd = "node `"$autoSummary`" --project `"$summaryProject`" --days 30 --max-tokens 2000"
+            $summaryResult = Invoke-Expression $summaryCmd 2>$null
+            if ($summaryResult -and $Verbose) {
+                Write-Host "   Auto-summary: $($summaryResult.Length) chars"
+            }
+        }
+    } catch {}
 
     Write-Host "   Session initialized: $sessionId"
 }
@@ -548,3 +561,5 @@ switch ($Trigger) {
         Write-Host "Valid: T0, T1, T2, T3, T4, T5, T6, T7, T8"
     }
 }
+
+exit 0

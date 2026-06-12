@@ -1,8 +1,9 @@
-name: code-builder
+﻿name: code-builder
 version: 1.0.0
-description: "Implementation specialist — writes, modifies, and creates code across full-stack projects"
+
+mode: primary
+model: minimax/minimax-m2.7
 model_tier: 2
-model: opencode-go/deepseek-v4-pro
 capabilities:
   - write_code
   - modify_code

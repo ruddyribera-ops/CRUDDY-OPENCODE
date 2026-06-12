@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "session",
+  "name": "healthcheck-test-1780678234870",
+  "created": "2026-06-05T16:50:35.013Z",
+  "data": {
+    "title": "healthcheck-test-1780678234870",
+    "activity_count": 3,
+    "last_idle": "2026-06-05T16:50:34.870Z",
+    "citation": {
+      "valid_from": "2026-06-05T16:50:34.870Z",
+      "valid_until": "2026-07-03T16:50:34.870Z",
+      "confidence": 1
+    }
+  }
+}

@@ -1,8 +1,8 @@
 ---
 name: browser-robust
-description: CloakBrowser + Scrapling hybrid — reliable browser automation that handles bot detection, site changes, and CDP flakiness. Use instead of Playwright MCP for any browser task. Triggers: navigate a site, click something, fill a form, scrape a page, take a screenshot, extract data from a page, click button, fill input, browser automation, web scraping, cloudflare bypass, turnstile bypass.
-When: Use for any browser task where Playwright is flaky or gets blocked. CloakBrowser passes Cloudflare/Turnstile/bot detection. Scrapling adaptive selectors survive site redesigns.
-Do not: Use for simple HTTP requests (use fetch instead). Use for PDF generation (use write_pdf). Use for desktop app automation (use desktop-commander).
+description: "CloakBrowser + Scrapling hybrid — reliable browser automation that handles bot detection, site changes, and CDP flakiness. Use instead of Playwright MCP for any browser task. Triggers: navigate a site, click something, fill a form, scrape a page, extract data from a page, click button, fill input, browser automation, web scraping, cloudflare bypass, turnstile bypass."
+When: "Use for any browser task where Playwright is flaky or gets blocked. CloakBrowser passes Cloudflare/Turnstile/bot detection. Scrapling adaptive selectors survive site redesigns."
+Do not: "Use for simple HTTP requests (use fetch instead). Use for PDF generation (use write_pdf). Use for desktop app automation (use desktop-commander)."
 Commands:
   python $CONFIG/scripts/browser.py navigate <url> [--timeout N]
   python $CONFIG/scripts/browser.py click <selector> [--timeout N]
@@ -15,14 +15,20 @@ Commands:
   python $CONFIG/scripts/browser.py cookies [--domain X]
   python $CONFIG/scripts/browser.py reset
   python $CONFIG/scripts/browser.py close
-Returns: JSON with {"ok": true, "data": ...} or {"ok": false, "error": "..."}
+  python $CONFIG/scripts/browser.py auth save <profile>
+  python $CONFIG/scripts/browser.py auth load <profile>
+  python $CONFIG/scripts/browser.py auth list
+  python $CONFIG/scripts/browser.py auth delete <profile>
+Returns: 'JSON with {"ok": true, "data": ...} or {"ok": false, "error": "..."}'
 Notes:
-  - Browser persists between commands (stateful session). Call reset() to get a fresh context.
-  - All commands return JSON — parse the "data" field for results.
-  - adaptive selector returns texts from matching elements (up to 10).
-  - screenshot saves to the path provided (default: screenshot.png in cwd).
-  - navigate defaults to 30s timeout, click to 15s, type to 10s.
-  - cloakbrowser auto-downloads stealth Chromium (~200MB) on first launch.
-  - Cloudflare and Turnstile are bypassed automatically by CloakBrowser.
+  - "Browser persists between commands (stateful session). Call reset() to get a fresh context."
+  - "All commands return JSON — parse the \"data\" field for results."
+  - "adaptive selector returns texts from matching elements (up to 10)."
+  - "screenshot saves to the path provided (default: screenshot.png in cwd)."
+  - "navigate defaults to 30s timeout, click to 15s, type to 10s."
+  - "cloakbrowser auto-downloads stealth Chromium (~200MB) on first launch."
+  - "Cloudflare and Turnstile are bypassed automatically by CloakBrowser."
+  - "Auth profiles: Requires auto-browser running at 127.0.0.1:8000 (see auto-browser MCP). Encrypted server-side with Fernet. Bearer token via env var AUTO_BROWSER_API_BEARER_TOKEN or hardcoded dev fallback. Operator ID via AUTO_BROWSER_OPERATOR_ID."
+  - "Auth profile workflow: navigate to login URL, log in manually or via automation, run auth save <profile-name>, later run reset + auth load <profile-name> to restore logged-in state."
 Skills: security-basics, performance-optimization
 ---

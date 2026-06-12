@@ -1,0 +1,26 @@
+# Token budgets per agent — adjust as needed
+# default_per_task: 50000  # fallback if agent not listed
+
+agent_budgets:
+  code-builder: 80000
+  bug-fixer: 60000
+  code-analyzer: 40000
+  code-reviewer: 50000
+  code-explainer: 30000
+  standup-summary: 20000
+  tech-writer: 60000
+  designer: 60000
+  support: 50000
+  cybersecurity: 70000
+  # Heavy agents — only dispatch when needed
+  account-manager: 100000
+  project-manager: 120000
+  solutions-architect: 100000
+  tech-lead: 150000
+  architecture-advisor: 80000
+  delivery-engineer: 80000
+  qa-engineer: 70000
+  project-generator: 100000
+  evolution-agent: 50000
+  skill-manager: 40000
+  main-coordinator: 200000  # coordinator runs everything, needs headroom

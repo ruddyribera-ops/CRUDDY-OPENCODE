@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@type": "decision",
+  "name": "test-routing-456",
+  "created": "2026-06-10T11:18:42.955Z",
+  "data": {}
+}

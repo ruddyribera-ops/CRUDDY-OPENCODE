@@ -1,8 +1,10 @@
-name: bug-fixer
+﻿name: bug-fixer
 version: 1.0.0
-description: "Debug specialist — finds root causes, fixes errors, resolves broken functionality"
+
 model_tier: 2
-model: opencode-go/deepseek-v4-pro
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
 capabilities:
   - diagnose_bugs
   - fix_errors

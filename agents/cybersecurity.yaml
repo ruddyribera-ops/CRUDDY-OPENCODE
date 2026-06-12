@@ -1,0 +1,41 @@
+﻿name: cybersecurity
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 3
+model: minimax/minimax-m3
+capabilities:
+  - security_audit
+  - threat_modeling
+  - vulnerability_assessment
+  - owasp_mapping
+  - CVE_lookup
+  - security_review
+skills_used:
+  - security-basics
+  - auth-patterns
+  - sql-safety
+  - no-silent-failure
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - list
+  - skill
+  - webfetch
+  - sequential-thinking_sequentialthinking
+mcp_tools_denied:
+  - edit
+  - write
+  - bash
+  - lsp
+dependencies: []
+role: executor
+guardrails:
+  - read_only_audit_only
+  - no_weak_cryptography
+  - no_skipped_auth
+  - no_security_debt_deferral
+  - flag_secrets_immediately
+  - severity_first_output

@@ -1,8 +1,10 @@
-name: code-explainer
+﻿name: code-explainer
 version: 1.0.0
-description: "Plain-language code explainer — breaks down code, concepts, and architecture for any audience"
+
+model_tier: 2
+mode: primary
 model_tier: 1
-model: opencode-go/deepseek-v4-flash
+model: minimax/minimax-m2.7
 capabilities:
   - explain_code
   - describe_architecture
