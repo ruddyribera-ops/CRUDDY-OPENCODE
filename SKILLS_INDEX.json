@@ -1,0 +1,420 @@
+[
+    {
+        "Name":  "adaptive-ui",
+        "Description":  "Playwright-based DOM survival patterns for dynamic UIs (Streamlit, FastAPI+HTMX, React). Handles cold starts, DOM mutations, and selector fragility.",
+        "Version":  "1.0.0",
+        "Triggers":  "",
+        "Path":  "skills/adaptive-ui/SKILL.md"
+    },
+    {
+        "Name":  "android-native-dev",
+        "Description":  "Android native application development and UI design guide. Covers Material Design 3, Kotlin/Compose development, project configuration, accessibility, and build troubleshooting. Read this before Android native application development.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/android-native-dev/SKILL.md"
+    },
+    {
+        "Name":  "api-patterns",
+        "Description":  "REST API design patterns, error handling, and response format standards",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/api-patterns/SKILL.md"
+    },
+    {
+        "Name":  "app-scraper-tester",
+        "Description":  "Systematic web application auditing skill — crawls, documents, and tests any web app using Playwright MCP. Produces a Blueprint.md + blueprint.json + test coverage map. Accepts target URL + optional credentials, detects SPA/MPA, maps forms/API endpoints, identifies critical paths, and generates structured audit output matching the PRIA blueprint format.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/app-scraper-tester/SKILL.md"
+    },
+    {
+        "Name":  "auth-patterns",
+        "Description":  "Password hashing, sessions, JWT, password change flows, and DB-type gotchas for auth flags",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/auth-patterns/SKILL.md"
+    },
+    {
+        "Name":  "buddy-sings",
+        "Description":  "Use when user wants their Claude Code pet (/buddy) to sing a song. Triggers on any request that combines the concept of their Claude Code buddy, pet, or companion with singing or music. Supports multilingual triggers — match equivalent phrases in any language.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/buddy-sings/SKILL.md"
+    },
+    {
+        "Name":  "caveman",
+        "Description":  "Ultra-compressed communication mode — DEFAULT for all responses. Cuts token usage ~75% by dropping filler, hedging, and pleasantries while keeping full technical accuracy.",
+        "Version":  "1.1.0",
+        "Triggers":  null,
+        "Path":  "skills/caveman/SKILL.md"
+    },
+    {
+        "Name":  "ci-cd-patterns",
+        "Description":  "GitHub Actions CI/CD pipeline patterns, git hooks, and automated quality checks",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/ci-cd-patterns/SKILL.md"
+    },
+    {
+        "Name":  "code-review",
+        "Description":  "Code review checklist for security, performance, and maintainability",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/code-review/SKILL.md"
+    },
+    {
+        "Name":  "color-font-skill",
+        "Description":  "Choose presentation-ready color palettes and font pairings for PPT/design tasks. Use when users ask for visual theme choices, brand-safe palettes, or font recommendations. Triggers include: 配色, 色板, 字体, color palette, font, PPT配色, 字体搭配.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/color-font-skill/SKILL.md"
+    },
+    {
+        "Name":  "cs-fundamentals",
+        "Description":  "Computer Science fundamentals: Machine Learning, NLP, Computer Vision, Algorithms, Cryptography, Quantum Computing, Static Analysis, and Theoretical CS. Use when: building ML pipelines, implementing NLP systems, designing CV solutions, working with algorithms, cryptography, quantum computing, static code analysis, or academic CS theory.",
+        "Version":  "1.0.0",
+        "Triggers":  "",
+        "Path":  "skills/cs-fundamentals/SKILL.md"
+    },
+    {
+        "Name":  "data-analysis",
+        "Description":  "Data analysis patterns for CSV, JSON, pandas, and reporting",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/data-analysis/SKILL.md"
+    },
+    {
+        "Name":  "database-patterns",
+        "Description":  "SQL/SQLite migration patterns, seed data, and query utilities",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/database-patterns/SKILL.md"
+    },
+    {
+        "Name":  "deployment-patterns",
+        "Description":  "Docker, docker-compose, Railway, containerization, and environment configuration",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/deployment-patterns/SKILL.md"
+    },
+    {
+        "Name":  "design-style-skill",
+        "Description":  "Select a consistent visual design system for PPT slides using radius/spacing style recipes. Use when users ask for overall style direction or component styling consistency.",
+        "Version":  "1.0.0",
+        "Triggers":  "风格, style, radius, spacing, 圆角, 间距, PPT风格, 视觉风格, design style, component style.",
+        "Path":  "skills/design-style-skill/SKILL.md"
+    },
+    {
+        "Name":  "desktop-manager",
+        "Description":  "Run desktop cleanup scripts using natural language (English or Spanish). Handles Windows 11 desktop organization, temp cleanup, and browser cache management.",
+        "Version":  "1.1.0",
+        "Triggers":  null,
+        "Path":  "skills/desktop-manager/SKILL.md"
+    },
+
+    {
+        "Name":  "education",
+        "Description":  "Category containing education-related skills for lesson planning and personalized learning",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/education/SKILL.md"
+    },
+    {
+        "Name":  "flutter-dev",
+        "Description":  "Flutter cross-platform development guide covering widget patterns, Riverpod/Bloc state management, GoRouter navigation, performance optimization, and platform-specific implementations. Includes const optimization, responsive layouts, testing strategies, and DevTools profiling. Use when: building Flutter apps, implementing state management (Riverpod/Bloc), setting up GoRouter navigation, creating custom widgets, optimizing performance, writing widget tests, cross-platform development.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/flutter-dev/SKILL.md"
+    },
+    {
+        "Name":  "frontend-dev",
+        "Description":  "Full-stack frontend development combining premium UI design, cinematic animations, AI-generated media assets, persuasive copywriting, and visual art. Builds complete, visually striking web pages with real media, advanced motion, and compelling copy. Covers: landing pages, marketing sites, product pages, dashboards, generative art, CSS frameworks (Tailwind, Sass), modern frameworks (Svelte, Next.js, Blazor, Yew), WebAssembly, PWA development, and build tools (Vite, esbuild, PostCSS).",
+        "Version":  "1.0.0",
+        "Triggers":  "",
+        "Path":  "skills/frontend-dev/SKILL.md"
+    },
+    {
+        "Name":  "fullstack-dev",
+        "Description":  "Full-stack backend architecture and frontend-backend integration guide. TRIGGER when: building a full-stack app, creating REST API with frontend, scaffolding backend service, building todo app, building CRUD app, building real-time app, building chat app, Express + React, Next.js API, Node.js backend, Python backend, Go backend, Fiber, FastAPI, Flask, Laravel, Symfony, PHP, designing service layers, implementing error handling, managing config/auth, setting up API clients, implementing auth flows, handling file uploads, adding real-time features (SSE/WebSocket), hardening for production. DO NOT TRIGGER when: pure frontend UI work, pure CSS/styling, database schema only.",
+        "Version":  "1.0.0",
+        "Triggers":  "",
+        "Path":  "skills/fullstack-dev/SKILL.md"
+    },
+    {
+        "Name":  "gif-sticker-maker",
+        "Description":  "Convert photos (people, pets, objects, logos) into 4 animated GIF stickers with captions. Use when: user wants to create cartoon stickers, GIF expressions, emoji packs, animated avatars, or convert photos to Funko Pop / Pop Mart blind box style animations. Triggers: sticker, GIF, cartoon, emoji, expression pack, avatar animation.",
+        "Version":  "1.0.0",
+        "Triggers":  "sticker, GIF, cartoon, emoji, expression pack, avatar animation.",
+        "Path":  "skills/gif-sticker-maker/SKILL.md"
+    },
+    {
+        "Name":  "git-workflow",
+        "Description":  "Conventional commits, branch naming, git hooks, and safe git practices",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/git-workflow/SKILL.md"
+    },
+    {
+        "Name":  "hermes-agent",
+        "Description":  "Enable Hermes Agent to delegate coding tasks to OpenCode specialists and share skills/memory bidirectionally",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/hermes-agent/SKILL.md"
+    },
+    {
+        "Name":  "hermes-integration",
+        "Description":  "Bridge to spawn Hermes Agent as a subagent for complex tasks. Enables OpenCode to delegate to Hermes for scheduling, messaging gateway tasks, or Hermes\u0027s self-improving skill system.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/hermes-integration/SKILL.md"
+    },
+    {
+        "Name":  "ios-application-dev",
+        "Description":  "iOS application development guide covering UIKit, SnapKit, and SwiftUI. Includes touch targets, safe areas, navigation patterns, Dynamic Type, Dark Mode, accessibility, collection views, common UI components, and SwiftUI design guidelines. For detailed references on specific topics, see the reference files. Use when: developing iOS apps, implementing UI, reviewing iOS code, working with UIKit/SnapKit/SwiftUI layouts, building iPhone interfaces, Swift mobile development, Apple HIG compliance, iOS accessibility implementation.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/ios-application-dev/SKILL.md"
+    },
+    {
+        "Name":  "js-modern-patterns",
+        "Description":  "Modern ES2022+ and TypeScript patterns for cleaner, more efficient code",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/js-modern-patterns/SKILL.md"
+    },
+    {
+        "Name":  "minimax-docx",
+        "Description":  "Professional DOCX document creation, editing, and formatting using OpenXML SDK (.NET). The skill provides workflows for generating structured Word documents from templates or data, with support for tables, images, headers/footers, and custom styles.",
+        "Version":  "1.0.0",
+        "Triggers":  "",
+        "Path":  "skills/minimax-docx/SKILL.md"
+    },
+    {
+        "Name":  "minimax-multimodal-toolkit",
+        "Description":  "Use mmx to generate text, images, video, speech, and music via the MiniMax AI platform. Use when the user wants to create media content, chat with MiniMax models, perform web search, or manage MiniMax API resources from the terminal.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/minimax-multimodal-toolkit/SKILL.md"
+    },
+    {
+        "Name":  "minimax-music-gen",
+        "Description":  "Use when user wants to generate music, songs, or audio tracks. Triggers on any request involving music creation, song writing, lyrics generation, audio production, or covers. Also triggers when user provides lyrics and wants them turned into a song, or describes a mood/scene and wants background music. Supports multilingual triggers — match equivalent phrases in any language. Do NOT use for music playback of existing files, music theory questions, or music recommendation without generation.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/minimax-music-gen/SKILL.md"
+    },
+    {
+        "Name":  "minimax-music-playlist",
+        "Description":  "Generate personalized music playlists by analyzing the user\u0027s music taste and generation feedback history. Triggers on any request involving playlist generation, music taste profiling, or personalized music recommendations. Supports multilingual triggers — match equivalent phrases in any language.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/minimax-music-playlist/SKILL.md"
+    },
+    {
+        "Name":  "minimax-pdf",
+        "Description":  "Use this skill when visual quality and design identity matter for a PDF. CREATE (generate from scratch): \u0027make a PDF\u0027, \u0027generate a report\u0027, \u0027write a proposal\u0027, \u0027create a resume\u0027, \u0027beautiful PDF\u0027, \u0027professional document\u0027, \u0027cover page\u0027, \u0027polished PDF\u0027, \u0027client-ready document\u0027. FILL (complete form fields): \u0027fill in the form\u0027, \u0027fill out this PDF\u0027, \u0027complete the form fields\u0027, \u0027write values into PDF\u0027, \u0027what fields does this PDF have\u0027. REFORMAT (apply design to an existing doc): \u0027reformat this document\u0027, \u0027apply our style\u0027, \u0027convert this Markdown/text to PDF\u0027, \u0027make this doc look good\u0027, \u0027re-style this PDF\u0027. This skill uses a token-based design system: color, typography, and spacing are derived from the document type and flow through every page. The output is print-ready. Prefer this skill when appearance matters, not just when any PDF output is needed.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/minimax-pdf/SKILL.md"
+    },
+    {
+        "Name":  "minimax-xlsx",
+        "Description":  "Open, create, read, analyze, edit, or validate Excel/spreadsheet files (.xlsx, .xlsm, .csv, .tsv). Use when the user asks to create, build, modify, analyze, read, validate, or format any Excel spreadsheet, financial model, pivot table, or tabular data file. Covers: creating new xlsx from scratch, reading and analyzing existing files, editing existing xlsx with zero format loss, formula recalculation and validation, and applying professional financial formatting standards. Triggers on \u0027spreadsheet\u0027, \u0027Excel\u0027, \u0027.xlsx\u0027, \u0027.csv\u0027, \u0027pivot table\u0027, \u0027financial model\u0027, \u0027formula\u0027, or any request to produce tabular data in Excel format.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/minimax-xlsx/SKILL.md"
+    },
+    {
+        "Name":  "mmx-cli",
+        "Description":  "Use mmx to generate text, images, video, speech, and music via the MiniMax AI platform. Use when the user wants to create media content, chat with MiniMax models, perform web search, or manage MiniMax API resources from the terminal.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/mmx-cli/SKILL.md"
+    },
+    {
+        "Name":  "msoffice-tools",
+        "Description":  "Word, Excel, PowerPoint document design — advanced patterns for professional, well-structured documents",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/msoffice-tools/SKILL.md"
+    },
+
+    {
+        "Name":  "ocr-tools",
+        "Description":  "OCR (Optical Character Recognition) tools and patterns — Tesseract, EasyOCR, PaddleOCR, RapidOCR, Surya, docTR. Covers installation (Windows/Linux/macOS), preprocessing pipelines, hybrid strategies, postprocessing, and document analysis. Use when extracting text from images, scanned documents, screenshots, or PDFs; building OCR pipelines; or comparing OCR engines.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/ocr-tools/SKILL.md"
+    },
+    {
+        "Name":  "performance-optimization",
+        "Description":  "Performance Optimization Patterns and Best Practices across React, API, DB, and bundle optimization",
+        "Version":  "1.1.0",
+        "Triggers":  null,
+        "Path":  "skills/performance-optimization/SKILL.md"
+    },
+    {
+        "Name":  "ppt-editing-skill",
+        "Description":  "Edit existing PowerPoint files or templates with XML-safe workflows. Use for template-based deck updates: analyze layouts, map content to slides, duplicate/reorder/delete slides safely, edit slide XML in parallel, clean orphaned assets, and repack validated PPTX output.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/ppt-editing-skill/SKILL.md"
+    },
+    {
+        "Name":  "ppt-orchestra-skill",
+        "Description":  "Plan and orchestrate multi-slide PowerPoint creation from scratch. Use before generating a full deck with subagents: classify each slide type, enforce visual variety, set typography/spacing rules, and run text-based QA to catch content issues.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/ppt-orchestra-skill/SKILL.md"
+    },
+    {
+        "Name":  "pptx-generator",
+        "Description":  "Generate, edit, and read PowerPoint presentations. Create from scratch with PptxGenJS (cover, TOC, content, section divider, summary slides), edit existing PPTX via XML workflows, or extract text with markitdown. Triggers: PPT, PPTX, PowerPoint, presentation, slide, deck, slides.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/pptx-generator/SKILL.md"
+    },
+    {
+        "Name":  "pr-review",
+        "Description":  "Review pull requests for the MiniMax Skills repository. Use when reviewing PRs, validating new skill submissions, or checking existing skills for compliance. Run the validation script first for hard checks, then apply quality guidelines for content review. Triggers: PR review, pull request, validate skill, check skill.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/pr-review/SKILL.md"
+    },
+    {
+        "Name":  "progressive-disclosure",
+        "Description":  "OpenCode progressive disclosure system for loading skill content incrementally, minimizing context window waste. Use when designing skill documentation that should reveal information progressively rather than all at once.",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/progressive-disclosure/SKILL.md"
+    },
+    {
+        "Name":  "python-patterns",
+        "Description":  "Modern Python 3.10+ patterns, type hints, FastAPI, Pydantic, and async best practices",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/python-patterns/SKILL.md"
+    },
+    {
+        "Name":  "react-native-dev",
+        "Description":  "React Native and Expo development guide covering components, styling, animations, navigation, state management, forms, networking, performance optimization, testing, native capabilities, and engineering (project structure, deployment, SDK upgrades, CI/CD). Use when: building React Native or Expo apps, implementing animations or native UI, managing state, fetching data, writing tests, optimizing performance, deploying to App Store/Play Store, setting up CI/CD, upgrading Expo SDK, or configuring Tailwind/NativeWind.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/react-native-dev/SKILL.md"
+    },
+    {
+        "Name":  "realtime-patterns",
+        "Description":  "WebSocket, Server-Sent Events, polling, and live update patterns",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/realtime-patterns/SKILL.md"
+    },
+
+    {
+        "Name":  "security-basics",
+        "Description":  "Security best practices, vulnerability prevention, and secure development across web applications, APIs, networks, and embedded systems. Covers: input validation, cryptography fundamentals, OWASP Top 10, AppSec (SAST/DAST), malware analysis, CTF (Capture The Flag), fuzzing, incident response, IoT security, and secure architecture patterns. Use when: fixing vulnerabilities, implementing auth, reviewing code for security, setting up security tooling (SAST/DAST/fuzzing), incident response, penetration testing CTF challenges, hardening web apps, IoT device security.",
+        "Version":  "2.0.0",
+        "Triggers":  "",
+        "Path":  "skills/security-basics/SKILL.md"
+    },
+    {
+        "Name":  "shader-dev",
+        "Description":  "Comprehensive GLSL shader techniques for creating stunning visual effects — ray marching, SDF modeling, fluid simulation, particle systems, procedural generation, lighting, post-processing, and more.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/shader-dev/SKILL.md"
+    },
+    {
+        "Name":  "skill-learning",
+        "Description":  "Agent-managed skill creation — save successful workflows as reusable skills. Auto-triggered after complex tasks (5+ tool calls). Integrates with Hermes Agent\u0027s skill system.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/skill-learning/SKILL.md"
+    },
+    {
+        "Name":  "slide-making-skill",
+        "Description":  "Implement single-slide PowerPoint pages with PptxGenJS. Use when writing or fixing slide JS files: dimensions, positioning, text/image/chart APIs, styling rules, and export expectations for native .pptx output.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/slide-making-skill/SKILL.md"
+    },
+    {
+        "Name":  "testing-standards",
+        "Description":  "Test writing standards, naming conventions, and coverage guidance",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/testing-standards/SKILL.md"
+    },
+
+    {
+        "Name":  "ui-design",
+        "Description":  "UI/UX design patterns — typography, spacing, color, accessibility, and framework-specific design systems (Tailwind, shadcn/ui, Streamlit theming).",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/ui-design/SKILL.md"
+    },
+    {
+        "Name":  "jwt-security",
+        "Description":  "Secure JWT configuration — claims, TTL, cookie flags, session invalidation on password change.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/jwt-security/SKILL.md"
+    },
+    {
+        "Name":  "password-security",
+        "Description":  "Bcrypt/Argon2 password hashing. Rejects MD5, SHA, plain, or custom hashes. Unified error messages for auth failures.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/password-security/SKILL.md"
+    },
+    {
+        "Name":  "sql-safety",
+        "Description":  "Parameterized queries only. PostgreSQL/SQLite type discipline. Idempotent migrations via ON CONFLICT.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/sql-safety/SKILL.md"
+    },
+    {
+        "Name":  "vision-analysis",
+        "Description":  "Analyze, describe, and extract information from images using the MiniMax vision MCP tool. Use when: user shares an image file path or URL (any message containing .jpg, .jpeg, .png, .gif, .webp, .bmp, or .svg file extension) or uses any of these words/phrases near an image: \u0027analyze\u0027, \u0027analyse\u0027, \u0027describe\u0027, \u0027explain\u0027, \u0027understand\u0027, \u0027look at\u0027, \u0027review\u0027, \u0027extract text\u0027, \u0027OCR\u0027, \u0027what is in\u0027, \u0027what\u0027s in\u0027, \u0027read this image\u0027, \u0027see this image\u0027, \u0027tell me about\u0027, \u0027explain this\u0027, \u0027interpret this\u0027, in connection with an image, screenshot, diagram, chart, mockup, wireframe, or photo. Also triggers for: UI mockup review, wireframe analysis, design critique, data extraction from charts, object detection, person/animal/activity identification.",
+        "Version":  "1.0.0",
+        "Triggers":  "any message with an image file extension (jpg, jpeg, png, gif, webp, bmp, svg),",
+        "Path":  "skills/vision-analysis/SKILL.md"
+    },
+
+    {
+        "Name":  "secrets-management",
+        "Description":  "All secrets in env vars or secret manager. .env.example for templates, never real values. Key rotation on exposure.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/secrets-management/SKILL.md"
+    },
+    {
+        "Name":  "no-silent-failure",
+        "Description":  "Never bare except:pass or catch{}. Always log + re-raise minimum. Structured logging with trace IDs.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/no-silent-failure/SKILL.md"
+    },
+    {
+        "Name":  "review-loop",
+        "Description":  "Auto-review changed files until they pass quality gates. Inspired by Greptile + GrepLoop. Triggers: review my code, check for issues, run quality checks, find bugs, gate check.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/review-loop/SKILL.md"
+    },
+    {
+        "Name":  "evaluator-optimizer",
+        "Description":  "Evaluator-optimizer loop - code-builder implements, code-reviewer critiques, loop until quality passes. Use when: complex task, multi-file change, thorough review needed, quality gates, iterative improvement.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/evaluator-optimizer/SKILL.md"
+    },
+    {
+        "Name":  "authmd-registration",
+        "Description":  "auth.md protocol - agent registration and authentication for external services. Two-hop discovery, ID-JAG presentation, credential caching, and fallback to manual API keys.",
+        "Version":  "1.0.0",
+        "Triggers":  null,
+        "Path":  "skills/authmd-registration/SKILL.md"
+    }
+]

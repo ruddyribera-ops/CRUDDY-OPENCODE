@@ -1,0 +1,16 @@
+{
+  "path": "C:\\Users\\Windows\\.config\\opencode\\scripts\\mail.py",
+  "result": {
+    "session_id": "review-1779587133",
+    "files_scanned": 1,
+    "cycles": [
+      {
+        "cycle": 1,
+        "issues": 0,
+        "status": "clean"
+      }
+    ],
+    "total_issues": 0,
+    "passed": true
+  }
+}

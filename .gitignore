@@ -1,134 +1,24 @@
-# OpenCode Config — Template Gitignore
+# Checkpoints — generated every 5min by checkpoint-guard plugin
+memory/checkpoints/
+memory/graph/nodes/
+memory/graph/edges/
 
-# Personal identity (never share these)
-USER.md
+# Tool density logs
+memory/tool-density.jsonl
 
-# Memory files — exclude all except templates + sanitized index
-memory/archive/
-memory/mailboxes/
-memory/checkpoint.yaml
-memory/schedule.yaml
-memory/*.md
-!memory/MEMORY.md
-!memory/*.template.md
+# Gate system markers (ephemeral)
+gates/.density-warning
+gates/.gate-system-init.marker
+gates/.memory-bridge-load.txt
+gates/.task-counter.json
 
-# Personal project deploy configs
-scripts/workflows/*.yml
+# CASS counter
+memory/cass/.counter
+memory/cass/meta.json
 
-# Personal educational documents
-scripts/GUIA-*.docx
-scripts/create_*.py
-scripts/extract_*.py
-scripts/verify_*.py
-scripts/transfer_*.py
-scripts/check_*.py
-scripts/analyze_*.py
-scripts/debug_*.py
-scripts/scrape_*.py
-scripts/try_*.py
-scripts/fill_*.py
-scripts/copy_*.py
-scripts/compare_*.py
-scripts/generate_*.py
-scripts/get_*.py
-scripts/list_*.py
-scripts/unpack_*.py
-scripts/test_parse*.py
+# Session/checkpoint index
+memory/checkpoints/checkpoint_index.jsonl
 
-# Old ETL archive scripts
-scripts/_archive_etl_old_versions/
-scripts/archive/
-
-# Personal project skill directories
-skills/.archive/pria-material-generator/
-skills/.archive/buddy-sings/
-
-# Planning and project docs (internal only)
-CI_CD_READY.md
-DEPLOYMENT_QUICK_START.txt
-DEV_AGENCY_*.md
-FINAL_IMPROVEMENT_POA.md
-HARNESS_IMPROVEMENT_POA.md
-HERMES_INTEGRATION_README.md
-HOOK_*.md
-HOOK_*.txt
-PROVIDER_FAILOVER_SETUP.md
-SYSTEM_OPTIMIZATION_POA.md
-GRAPH_MIGRATION_SOP.md
-smoke_test/
-
-# Auto-generated indexes
-SKILLS_INDEX.json
-audit_inventory.json
-audits/
-
-# Binary and large files
-skills/LEGACY_VAULT.zip
-skills/.archive/frontend-dev/canvas-fonts/*.ttf
-*.zip
-
-# Python package (should be installed via pip, not tracked)
-lib/
-
-# Backup files
-*.bak
-_*_backup_*/**
-_*_backup_*/
-
-# Tool output (runtime artifacts)
-tool-output/
-_source/
-_source_test/
-
-# Extracted MCP tools
-playwright-browsers/
-ms-playwright/
-
-# Secrets (never commit)
-*.env
-.env.*
-**/*.env
-opencode.local.json
-
-# EC private keys — NEVER commit
-.well-known/ec-*.pem
-
-# Node modules
-node_modules/
-
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-
-# OS files
-Thumbs.db
+# OS noise
 .DS_Store
-
-# Intervention tracker logs
-memory/interventions.json
-
-# Runtime state files (auto-generated, session-specific)
-memory/session.yaml
-memory/token_budget.yaml
-memory/kg_queue.json
-memory/auto-memory.log
-hook-errors.log
-
-# Handover files (auto-generated)
-memory/handover/
-
-# Review artifacts
-memory/reviews/
-
-# ── Backup setup additions (Priority 2) ─────────────────────────
-# Large regenerable memory logs
-memory/session_events.jsonl
-memory/gate-system.log
-memory/biome-check.log
-memory/compaction-survival.log
-memory/security-scan.log
-memory/sessions/
-
-# Temp / scratch files
-*.tmp
+Thumbs.db

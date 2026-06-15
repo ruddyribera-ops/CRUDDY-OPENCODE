@@ -1,0 +1,145 @@
+================================================================================
+ACADEMIA CREATIVOS DIGITALES — RESUMEN EJECUTIVO
+================================================================================
+
+FECHA: 2026-05-08
+AUDITOR: OpenCode App-Scraper-Tester
+
+--------------------------------------------------------------------------------
+1. INFORMACIÓN GENERAL
+--------------------------------------------------------------------------------
+
+Platform: Moodle 4.x (LMS)
+URL Base: https://academia.creativos-digitales.com
+Login: https://academia.creativos-digitales.com/login/index.php
+
+--------------------------------------------------------------------------------
+2. ACCESO
+--------------------------------------------------------------------------------
+
+Usuario: misterruddy@laspalmas.edu.bo
+Contraseña: Capacitaciones2025
+Rol: Docente-Escuela
+Colegio: Las Palmas School - 1008
+
+--------------------------------------------------------------------------------
+3. ESTADÍSTICAS DE CURSOS
+--------------------------------------------------------------------------------
+
+TOTAL CURSOS ENROLADOS: 47
+├── ACCESIBLES: 47 (100%)
+├── BLOQUEADOS: 0
+└── ALIAS: 0
+
+CURSOS POR CATEGORÍA:
+├── 2601 (nivel junior/coder/developer/senior): 21 cursos
+├── Las Palmas School (Grados): 6 cursos (1º-6º Grado)
+├── Las Palmas School (Años): 5 cursos (1º-5º Año)
+├── Las Palmas School Robótica (Grados): 6 cursos
+├── Las Palmas School Robótica (Años): 5 cursos
+├── Club de Programadores: 2 cursos
+├── Cápsulas: 4 cursos (referencias cruzadas)
+└── Bienvenidos: 1 curso
+
+--------------------------------------------------------------------------------
+4. ESTRUCTURA DEL SITIO
+--------------------------------------------------------------------------------
+
+/ (home) → redirige a /my/
+├── /login/ — Login Moodle
+├── /my/ — Dashboard (25 cursos visibles en grid)
+├── /course/ — Catálogo (33 páginas de categorías)
+├── /calendar/view.php — Calendario de eventos
+├── /notification/ — Notificaciones (1 nueva)
+├── /message/ — Sistema de mensajería
+├── /user/profile.php — Perfil de usuario
+└── /grade/report/ — Informes de calificaciones
+
+--------------------------------------------------------------------------------
+5. CURSOS ENROLADOS (47 cursos)
+--------------------------------------------------------------------------------
+
+2601-CODERS (21):
+  9142 - Junior 1
+  9161 - Junior 2
+  9186 - Junior 3
+  9187 - Coder 1
+  9188 - Coder 2
+  9191 - Coder 3
+  9346 - Developer 1 (GB)
+  9166 - Developer 2
+  9349 - Developer 3
+  9358 - Senior 1
+  9360 - Senior 2
+  9353 - Makey Makey 1
+  9185 - Makey Makey 2
+  9354 - Makey Makey 4
+  9249 - Tinkercad Bloques 1
+  9348 - Tinkercad Arduino 1
+  9146 - Cápsulas Junior
+  9344 - Cápsulas Coder
+  9345 - Cápsulas Developer
+  9362 - Cápsulas Senior
+  10737 - Junior 1 - Ed. Soc.
+
+LAS PALMAS SCHOOL (22):
+  13433-13438 - Grados 1-6
+  13439-13443 - Años 1-5
+  13444-13449 - Robótica Grados 1-6
+  13450-13454 - Robótica Años 1-5
+
+OTROS (4):
+  13080 - Club de Programadores - Liga Minecraft
+  13079 - Club de Programadores - Liga Scratch
+  6297 - Bienvenidos a Creativos Digitales - Las Palmas
+
+--------------------------------------------------------------------------------
+6. CATEGORÍAS DEL CATÁLOGO (20+ visibles)
+--------------------------------------------------------------------------------
+
+Cursos Colegios, Capacitaciones internas Colegios, Talleres de Formación 
+Continua, Capacitadores, General, Club de Programadores, Inducciones, 
+Programación y Creatividad, Alcaldía de Medellín, + muchas más
+
+--------------------------------------------------------------------------------
+7. FUNCIONALIDADES VERIFICADAS
+--------------------------------------------------------------------------------
+
+[X] Login funcional
+[X] Dashboard con grid de cursos
+[X] Acceso a cursos enrolados
+[X] Navegación por secciones de curso
+[X] Bloques de contenido Genially embebidos
+[X] Panel de administración de curso
+[X] Calendario con filtros
+[X] Sistema de notificaciones (1 nueva)
+[X] Cambio de idioma (English disponible)
+
+--------------------------------------------------------------------------------
+8. ARQUITECTURA
+--------------------------------------------------------------------------------
+
+- LMS: Moodle 4.x (PHP)
+- Contenido embebido: Genially iframes
+- Videollamadas: Google Meet
+- Admin panel: https://gestion.creativos-digitales.com (separado)
+
+--------------------------------------------------------------------------------
+9. ARCHIVOS GENERADOS
+--------------------------------------------------------------------------------
+
+1. C:\Users\Windows\.config\opencode\audits\academia-creativos\2026-05-08\Blueprint.md
+2. C:\Users\Windows\.config\opencode\audits\academia-creativos\2026-05-08\blueprint.json
+3. C:\Users\Windows\.config\opencode\audits\academia-creativos\2026-05-08\SUMMARY.txt
+
+--------------------------------------------------------------------------------
+10. NO DOCUMENTADO (por scope)
+--------------------------------------------------------------------------------
+
+- Contenido completo de cada sección de cada curso
+- Todas las 33 páginas del catálogo
+- Sistema de mensajería con otros usuarios
+- Calificaciones detalladas
+- Informes avanzados
+
+================================================================================

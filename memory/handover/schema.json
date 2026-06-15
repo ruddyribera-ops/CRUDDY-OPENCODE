@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "description": "Structured handoff contract between agents (LangGraph Command pattern adapted for file-based)",
+  "research_sources": [
+    "LangGraph Command(goto) — typed state schemas, scoped updates",
+    "Augment Code multi-agent orchestration — 36.94% coordination failures without contracts",
+    "Addy Osmani micro-specs — decompose features into atomic contracts"
+  ],
+  "required_fields": {
+    "task_id": "string — unique identifier (YYYY-MM-DD-NNN)",
+    "from_agent": "string — sending agent name",
+    "to_agent": "string — receiving agent name",
+    "intent": "string — one-sentence description of what to do",
+    "input": "object — typed input data matching input_schema",
+    "expected_output": "object — typed output data matching output_schema",
+    "verify_command": "string — runnable command to validate output (exit 0 = pass)",
+    "created_at": "string — ISO 8601 timestamp"
+  },
+  "optional_fields": {
+    "priority": "low | medium | high | critical (default: medium)",
+    "timeout_seconds": "number — max execution time (default: 300)",
+    "context_files": "string[] — files to load into agent context",
+    "context_skills": "string[] — skills to inject (matches SKILLS_INDEX.json names)",
+    "context_genes": "string[] — DNA gene IDs to inject",
+    "rollback_plan": "string — what to do if verify_command fails",
+    "depends_on": "string[] — task_ids that must complete first"
+  },
+  "input_schema_template": {
+    "type": "object",
+    "properties": {
+      "files": { "type": "array", "items": { "type": "string" } },
+      "params": { "type": "object" }
+    },
+    "required": ["files"]
+  },
+  "output_schema_template": {
+    "type": "object",
+    "properties": {
+      "result": { "type": "string" },
+      "artifacts": { "type": "array", "items": { "type": "string" } },
+      "tier_evidence": { "type": "integer", "minimum": 0, "maximum": 3 }
+    },
+    "required": ["result", "tier_evidence"]
+  },
+  "usage": "Coordinator writes handoff to memory/handover/<task_id>.json before routing. Specialist reads, validates against schema, executes, then writes output matching output_schema. Coordinator runs verify_command to confirm."
+}
