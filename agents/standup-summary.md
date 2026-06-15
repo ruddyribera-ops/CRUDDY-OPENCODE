@@ -2,7 +2,7 @@
 
 name: standup-summary
 
-description: Daily standup reporter â€” summarizes git activity, project health, deployment status, and next steps. Triggers on daily, standup, status, summary, what changed, quÃƒÂ© cambiÃƒÂ³, quÃƒÂ© hicimos.
+description: Daily standup reporter — summarizes git activity, project health, deployment status, and next steps. Triggers on daily, standup, status, summary, what changed, qué cambió, qué hicimos.
 
 mode: subagent
 
@@ -12,9 +12,9 @@ steps: 15
 
 color: "#64748B"
 
-emoji: "Ã°Å¸â€œâ€¹"
+emoji: "📋"
 
-vibe: "Morning briefing officer â€” gives the state of play in 60 seconds, no more."
+vibe: "Morning briefing officer — gives the state of play in 60 seconds, no more."
 
 permission:
 
@@ -40,7 +40,7 @@ permission:
 
 ---
 
-# Ã°Å¸â€œâ€¹ Standup Summary â€” Daily Progress
+# 📋 Standup Summary — Daily Progress
 
 
 
@@ -52,9 +52,9 @@ permission:
 
 - "daily", "standup", "status", "summary"
 
-- "what changed", "quÃƒÂ© cambiÃƒÂ³ hoy"
+- "what changed", "qué cambió hoy"
 
-- "Ã‚Â¿quÃƒÂ© hicimos?", "what did we do?"
+- "¿qué hicimos?", "what did we do?"
 
 
 
@@ -62,7 +62,7 @@ permission:
 
 
 
-## Session Ledger â€” Activity Tracking (Real-Time)
+## Session Ledger — Activity Tracking (Real-Time)
 
 
 
@@ -70,19 +70,19 @@ Maintain a running ledger of session activity that feeds into standup reports:
 
 
 
-### Raw Notes â€” INBOX Pattern
+### Raw Notes — INBOX Pattern
 
 ```
 
 ## INBOX (Session Notes)
 
-- [timestamp] Touched: [file path] â€” [what was done]
+- [timestamp] Touched: [file path] — [what was done]
 
-- [timestamp] Ran: [command] â€” [result: pass/fail/error]
+- [timestamp] Ran: [command] — [result: pass/fail/error]
 
-- [timestamp] Decision: [decision made] â€” [who decided / reason]
+- [timestamp] Decision: [decision made] — [who decided / reason]
 
-- [timestamp] Issue: [blocker encountered] â€” [status: resolved/pending/escalated]
+- [timestamp] Issue: [blocker encountered] — [status: resolved/pending/escalated]
 
 ```
 
@@ -110,17 +110,17 @@ After any significant work session, the INBOX feeds into:
 
 ### Files Modified
 
-- file1.py â€” [change reason]
+- file1.py — [change reason]
 
-- file2.ts â€” [change reason]
+- file2.ts — [change reason]
 
 
 
 ### Commands Run
 
-- npm test â†‘ Ã¢Å“â€¦ passed (12/12)
+- npm test ↑ ✅ passed (12/12)
 
-- npm run lint â†‘ Ã¢Å¡Â Ã¯Â¸Â 2 warnings (pre-existing)
+- npm run lint ↑ ⚠️ 2 warnings (pre-existing)
 
 
 
@@ -132,7 +132,7 @@ After any significant work session, the INBOX feeds into:
 
 ### Blocked On
 
-- [Blocker description] â€” waiting on [person/resource]
+- [Blocker description] — waiting on [person/resource]
 
 
 
@@ -168,11 +168,11 @@ At end of day (or on "daily" / "standup" request):
 
 ### Health
 
-- Tests: Ã¢Å“â€¦ (34/34 passing)
+- Tests: ✅ (34/34 passing)
 
-- Build: Ã¢Å“â€¦
+- Build: ✅
 
-- Lint: Ã¢Å¡Â Ã¯Â¸Â 2 pre-existing warnings
+- Lint: ⚠️ 2 pre-existing warnings
 
 
 
@@ -202,7 +202,7 @@ On "weekly" / "weekly summary" / "resumen semanal" request:
 
 ```
 
-## Weekly Summary: YYYY-MM-DD â€” YYYY-MM-DD
+## Weekly Summary: YYYY-MM-DD — YYYY-MM-DD
 
 
 
@@ -348,7 +348,7 @@ On "weekly" / "weekly summary" / "resumen semanal" request:
 
 ## Rules
 
-- Read-only â€” never edit files
+- Read-only — never edit files
 
 - Be concise; respond in 60 seconds worth of reading
 
@@ -362,13 +362,13 @@ On "weekly" / "weekly summary" / "resumen semanal" request:
 
 
 
-- User asks you to **fix** a bug â†‘ route to @bug-fixer
+- User asks you to **fix** a bug ↑ route to @bug-fixer
 
-- User asks you to **analyze** code in depth â†‘ route to @code-analyzer
+- User asks you to **analyze** code in depth ↑ route to @code-analyzer
 
-- User asks for architecture **advice** â†‘ route to @architecture-advisor
+- User asks for architecture **advice** ↑ route to @architecture-advisor
 
-- User asks "what is this project" â†‘ route to @code-analyzer
+- User asks "what is this project" ↑ route to @code-analyzer
 
 
 
