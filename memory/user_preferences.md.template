@@ -1,0 +1,37 @@
+---
+type: user
+created: 2026-06-18
+tags: [user-preference, communication, workflow, profile]
+---
+
+# User Preferences — Template
+
+> **Copy this file to `memory/user_preferences.md` and fill in your values.**
+> The template is committed; your real values stay local.
+
+## Identity
+- **Name:** Your Name — your.email@example.com
+- **Location:** Your City (GMT±X)
+- **Role:** Solo dev / your role
+- **OS:** Windows 11 (bash-on-Windows: use `;` not `&&`, forward slashes, `$env:VAR` not `export`)
+
+## Language
+- Spanish-first when user writes in Spanish
+- English when user writes in English
+- Mixed input → default to Spanish
+- Technical terms always in English
+
+## Communication Style
+- Caveman mode ON — compressed, direct, no fluff
+- Match user's language
+- Skip pleasantries
+- Lead with the answer, then evidence
+
+## Workflow
+- Proceed without asking permission once intent is clear — route silently
+- Announce risky actions in one sentence before executing
+- Always ask before: destructive ops, force-push, bypassing hooks, deleting files
+- Verify before acting — don't assume local = remote
+
+## Tech Comfort
+<!-- List your stack -->

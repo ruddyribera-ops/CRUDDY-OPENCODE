@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Runtime state
+gates/
+.opencode/memory.db
+.opencode/memory.db-journal
+.opencode/memory.db-shm
+.opencode/memory.db-wal
+.opencode/*.done
+.opencode/*.marker
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local config (user-specific)
+memory/user_preferences.md
+memory/session_log.md
+memory/session_events.jsonl
+memory/*.log
+
+# Backups (not part of repo)
+D:\Temp\opencode/
+backups/
+
+# Large binaries (excluded from repo — download via script)
+factory/tools/codebase-memory-mcp/*.exe
+
+# Secrets (defense in depth — keys should be env vars anyway)
+.env
+.env.local
+*.pem
+*.key
