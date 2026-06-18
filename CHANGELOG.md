@@ -26,3 +26,16 @@ All notable changes to CRUDDY-OPENCODE are documented here.
 - Windows-only (designed for Windows 11; WSL2 untested)
 - No public benchmark yet — v0.2.0 will add autoresearch effectiveness benchmark
 - Documentation is functional, not polished — README + factory/README + this CHANGELOG are the entry points
+
+## [0.1.1] - 2026-06-18
+
+### Added
+- **Origin Story** section crediting [opencode-power-setup](https://github.com/ruddyribera-ops/opencode-power-setup) as the predecessor
+- **Agents on Deck** — documented all 21 agents (was previously listed as ~10)
+- **Skills Catalog** — corrected count to 54 active + 29 archived (was previously listed as 9 curated)
+- **MCP Servers** — listed all 5 (was previously listed as 2)
+- **Plugins** — corrected count to 12 (was previously listed as 10)
+- **By the Numbers** table
+
+### Fixed
+- Removed `git-init.ps1` from public repo (contained PII; was internal agent script)

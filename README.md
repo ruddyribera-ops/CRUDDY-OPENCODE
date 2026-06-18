@@ -3,16 +3,78 @@
 > A self-improving, safety-conscious, memory-augmented OpenCode config.
 > Born from a real incident. Designed for one person who never wants to lose data again.
 
-## What It Is
+## Origin Story
 
-CRUDDY-OPENCODE is a custom configuration for [OpenCode](https://opencode.ai/) that turns it into a self-improving, memory-augmented coding assistant. Every piece is local, every batch file operation is preceded by an automatic snapshot, and the system runs an overnight loop that quietly improves the config itself.
+CRUDDY-OPENCODE is the direct evolution of **[opencode-power-setup](https://github.com/ruddyribera-ops/opencode-power-setup)** (the predecessor, 1 stars, MIT). That repo was a turnkey template — 10 agents, 55 skills, DAG orchestration, challenger rule, memory system. CRUDDY-OPENCODE keeps all of that and adds:
 
-**Distinctive features:**
-- 🧬 **Self-improving autoresearch loop** — Karpathy's `autoresearch` pattern, applied to your config files. Every night at 2 AM, the system picks a config file, makes a small change, evaluates whether it improved, and keeps it or reverts. Over time, the config gets better without you touching it.
-- 🛡️ **Incident-aware safety net** — A real data loss event (2026-06-17, 16 teacher planning documents destroyed) is encoded into a permanent rule that prevents the same failure mode. See [`docs/PDC_INCIDENT_CAUTIONARY_TALE.md`](docs/PDC_INCIDENT_CAUTIONARY_TALE.md).
-- 🧠 **Hybrid memory retrieval** — BM25 + vector embeddings + knowledge graph, all running locally on `sentence-transformers/all-MiniLM-L6-v2`. 87 indexed memories at v0.1.0, queryable in ~1 second. $0 cost.
-- 🔌 **Hook automation** — OpenCode JS plugin fires on session lifecycle events, with a 90-second forced-idle fallback so it works even when OpenCode's event delivery is unreliable.
-- 📦 **Consolidated structure** — All system code lives under `factory/`. No scattered files.
+- 🧬 **Self-improving autoresearch loop** (Karpathy pattern) — overnight config improvement
+- 🛡️ **Incident-aware safety net** (born from the 2026-06-17 PDC destruction — see [`docs/PDC_INCIDENT_CAUTIONARY_TALE.md`](docs/PDC_INCIDENT_CAUTIONARY_TALE.md))
+- 🧠 **Hybrid memory retrieval** (BM25 + vector + graph, 100% local, $0 cost)
+- 🔌 **Hook automation with 90s forced-idle fallback**
+- 📦 **Consolidated `factory/` single-source-of-truth structure**
+
+If you're coming from opencode-power-setup: everything you knew still works. CRUDDY-OPENCODE inherits the full agent roster and skill ecosystem, then enhances it.
+
+## What's Inside
+
+### 🤖 Agents on Deck (21)
+
+| Agent | Role |
+|-------|------|
+| `account-manager` | Client-facing persona, orchestrates work via specialists |
+| `main-coordinator` | Routes requests, owns the workflow, default agent |
+| `code-builder` | Writes code, implements features, refactors |
+| `bug-fixer` | Debug specialist — root cause analysis, error resolution |
+| `code-analyzer` | Project scanner — structure, patterns, dependencies |
+| `code-explainer` | Plain-language code explanation |
+| `code-reviewer` | Code quality reviewer — quality gates, security, style |
+| `architecture-advisor` | Tech decisions, tradeoffs, stack choice |
+| `solutions-architect` | Multi-agent project scaffolding |
+| `project-manager` | Sprint planning, standups, retrospectives |
+| `project-generator` | Full multi-agent project generator |
+| `qa-engineer` | Test plans, acceptance testing, bug triage |
+| `delivery-engineer` | Deploy, CI/CD, verification |
+| `tech-lead` | Technical oversight, code quality routing |
+| `tech-writer` | Documentation engineer |
+| `designer` | Design systems, UI/UX, visual artifacts |
+| `cybersecurity` | Security audits, threat modeling, OWASP |
+| `support` | Customer support triage |
+| `evolution-agent` | Self-improvement, pattern detection |
+| `skill-manager` | Skill creation, management, lifecycle |
+| `standup-summary` | Daily status, git activity, progress |
+
+### 🛠️ Skills Catalog (54 active + 29 archived = 83 total)
+
+**Active (54) in `skills/`:** account-manager, android-native-dev, api-patterns, auth-patterns, authmd-registration, autoresearch, awesome-ask-questions-if-underspecified, awesome-differential-review, awesome-investigate, awesome-office-hours, awesome-webapp-testing, browser-robust, ci-cd-patterns, code-review, cs-fundamentals, data-analysis, database-patterns, delivery-engineer, deployment-patterns, design, desktop-manager, evaluator-optimizer, flutter-dev, frontend-design, git-workflow, ios-application-dev, js-modern-patterns, jwt-security, karpathy-guidelines, memory-retrieval, msoffice-tools, no-silent-failure, ocr-tools, opensource, password-security, performance-optimization, project-manager, python-patterns, qa-engineer, react-native-dev, realtime-patterns, review-loop, secrets-management, security-basics, skill-learning, solutions-architect, sql-safety, superpowers-subagent-driven-development, superpowers-systematic-debugging, superpowers-test-driven-development, superpowers-writing-skills, tech-lead, testing-standards, ui-design
+
+**Archived (29)** in `skills/.archive/` — kept for reference, not auto-loaded.
+
+### 🔌 MCP Servers (5)
+
+| Server | Purpose |
+|--------|---------|
+| `auto-browser` | Browser automation |
+| `codebase-memory` | Structural code intelligence (knowledge graph queries) |
+| `context7` | Library documentation lookup |
+| `fetch` | HTTP fetching |
+| `playwright` | Browser automation & testing |
+
+### 🛠️ Plugins (12)
+
+12 OpenCode JS plugins in `plugins/` covering checkpoint, sub-agent, tool guards, memory bridge, compaction survival, session title, biome formatting, and the session-start-memory hook.
+
+### 📊 By the Numbers
+
+| Component | Count |
+|-----------|-------|
+| Agents | 21 |
+| Skills (active) | 54 |
+| Skills (archived) | 29 |
+| Plugins (.js) | 12 |
+| MCP servers | 5 |
+| Rule files | 31 |
+| Pre-flight tools | 2 (PS1 + Python) |
+| Scheduled tasks | 2 (nightly autoresearch + memory watcher) |
 
 ## Quickstart (5 minutes)
 
@@ -70,7 +132,7 @@ powershell -ExecutionPolicy Bypass -File <INSTALL_DIR>/factory/tools/preflight-s
 
 If all three return without errors, you're set.
 
-## What's Inside
+## What's Inside (Filesystem)
 
 ```
 CRUDDY-OPENCODE/
@@ -82,7 +144,7 @@ CRUDDY-OPENCODE/
 │   ├── tools/                  # Pre-flight snapshot + MCP binaries
 │   ├── planning/               # Architecture specs (mem-retrieval, mem-v2)
 │   └── docs/                   # HOOKS.md, ARCHITECTURE.md
-├── plugins/                    # OpenCode JS plugins (10 total)
+├── plugins/                    # OpenCode JS plugins (12 total)
 ├── rules/
 │   └── agent_rules/
 │       └── batch-file-modification-safety.md  # Born from PDC incident
@@ -107,6 +169,15 @@ CRUDDY-OPENCODE was built in 48 hours by a solo developer who needed an AI codin
 4. **The developer wanted it all in one place.** Hence `factory/`.
 
 ## FAQ
+
+**Q: I used opencode-power-setup before. Will this work the same way?**
+A: Yes. CRUDDY-OPENCODE is built on top of power-setup's foundation. All 21 agents and 54 inherited skills still work. The new pieces (autoresearch, hybrid memory, safety net) are additive.
+
+**Q: How do I get the latest v0.1.x?**
+A: `git pull` after cloning. Tags: `v0.1.0` (initial), `v0.1.1` (origin story + accurate docs).
+
+**Q: Why is the skill count 54+29?**
+A: 54 active skills auto-load. 29 archived skills are kept for reference but don't activate. Total catalog: 83.
 
 **Q: Does this work on Mac/Linux?**
 A: Untested. The pre-flight snapshot tools have Windows-specific paths. The autoresearch skill and memory retrieval are cross-platform. PRs welcome.
