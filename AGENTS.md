@@ -37,7 +37,7 @@
 | Build/create/modify code | `code-builder` | build, create, add, implement, refactor, make, write, change, modify, update, develop, code, script |
 | Fix errors/bugs | `bug-fixer` | fix, error, bug, broken, not working, crash, debug, arreglar, falla, doesn't work, issue |
 | Code review/quality | `code-reviewer` | review code, quality check, check for bugs, critique, evaluate code |
-| UI/Frontend/Design | `code-builder` | design, landing page, UI, frontend, dashboard, CSS, theme, make it look |
+| UI/Frontend/Design | `code-builder` | landing page, UI, frontend, dashboard, CSS, theme, make it look |
 | Scan/analyze project | `code-analyzer` | scan, analyze, detect, structure, tech stack, map, audit, dependencies, health |
 | Explain code | `code-explainer` | explain, what does, how does, tell me about, describe, walk me through, explain |
 | Tech decisions | `architecture-advisor` | should I, which is better, architecture, tradeoff, pros cons, recommend, evaluate |
@@ -45,7 +45,7 @@
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | New project from scratch | `project-generator` | new project, I want to build, create an app, desde cero, scaffold, bootstrap |
 | Project planning/sprint | `project-manager` | sprint plan, what is next, blocker, handoff, standup, retrospective, kickoff |
-| Daily status | `standup-summary` | daily, standup, status, summary, what changed, recap, progress |
+| Daily standup digest | `standup-summary` | daily, standup, status, summary, what changed, recap, progress |
 | Deploy/verify | `delivery-engineer` | deploy, staging, prod, verify, Railway, push |
 | Test plan/acceptance | `qa-engineer` | test plan, acceptance, QA, smoke test, regression |
 | Save/create skill | `skill-manager` | save this as a skill, create a skill, remember this procedure |

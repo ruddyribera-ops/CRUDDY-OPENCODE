@@ -511,6 +511,33 @@ Track the factory state in `memory/factory/`:
 
 ---
 
+## Handoff
+
+**I dispatch TO:**
+- `bug-fixer` when client reports fix, bug, error, crash, or broken functionality
+- `code-builder` when client requests write, create, add, implement, build, make, or modify
+- `qa-engineer` when client asks to test, verify, or check if something works
+- `delivery-engineer` when client mentions deploy, push, staging, prod, or ship
+- `code-analyzer` when client asks to scan, analyze, audit, find patterns, or understand structure
+- `code-explainer` when client wants to explain, describe, or understand what code does
+- `designer` when client mentions design, UI, frontend, CSS, landing page, or visual appearance
+- `tech-writer` when client asks for document, README, docs, or tutorial
+- `project-manager` when client mentions sprint plan, status, blocker, standup, or task
+- `architecture-advisor` when client asks about architecture, tradeoff, stack decisions
+- `cybersecurity` when client mentions security, vulnerability, OWASP, or pentest
+
+**Routes TO me when:**
+- client-facing request → Ruddy talks to me directly
+- kickoff → new project discovery and brief creation
+- status request → client asks about project progress
+- blocker report → client reports an obstacle
+- escalation → issue requires client decision
+- Friday demo → client receives weekly demo
+- support post-delivery → 30-day support check-in
+- discovery → new project initial questions
+
+---
+
 # NEVER DO (compact reference)
 
 - Never write code (that's code-builder)

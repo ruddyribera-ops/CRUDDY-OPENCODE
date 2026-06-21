@@ -2,7 +2,7 @@
 name: common
 description: Cross-cutting rules that apply to ALL agents. The single source of truth for tool-call budgets, banned phrases, frontmatter template, handoff format, and forbidden action enforcement.
 triggers: applies to all agents by default
-applies_to: all 21 agents in agents/
+applies_to: all agents in agents/ (currently 6, growing to 21 by v0.4.0)
 ---
 
 # Common Agent Rules (Cross-Cutting)
@@ -71,8 +71,26 @@ forbidden_triggers:
 - `do_not`: forbidden actions (in agent's own words)
 - `triggers`: list of phrases that activate this agent
 - `forbidden_triggers`: list of phrases that should NOT activate this agent (use the alternative)
+- **Trigger format: lowercase + no chars outside `[a-z0-9 _-]`, spaces allowed.** Hyphens optional but consistent within a file preferred.
 
 **Why this exists:** inconsistent frontmatter makes agent discovery unreliable. Some agents have rich frontmatter, others have none. This is the standard.
+
+### 3.1. Dual-Schema Convention
+
+Agents in `agents/` and skills in `skills/` use different frontmatter schemas because they are different artifact types:
+
+| Artifact | Schema | Source |
+|----------|--------|--------|
+| `agents/` | INTERNAL schema: `do_not`, `triggers`, `forbidden_triggers` | This template |
+| `skills/` | Agent Skills STANDARD schema: `do not`, `Commands`, `Returns`, `Notes` | Upstream Claude Skills convention |
+
+**Skills/ is NOT to be migrated to the internal schema.** It is a different artifact type with different consumers and a different upstream standard.
+
+**When to use each:**
+
+- **Use `agents/` when:** defining an agent that receives dispatched tasks from the coordinator/handoff system. Agents have triggers, forbidden_triggers, and explicit do_not lists.
+- **Use `skills/` when:** creating a reusable workflow pattern, checklist, or specialized procedure that any agent can load via the `skill` tool. Skills are imported, not dispatched.
+- **Why both exist:** Agents are the *actors* (receive work, execute, delegate). Skills are the *capabilities* (reusable patterns that agents consume). One is a person, the other is a playbook.
 
 ## 4. Handoff Format (Canonical)
 
