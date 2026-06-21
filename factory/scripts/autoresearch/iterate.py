@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Paths
 CONFIG_DIR = Path.home() / ".config" / "opencode"
-AUTORESEARCH_DIR = CONFIG_DIR / "scripts" / "autoresearch"
+AUTORESEARCH_DIR = Path(__file__).parent
 PREPARE_PY = AUTORESEARCH_DIR / "prepare.py"
 RESULTS_TSV = AUTORESEARCH_DIR / "results.tsv"
 GIT_DIR = CONFIG_DIR / ".git"

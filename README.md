@@ -5,13 +5,14 @@
 
 ## Origin Story
 
-CRUDDY-OPENCODE is the direct evolution of **[opencode-power-setup](https://github.com/ruddyribera-ops/opencode-power-setup)** (the predecessor, 1 stars, MIT). That repo was a turnkey template — 10 agents, 55 skills, DAG orchestration, challenger rule, memory system. CRUDDY-OPENCODE keeps all of that and adds:
+CRUDDY-OPENCODE is the direct evolution of **[opencode-power-setup](https://github.com/ruddyribera-ops/opencode-power-setup)** (the predecessor, 1 star, MIT). That repo was a turnkey template — 10 agents, 55 skills, DAG orchestration, challenger rule, memory system. CRUDDY-OPENCODE keeps all of that and adds:
 
 - 🧬 **Self-improving autoresearch loop** (Karpathy pattern) — overnight config improvement
 - 🛡️ **Incident-aware safety net** (born from the 2026-06-17 PDC destruction — see [`docs/PDC_INCIDENT_CAUTIONARY_TALE.md`](docs/PDC_INCIDENT_CAUTIONARY_TALE.md))
 - 🧠 **Hybrid memory retrieval** (BM25 + vector + graph, 100% local, $0 cost)
 - 🔌 **Hook automation with 90s forced-idle fallback**
 - 📦 **Consolidated `factory/` single-source-of-truth structure**
+- 📚 **Self-improving rule library** (4 rules, each born from a real incident)
 
 If you're coming from opencode-power-setup: everything you knew still works. CRUDDY-OPENCODE inherits the full agent roster and skill ecosystem, then enhances it.
 
@@ -45,9 +46,7 @@ If you're coming from opencode-power-setup: everything you knew still works. CRU
 
 ### 🛠️ Skills Catalog (54 active + 29 archived = 83 total)
 
-**Active (54) in `skills/`:** account-manager, android-native-dev, api-patterns, auth-patterns, authmd-registration, autoresearch, awesome-ask-questions-if-underspecified, awesome-differential-review, awesome-investigate, awesome-office-hours, awesome-webapp-testing, browser-robust, ci-cd-patterns, code-review, cs-fundamentals, data-analysis, database-patterns, delivery-engineer, deployment-patterns, design, desktop-manager, evaluator-optimizer, flutter-dev, frontend-design, git-workflow, ios-application-dev, js-modern-patterns, jwt-security, karpathy-guidelines, memory-retrieval, msoffice-tools, no-silent-failure, ocr-tools, opensource, password-security, performance-optimization, project-manager, python-patterns, qa-engineer, react-native-dev, realtime-patterns, review-loop, secrets-management, security-basics, skill-learning, solutions-architect, sql-safety, superpowers-subagent-driven-development, superpowers-systematic-debugging, superpowers-test-driven-development, superpowers-writing-skills, tech-lead, testing-standards, ui-design
-
-**Archived (29)** in `skills/.archive/` — kept for reference, not auto-loaded.
+See `skills/AWESOME_INDEX.md` for the full list. Inherited from opencode-power-setup, augmented with 5 from `awesome-agent-skills` and 4 from `obra/superpowers`.
 
 ### 🔌 MCP Servers (5)
 
@@ -63,6 +62,19 @@ If you're coming from opencode-power-setup: everything you knew still works. CRU
 
 12 OpenCode JS plugins in `plugins/` covering checkpoint, sub-agent, tool guards, memory bridge, compaction survival, session title, biome formatting, and the session-start-memory hook.
 
+### 📚 Self-Improving Rule Library (4 rules)
+
+Each rule was born from a real incident. The library grows when the system fails:
+
+| Rule | Source Incident | Date |
+|------|----------------|------|
+| `batch-file-modification-safety.md` | PDC destruction (16 files lost) | 2026-06-17 |
+| `account-manager-discipline.md` | PRIA v10 demo prep (AM touched code) | 2026-06-18 |
+| `sprint-methodology.md` | World Cup Budokai (6 cancellations) | 2026-06-20 |
+| `common.md` | Cross-cutting patterns (audit) | 2026-06-21 |
+
+Read these before assuming any rule is arbitrary. Each has a story.
+
 ### 📊 By the Numbers
 
 | Component | Count |
@@ -72,7 +84,7 @@ If you're coming from opencode-power-setup: everything you knew still works. CRU
 | Skills (archived) | 29 |
 | Plugins (.js) | 12 |
 | MCP servers | 5 |
-| Rule files | 31 |
+| Rule files | 4 |
 | Pre-flight tools | 2 (PS1 + Python) |
 | Scheduled tasks | 2 (nightly autoresearch + memory watcher) |
 
@@ -136,24 +148,22 @@ If all three return without errors, you're set.
 
 ```
 CRUDDY-OPENCODE/
-├── factory/                    # All system code (single source of truth)
-│   ├── scripts/
-│   │   ├── autoresearch/       # Self-improving loop (Karpathy pattern)
-│   │   └── memory_retrieval/   # Hybrid BM25 + vector + graph retrieval
-│   ├── hooks/                  # Session-start hook scripts
+├── factory/                    # Single source of truth for system code
+│   ├── scripts/autoresearch/   # Self-improving loop
+│   ├── scripts/memory_retrieval/   # Hybrid BM25 + vector + graph
+│   ├── hooks/                  # Session-start hook
 │   ├── tools/                  # Pre-flight snapshot + MCP binaries
-│   ├── planning/               # Architecture specs (mem-retrieval, mem-v2)
-│   └── docs/                   # HOOKS.md, ARCHITECTURE.md
-├── plugins/                    # OpenCode JS plugins (12 total)
+│   └── planning/               # Architecture specs
+├── plugins/                    # 12 OpenCode JS plugins
 ├── rules/
-│   └── agent_rules/
-│       └── batch-file-modification-safety.md  # Born from PDC incident
-├── skills/
-│   ├── awesome-*/              # 5 skills from awesome-agent-skills
-│   └── superpowers-*/          # 4 skills from obra/superpowers
-├── opencode.json               # OpenCode config (with env-var key refs)
-├── memory/
-│   └── user_preferences.md.template  # ← copy to user_preferences.md locally
+│   ├── agent_rules/            # 4 rules (3 incident-derived + 1 common)
+│   └── common.md               # Cross-cutting rules
+├── skills/                     # 54 active + 29 archived
+├── agents/                     # 21 agent definitions
+├── opencode.json               # OpenCode config
+├── memory/user_preferences.md.template
+├── docs/PDC_INCIDENT_CAUTIONARY_TALE.md
+├── SYSTEM_FLOW.md              # Master agent interaction graph
 ├── LICENSE
 ├── CHANGELOG.md
 └── README.md
@@ -167,17 +177,24 @@ CRUDDY-OPENCODE was built in 48 hours by a solo developer who needed an AI codin
 2. **2026-06-17: 16 teacher planning documents were destroyed** by an in-place modification with no backups. The fix became a permanent rule.
 3. **The developer kept losing context between sessions.** The memory layer was the answer.
 4. **The developer wanted it all in one place.** Hence `factory/`.
+5. **2026-06-21: The system had 4 incidents in 5 days.** Each one became a new rule. The library is now self-improving.
 
 ## FAQ
 
 **Q: I used opencode-power-setup before. Will this work the same way?**
-A: Yes. CRUDDY-OPENCODE is built on top of power-setup's foundation. All 21 agents and 54 inherited skills still work. The new pieces (autoresearch, hybrid memory, safety net) are additive.
+A: Yes. CRUDDY-OPENCODE is built on top of power-setup's foundation. All 21 agents and 54 inherited skills still work.
 
-**Q: How do I get the latest v0.1.x?**
-A: `git pull` after cloning. Tags: `v0.1.0` (initial), `v0.1.1` (origin story + accurate docs).
+**Q: How do I get the latest v0.2.x?**
+A: `git pull` after cloning. Tags: `v0.1.0`, `v0.1.1`, `v0.1.2`, `v0.2.0`.
 
-**Q: Why is the skill count 54+29?**
-A: 54 active skills auto-load. 29 archived skills are kept for reference but don't activate. Total catalog: 83.
+**Q: What's new in v0.2.0?**
+A: 4-rule self-improving rule library, SYSTEM_FLOW.md reference, improved account-manager agent with post-mortem learnings, fixed autoresearch nightly path bug.
+
+**Q: What does the autoresearch loop actually do?**
+A: Runs nightly at 2 AM, picks a config file, makes a small change, evaluates whether it improved (using a measurable metric like file_token_count), and keeps the change or reverts. Karpathy's autoresearch pattern.
+
+**Q: What's the PDC cautionary tale?**
+A: A real data loss event where 16 teacher planning documents were destroyed. Encoded into `batch-file-modification-safety.md` and `docs/PDC_INCIDENT_CAUTIONARY_TALE.md`.
 
 **Q: Does this work on Mac/Linux?**
 A: Untested. The pre-flight snapshot tools have Windows-specific paths. The autoresearch skill and memory retrieval are cross-platform. PRs welcome.

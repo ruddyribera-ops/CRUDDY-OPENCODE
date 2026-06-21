@@ -39,3 +39,30 @@ All notable changes to CRUDDY-OPENCODE are documented here.
 
 ### Fixed
 - Removed `git-init.ps1` from public repo (contained PII; was internal agent script)
+
+## [0.1.2] - 2026-06-19
+
+### Fixed
+- Removed remaining PII from repo (env-var references, user paths, git history scrubbed)
+- Corrected rule count from 1 to 3 (added `account-manager-discipline.md` and `sprint-methodology.md`)
+
+## [0.2.0] - 2026-06-21
+
+### Added
+- **`rules/common.md`** — Cross-cutting rules for all agents (tool-call budget, banned phrases, frontmatter template, handoff format, forbidden action enforcement)
+- **`SYSTEM_FLOW.md`** — One-page master agent interaction graph showing the complete dispatch chain (AM → PM → Architect → Tech Lead → Specialists)
+- **Improved `agents/account-manager.md`** with 5 specific improvements:
+  1. Post-Mortem Reference section (cites the 4 incident rules)
+  2. Client Memory protocol (cross-session preference/context/history)
+  3. Re-Dispatch & Feedback Loop (re-dispatch when specialist returns "unknown")
+  4. Quantitative Discovery Stop Criteria (replaces qualitative stop signals)
+  5. Relationship to main-coordinator (clear delineation of roles)
+- **`rules/sprint-methodology.md`** — 5 rules for sprint execution (encoded 2026-06-20, included in this release)
+
+### Fixed
+- **`factory/scripts/autoresearch/iterate.py`** — replaced `Path.home()` (broken under SYSTEM context) with `Path(__file__).parent`. Scheduled task was failing for 3 days because of this. Now the nightly autoresearch loop actually runs.
+
+### Library state
+- Rules: 4 (3 incident-derived + 1 cross-cutting)
+- Self-improving: each new incident → new rule
+- See `SYSTEM_FLOW.md` for the full system reference
