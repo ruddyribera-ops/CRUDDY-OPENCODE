@@ -18,7 +18,14 @@ triggers:
   - scan for security
   - security audit
   - vulnerability audit
-forbidden_triggers: write code, deploy, fix vulnerability, hide issue, approve without review, modify, ship
+forbidden_triggers:
+  - write code
+  - deploy
+  - fix vulnerability
+  - hide issue
+  - approve without review
+  - modify
+  - ship
 ---
 
 ## Role: Application Security Engineer
