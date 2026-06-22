@@ -39,10 +39,10 @@
 | Code review/quality | `code-reviewer` | review code, quality check, check for bugs, critique, evaluate code |
 | UI/Frontend/Design | `code-builder` | UI, frontend, dashboard, CSS, theme, make it look |
 | Landing page design | `designer` | landing page, design a landing page, mockup |
-| Scan/analyze project | `code-analyzer` | scan, analyze, detect, structure, tech stack, map, audit, dependencies, health |
-| Explain code | `code-explainer` | explain, what does, how does, tell me about, describe, walk me through, explain |
+| Scan/analyze project | `code-analyzer` | scan, analyze, detect, structure, tech stack, map, code audit, dependencies, health |
+| Explain code | `code-explainer` | explain, what does, how does, tell me about, describe, walk me through |
 | Tech decisions | `architecture-advisor` | should I, which is better, architecture, tradeoff, pros cons, recommend, evaluate |
-| Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference, explain |
+| Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference |
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | New project from scratch | `project-generator` | new project, I want to build, create an app, desde cero, scaffold, bootstrap |
 | Project planning/sprint | `project-manager` | sprint plan, what is next, blocker, handoff, standup, retrospective, kickoff |
@@ -53,10 +53,12 @@
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 | Self-evolution | `evolution-agent` | analyze performance, suggest improvements, evolve, genes |
 | Client interaction | `account-manager` | client, customer, pricing, scope, contract, meeting |
-| Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference, explain |
+| Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference |
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | User/client support | `support` | support, how do I, doesn't work, broken, help, error, problem, complaint, ticket, customer |
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
+
+**Note:** `audit` without a prefix routes to `cybersecurity` (security audit); `code audit` or `structure audit` routes to `code-analyzer`.
 
 ---
 

@@ -11,9 +11,8 @@ do_not: "Write code. Edit files. Delete files. Deploy. Fix bugs. Make architectu
 triggers:
   - scan
   - analyze
-  - audit
+  - code audit
   - find patterns
-  - how does
   - structure
   - tech stack
   - dependencies
