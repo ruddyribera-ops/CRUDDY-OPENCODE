@@ -2,6 +2,38 @@
 
 All notable changes to CRUDDY-OPENCODE are documented here.
 
+## [v0.3.0] - 2026-06-21 — "Omega"
+
+### Added
+- 10 of 21 documented agents now implemented in agents/ folder
+- 4 P0 agents created: code-builder, bug-fixer, main-coordinator, code-analyzer
+- 5 skills migrated to agents/ (project-manager, solutions-architect, tech-lead, delivery-engineer, qa-engineer)
+- Canonical frontmatter schema enforced: name, description, when, do_not, triggers, forbidden_triggers
+- Handoff section standard: ## Handoff with I dispatch TO + Routes TO me when
+- rules/common.md §3.1 Dual-Schema Convention (agents/ vs skills/)
+- AGENTS.md: new "Landing page design" intent routes to designer
+
+### Changed
+- rules/common.md §3: trigger format rule amended (lowercase + [a-z0-9 _-], spaces allowed)
+- rules/common.md line 5: applies_to count fixed (was inaccurate)
+- AGENTS.md routing table: status and design routing conflicts resolved
+
+### Fixed
+- account-manager.md: added missing ## Handoff section
+- project-manager.md, tech-lead.md: deduplicated triggers
+- qa-engineer.md: removed bare "bug" trigger
+- delivery-engineer.md: YAML parse error in description
+- Multiple routing conflicts between AM dispatch table and AGENTS.md
+
+### Audit reports
+- audits/v0.3.0/PHASE1-QA.md
+- audits/v0.3.0/PHASE1-VERIFY.md
+- audits/v0.3.0/PHASE2-QA-ROUND1.md
+- audits/v0.3.0/PHASE2-QA-FIXED.md
+
+### Roadmap
+- v0.4.0: implement remaining 11 agents (code-explainer, code-reviewer, tech-writer, cybersecurity, architecture-advisor, designer, support, project-generator, skill-manager, standup-summary, evolution-agent)
+
 ## [0.1.0] - 2026-06-18
 
 ### Added

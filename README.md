@@ -16,9 +16,18 @@ CRUDDY-OPENCODE is the direct evolution of **[opencode-power-setup](https://gith
 
 If you're coming from opencode-power-setup: everything you knew still works. CRUDDY-OPENCODE inherits the full agent roster and skill ecosystem, then enhances it.
 
+## v0.3.0 "Omega" Highlights
+
+- **10 of 21 agents now implemented** in `agents/` folder
+- **4 P0 agents shipped**: code-builder, bug-fixer, main-coordinator, code-analyzer
+- **5 skills migrated to agents/**: project-manager, solutions-architect, tech-lead, delivery-engineer, qa-engineer
+- **Canonical frontmatter schema** enforced across all agents
+- **Routing conflicts resolved** between AGENTS.md and AM dispatch tables
+- **Audit reports** for Phase 1 QA, Phase 1 Verify, Phase 2 QA Round 1, and Phase 2 QA Fixed
+
 ## What's Inside
 
-### 🤖 Agents on Deck (21)
+### 🤖 Agents on Deck (10 of 21 implemented)
 
 | Agent | Role |
 |-------|------|
@@ -79,7 +88,7 @@ Read these before assuming any rule is arbitrary. Each has a story.
 
 | Component | Count |
 |-----------|-------|
-| Agents | 21 |
+| Agents (implemented) | 10 of 21 |
 | Skills (active) | 54 |
 | Skills (archived) | 29 |
 | Plugins (.js) | 12 |
@@ -184,11 +193,11 @@ CRUDDY-OPENCODE was built in 48 hours by a solo developer who needed an AI codin
 **Q: I used opencode-power-setup before. Will this work the same way?**
 A: Yes. CRUDDY-OPENCODE is built on top of power-setup's foundation. All 21 agents and 54 inherited skills still work.
 
-**Q: How do I get the latest v0.2.x?**
-A: `git pull` after cloning. Tags: `v0.1.0`, `v0.1.1`, `v0.1.2`, `v0.2.0`.
+**Q: How do I get the latest v0.3.x?**
+A: `git pull` after cloning. Tags: `v0.1.0`, `v0.1.1`, `v0.1.2`, `v0.2.0`, `v0.3.0`.
 
-**Q: What's new in v0.2.0?**
-A: 4-rule self-improving rule library, SYSTEM_FLOW.md reference, improved account-manager agent with post-mortem learnings, fixed autoresearch nightly path bug.
+**Q: What's new in v0.3.0?**
+A: 10 of 21 agents implemented (code-builder, bug-fixer, main-coordinator, code-analyzer + 5 migrated skills), canonical frontmatter schema, routing conflict fixes, 4 audit reports for Phase 1-2 QA.
 
 **Q: What does the autoresearch loop actually do?**
 A: Runs nightly at 2 AM, picks a config file, makes a small change, evaluates whether it improved (using a measurable metric like file_token_count), and keeps the change or reverts. Karpathy's autoresearch pattern.
