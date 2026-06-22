@@ -6,7 +6,6 @@ do_not: "Talk to the client. Write code (delegate to code-builder). Deploy. Ship
 triggers:
   - test plan
   - acceptance
-  - bug
   - test
   - qa
   - is it ready to ship

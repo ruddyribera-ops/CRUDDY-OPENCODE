@@ -10,7 +10,6 @@ do_not: "Write code. Edit files. Run bash for file operations. Debug. Test. Depl
 triggers:
   - new project
   - kickoff
-  - status
   - demo
   - blocker
   - escalation

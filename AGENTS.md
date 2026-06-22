@@ -37,7 +37,8 @@
 | Build/create/modify code | `code-builder` | build, create, add, implement, refactor, make, write, change, modify, update, develop, code, script |
 | Fix errors/bugs | `bug-fixer` | fix, error, bug, broken, not working, crash, debug, arreglar, falla, doesn't work, issue |
 | Code review/quality | `code-reviewer` | review code, quality check, check for bugs, critique, evaluate code |
-| UI/Frontend/Design | `code-builder` | landing page, UI, frontend, dashboard, CSS, theme, make it look |
+| UI/Frontend/Design | `code-builder` | UI, frontend, dashboard, CSS, theme, make it look |
+| Landing page design | `designer` | landing page, design a landing page, mockup |
 | Scan/analyze project | `code-analyzer` | scan, analyze, detect, structure, tech stack, map, audit, dependencies, health |
 | Explain code | `code-explainer` | explain, what does, how does, tell me about, describe, walk me through, explain |
 | Tech decisions | `architecture-advisor` | should I, which is better, architecture, tradeoff, pros cons, recommend, evaluate |

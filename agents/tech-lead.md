@@ -12,7 +12,6 @@ triggers:
   - scaffold
   - kickoff engineering
   - who is doing what
-  - status
 forbidden_triggers:
   - write code
   - talk to the client
