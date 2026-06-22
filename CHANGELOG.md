@@ -2,6 +2,37 @@
 
 All notable changes to CRUDDY-OPENCODE are documented here.
 
+## [v0.4.0] - 2026-06-21 — "Sigma"
+
+### Added
+- 11 new agents implemented, total 21 of 21 documented agents live
+- 5 P1 agents: code-explainer, code-reviewer, tech-writer, cybersecurity, architecture-advisor
+- 3 P2 agents: designer, support, project-generator
+- 3 P3 agents: skill-manager, standup-summary, evolution-agent
+- 100% agent coverage achieved
+
+### Changed
+- AGENTS.md routing table: removed duplicate intent rows (tech-writer, designer, cybersecurity)
+- AGENTS.md routing table: added `review my pull request` trigger for code-reviewer
+- agents/architecture-advisor.md: missing Handoff subsections added
+- agents/cybersecurity.md: forbidden_triggers converted from string to YAML list
+- All 21 agents now use canonical Handoff format (## Handoff + **I dispatch TO:** + **Routes TO me when:**)
+
+### Fixed
+- agents/evolution-agent.md: Handoff subsections reordered (was reversed); code-builder typo corrected to code-analyzer
+- agents/architecture-advisor.md: was missing both Handoff subsections
+- Trigger overlaps resolved: `audit` (code-analyzer → `code audit`), `explain` (tech-writer removed, code-explainer kept), `how does` (removed from code-analyzer)
+- YAML parse errors fixed: 3 P1 files (tech-writer, cybersecurity, architecture-advisor) had unquoted `when:` field with colons
+
+### Audit reports
+- audits/v0.4.0/PHASE1-QA-ROUND1.md
+- audits/v0.4.0/PHASE1-QA-FIXED.md
+- audits/v0.4.0/PHASE2-QA.md
+- audits/v0.4.0/PHASE3-QA.md
+
+### Roadmap
+- v0.5.0: skill ecosystem maturity, evolution agent activation, observability hooks, performance optimization
+
 ## [v0.3.0] - 2026-06-21 — "Omega"
 
 ### Added

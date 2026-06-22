@@ -1,0 +1,1446 @@
+{
+  "per_file": [
+    {
+      "file": "account-manager.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 11,
+      "triggers_bad_format": [],
+      "triggers": [
+        "new project",
+        "kickoff",
+        "demo",
+        "blocker",
+        "escalation",
+        "client communication",
+        "what happened",
+        "where is my app",
+        "when will it be done",
+        "sign off",
+        "support"
+      ],
+      "forbidden_trigger_count": 11,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "fix",
+        "bug",
+        "error",
+        "write code",
+        "edit",
+        "deploy",
+        "test",
+        "analyze",
+        "scan",
+        "architecture",
+        "script"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 569
+    },
+    {
+      "file": "architecture-advisor.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 10,
+      "triggers_bad_format": [],
+      "triggers": [
+        "architecture",
+        "tradeoff",
+        "should i",
+        "which is better",
+        "design decision",
+        "pros and cons",
+        "recommend",
+        "evaluate",
+        "adr",
+        "architecture decision"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "deploy",
+        "decide alone",
+        "ship without review",
+        "modify",
+        "run tests",
+        "hide tradeoffs"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": false,
+        "has_routes_to_me": false,
+        "position_ok": false,
+        "actual_order": "unknown"
+      },
+      "line_count": 421
+    },
+    {
+      "file": "bug-fixer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 12,
+      "triggers_bad_format": [],
+      "triggers": [
+        "fix",
+        "bug",
+        "error",
+        "crash",
+        "broken",
+        "debug",
+        "not working",
+        "doesnt work",
+        "issue",
+        "arreglar",
+        "falla",
+        "stack trace"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write new feature",
+        "refactor working code",
+        "deploy without test",
+        "talk to client",
+        "analyze without bug",
+        "design new system",
+        "ship workaround"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 208
+    },
+    {
+      "file": "code-analyzer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 10,
+      "triggers_bad_format": [],
+      "triggers": [
+        "scan",
+        "analyze",
+        "code audit",
+        "find patterns",
+        "structure",
+        "tech stack",
+        "dependencies",
+        "health",
+        "map",
+        "detect"
+      ],
+      "forbidden_trigger_count": 8,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "fix bug",
+        "deploy",
+        "edit",
+        "delete",
+        "modify",
+        "refactor",
+        "ship"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 271
+    },
+    {
+      "file": "code-builder.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 14,
+      "triggers_bad_format": [],
+      "triggers": [
+        "write code",
+        "create",
+        "add",
+        "implement",
+        "build",
+        "make",
+        "modify",
+        "refactor",
+        "change",
+        "update",
+        "develop",
+        "code",
+        "write",
+        "edit"
+      ],
+      "forbidden_trigger_count": 8,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "fix bug",
+        "debug",
+        "analyze structure",
+        "test",
+        "deploy",
+        "ship",
+        "explain what code does",
+        "design architecture"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 315
+    },
+    {
+      "file": "code-explainer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 9,
+      "triggers_bad_format": [],
+      "triggers": [
+        "explain",
+        "explain code",
+        "what does",
+        "how does",
+        "tell me about",
+        "describe",
+        "walk me through",
+        "how does it work",
+        "what is"
+      ],
+      "forbidden_trigger_count": 6,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "fix bug",
+        "refactor",
+        "deploy",
+        "modify",
+        "ship"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 239
+    },
+    {
+      "file": "code-reviewer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 10,
+      "triggers_bad_format": [],
+      "triggers": [
+        "review code",
+        "quality check",
+        "check for bugs",
+        "critique",
+        "evaluate code",
+        "look for issues",
+        "scan for bugs",
+        "code review",
+        "review this",
+        "quality review"
+      ],
+      "forbidden_trigger_count": 6,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "fix bug",
+        "deploy",
+        "run tests",
+        "modify",
+        "ship"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 265
+    },
+    {
+      "file": "cybersecurity.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 14,
+      "triggers_bad_format": [],
+      "triggers": [
+        "security",
+        "audit",
+        "vulnerability",
+        "owasp",
+        "threat model",
+        "pentest",
+        "secure",
+        "harden",
+        "appsec",
+        "cve",
+        "security review",
+        "scan for security",
+        "security audit",
+        "vulnerability audit"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "deploy",
+        "fix vulnerability",
+        "hide issue",
+        "approve without review",
+        "modify",
+        "ship"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 342
+    },
+    {
+      "file": "delivery-engineer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 13,
+      "triggers_bad_format": [],
+      "triggers": [
+        "deploy",
+        "walkthrough",
+        "friday demo",
+        "recording",
+        "loom",
+        "staging",
+        "prod",
+        "ship",
+        "demo",
+        "deploy-staging",
+        "smoke-test",
+        "record-walkthrough",
+        "deploy-production"
+      ],
+      "forbidden_trigger_count": 6,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "run tests",
+        "talk to the client",
+        "skip smoke test",
+        "ship to prod without ask first time",
+        "hide deploy failure"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 106
+    },
+    {
+      "file": "designer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 15,
+      "triggers_bad_format": [],
+      "triggers": [
+        "design",
+        "design system",
+        "design tokens",
+        "ui",
+        "ux",
+        "landing page",
+        "color palette",
+        "typography",
+        "component",
+        "mockup",
+        "visual style",
+        "make it look",
+        "redesign",
+        "layout",
+        "brand"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "fix bug",
+        "deploy",
+        "ship",
+        "modify functionality",
+        "run tests",
+        "change behavior"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 400
+    },
+    {
+      "file": "evolution-agent.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 12,
+      "triggers_bad_format": [],
+      "triggers": [
+        "analyze performance",
+        "suggest improvements",
+        "evolve",
+        "evolve config",
+        "evolution check",
+        "pattern detection",
+        "self improvement",
+        "performance review",
+        "improve",
+        "optimize config",
+        "session analysis",
+        "post-mortem"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write user code",
+        "deploy",
+        "modify live config",
+        "decide architecture",
+        "ship change",
+        "change behavior unilaterally",
+        "hide pattern"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": false,
+        "actual_order": "routes-first (REVERSED)"
+      },
+      "line_count": 349
+    },
+    {
+      "file": "main-coordinator.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 8,
+      "triggers_bad_format": [],
+      "triggers": [
+        "coordinate",
+        "route",
+        "orchestrate",
+        "multi-step",
+        "complex task",
+        "fan-in",
+        "fan-out",
+        "next step"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "talk to client",
+        "write code",
+        "plan sprint",
+        "deploy",
+        "fix bug",
+        "test",
+        "ship"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 318
+    },
+    {
+      "file": "project-generator.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 12,
+      "triggers_bad_format": [],
+      "triggers": [
+        "new project scaffolding",
+        "scaffold",
+        "bootstrap",
+        "create app",
+        "build app from brief",
+        "from scratch",
+        "full project",
+        "new system",
+        "tengo una idea",
+        "quiero crear",
+        "desde cero",
+        "nuevo sistema"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "talk to client",
+        "write code directly",
+        "decide architecture",
+        "ship alone",
+        "deploy without test",
+        "run mid-sprint",
+        "skip brief"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 361
+    },
+    {
+      "file": "project-manager.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 13,
+      "triggers_bad_format": [],
+      "triggers": [
+        "sprint plan",
+        "what is next",
+        "blocker",
+        "handoff",
+        "standup",
+        "sprint review",
+        "retrospective",
+        "kickoff",
+        "where are we",
+        "status",
+        "plan",
+        "dispatch",
+        "retro"
+      ],
+      "forbidden_trigger_count": 5,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "talk to the client",
+        "write code",
+        "design architecture",
+        "run tests",
+        "deploy"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 101
+    },
+    {
+      "file": "qa-engineer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 11,
+      "triggers_bad_format": [],
+      "triggers": [
+        "test plan",
+        "acceptance",
+        "test",
+        "qa",
+        "is it ready to ship",
+        "smoke test",
+        "regression",
+        "write-test-plan",
+        "run-tests",
+        "sign-off",
+        "file-bug"
+      ],
+      "forbidden_trigger_count": 8,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "run tests on someones behalf",
+        "talk to the client",
+        "ship failing acceptance",
+        "sign off without verification",
+        "file bug without repro steps",
+        "hide failing test",
+        "test only happy path"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 98
+    },
+    {
+      "file": "skill-manager.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 10,
+      "triggers_bad_format": [],
+      "triggers": [
+        "save this as a skill",
+        "create a skill",
+        "remember this procedure",
+        "mirror skill",
+        "import skill",
+        "export skill",
+        "skill lifecycle",
+        "archive skill",
+        "dedupe skills",
+        "skill management"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "deploy",
+        "manage agents",
+        "modify behavior",
+        "ship",
+        "change agent",
+        "run tests"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 374
+    },
+    {
+      "file": "solutions-architect.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 13,
+      "triggers_bad_format": [],
+      "triggers": [
+        "stack",
+        "framework",
+        "integrations",
+        "security model",
+        "what should we use",
+        "which database",
+        "which auth",
+        "where to host",
+        "scaffolding decisions",
+        "pick-stack",
+        "write-decisions",
+        "review-stack",
+        "spike"
+      ],
+      "forbidden_trigger_count": 5,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "run tests",
+        "talk to the client",
+        "override brief constraints",
+        "add gold-plating"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 120
+    },
+    {
+      "file": "standup-summary.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 12,
+      "triggers_bad_format": [],
+      "triggers": [
+        "standup",
+        "daily",
+        "daily standup",
+        "morning",
+        "summary",
+        "recap",
+        "progress",
+        "daily status",
+        "what changed",
+        "daily summary",
+        "morning brief",
+        "daily digest"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "deploy",
+        "modify state",
+        "change behavior",
+        "ship",
+        "talk to client",
+        "run tests"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 269
+    },
+    {
+      "file": "support.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 13,
+      "triggers_bad_format": [],
+      "triggers": [
+        "support",
+        "how do i",
+        "doesnt work",
+        "help",
+        "error",
+        "problem",
+        "complaint",
+        "ticket",
+        "customer",
+        "user question",
+        "post-delivery",
+        "knowledge base",
+        "troubleshoot"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "fix bug",
+        "deploy",
+        "modify",
+        "ship",
+        "change behavior",
+        "talk to client"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 310
+    },
+    {
+      "file": "tech-lead.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 8,
+      "triggers_bad_format": [],
+      "triggers": [
+        "dispatch",
+        "assign",
+        "who works on",
+        "parallel",
+        "which engineer",
+        "scaffold",
+        "kickoff engineering",
+        "who is doing what"
+      ],
+      "forbidden_trigger_count": 5,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "talk to the client",
+        "design architecture",
+        "run tests",
+        "pretend work is done"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 103
+    },
+    {
+      "file": "tech-writer.md",
+      "parse_ok": true,
+      "parse_error": null,
+      "fields_present": [
+        "name",
+        "description",
+        "when",
+        "do_not",
+        "triggers",
+        "forbidden_triggers"
+      ],
+      "fields_missing": [],
+      "trigger_count": 11,
+      "triggers_bad_format": [],
+      "triggers": [
+        "document",
+        "doc",
+        "readme",
+        "write docs",
+        "geo",
+        "diataxis",
+        "tutorial",
+        "how-to",
+        "reference",
+        "documentation",
+        "write doc"
+      ],
+      "forbidden_trigger_count": 7,
+      "forbidden_triggers_bad_format": [],
+      "forbidden_triggers": [
+        "write code",
+        "fix bug",
+        "deploy",
+        "modify functionality",
+        "change behavior",
+        "run tests",
+        "ship"
+      ],
+      "when_quoted": true,
+      "when_starts_with_quote": true,
+      "when_closed_quote": true,
+      "handoff": {
+        "has_handoff_heading": true,
+        "has_dispatch_to": true,
+        "has_routes_to_me": true,
+        "position_ok": true,
+        "actual_order": "I-dispatch-first"
+      },
+      "line_count": 321
+    }
+  ],
+  "trigger_overlaps": {
+    "kickoff": [
+      "account-manager.md",
+      "project-manager.md"
+    ],
+    "demo": [
+      "account-manager.md",
+      "delivery-engineer.md"
+    ],
+    "blocker": [
+      "account-manager.md",
+      "project-manager.md"
+    ],
+    "support": [
+      "account-manager.md",
+      "support.md"
+    ],
+    "error": [
+      "bug-fixer.md",
+      "support.md"
+    ],
+    "doesnt work": [
+      "bug-fixer.md",
+      "support.md"
+    ],
+    "scaffold": [
+      "project-generator.md",
+      "tech-lead.md"
+    ],
+    "standup": [
+      "project-manager.md",
+      "standup-summary.md"
+    ],
+    "dispatch": [
+      "project-manager.md",
+      "tech-lead.md"
+    ]
+  },
+  "agents_md_xref": {
+    "files_on_disk": [
+      "account-manager",
+      "architecture-advisor",
+      "bug-fixer",
+      "code-analyzer",
+      "code-builder",
+      "code-explainer",
+      "code-reviewer",
+      "cybersecurity",
+      "delivery-engineer",
+      "designer",
+      "evolution-agent",
+      "main-coordinator",
+      "project-generator",
+      "project-manager",
+      "qa-engineer",
+      "skill-manager",
+      "solutions-architect",
+      "standup-summary",
+      "support",
+      "tech-lead",
+      "tech-writer"
+    ],
+    "agents_in_md": [
+      "account-manager",
+      "architecture-advisor",
+      "bug-fixer",
+      "code-analyzer",
+      "code-builder",
+      "code-explainer",
+      "code-reviewer",
+      "cybersecurity",
+      "delivery-engineer",
+      "designer",
+      "evolution-agent",
+      "main-coordinator",
+      "project-generator",
+      "project-manager",
+      "qa-engineer",
+      "skill-manager",
+      "solutions-architect",
+      "standup-summary",
+      "support",
+      "tech-lead",
+      "tech-writer"
+    ],
+    "on_disk_not_in_md": [],
+    "in_md_not_on_disk": [],
+    "match_count": 21,
+    "disk_count": 21,
+    "md_count": 21
+  },
+  "dispatch_simulation": [
+    {
+      "message": "save this as a skill for future use",
+      "trigger_hits": [
+        [
+          "save this as a skill",
+          [
+            "skill-manager"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "skill-manager"
+      ],
+      "ambiguous": false,
+      "no_match": false
+    },
+    {
+      "message": "daily standup, what changed",
+      "trigger_hits": [
+        [
+          "change",
+          [
+            "code-builder"
+          ]
+        ],
+        [
+          "standup",
+          [
+            "project-manager",
+            "standup-summary"
+          ]
+        ],
+        [
+          "daily",
+          [
+            "standup-summary"
+          ]
+        ],
+        [
+          "what changed",
+          [
+            "standup-summary"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "code-builder",
+        "project-manager",
+        "standup-summary"
+      ],
+      "ambiguous": true,
+      "no_match": false
+    },
+    {
+      "message": "analyze performance of last sprint",
+      "trigger_hits": [
+        [
+          "analyze",
+          [
+            "code-analyzer"
+          ]
+        ],
+        [
+          "analyze performance",
+          [
+            "evolution-agent"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "code-analyzer",
+        "evolution-agent"
+      ],
+      "ambiguous": true,
+      "no_match": false
+    },
+    {
+      "message": "design a landing page for our product",
+      "trigger_hits": [
+        [
+          "landing page",
+          [
+            "designer"
+          ]
+        ],
+        [
+          "design a landing page",
+          [
+            "designer"
+          ]
+        ],
+        [
+          "prod",
+          [
+            "delivery-engineer"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "delivery-engineer",
+        "designer"
+      ],
+      "ambiguous": true,
+      "no_match": false
+    },
+    {
+      "message": "deploy to staging and verify",
+      "trigger_hits": [
+        [
+          "deploy",
+          [
+            "delivery-engineer"
+          ]
+        ],
+        [
+          "staging",
+          [
+            "delivery-engineer"
+          ]
+        ],
+        [
+          "verify",
+          [
+            "delivery-engineer"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "delivery-engineer"
+      ],
+      "ambiguous": false,
+      "no_match": false
+    },
+    {
+      "message": "fix the broken login button",
+      "trigger_hits": [
+        [
+          "fix",
+          [
+            "bug-fixer"
+          ]
+        ],
+        [
+          "broken",
+          [
+            "bug-fixer",
+            "support"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "bug-fixer",
+        "support"
+      ],
+      "ambiguous": true,
+      "no_match": false
+    },
+    {
+      "message": "explain how this code works",
+      "trigger_hits": [
+        [
+          "code",
+          [
+            "code-builder"
+          ]
+        ],
+        [
+          "explain",
+          [
+            "code-explainer"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "code-builder",
+        "code-explainer"
+      ],
+      "ambiguous": true,
+      "no_match": false
+    },
+    {
+      "message": "review my pull request",
+      "trigger_hits": [],
+      "predicted_agents": [],
+      "ambiguous": false,
+      "no_match": true
+    },
+    {
+      "message": "test plan for the new feature",
+      "trigger_hits": [
+        [
+          "test plan",
+          [
+            "qa-engineer"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "qa-engineer"
+      ],
+      "ambiguous": false,
+      "no_match": false
+    },
+    {
+      "message": "security audit on the API",
+      "trigger_hits": [
+        [
+          "security",
+          [
+            "cybersecurity"
+          ]
+        ],
+        [
+          "audit",
+          [
+            "cybersecurity"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "cybersecurity"
+      ],
+      "ambiguous": false,
+      "no_match": false
+    },
+    {
+      "message": "create a README with setup instructions",
+      "trigger_hits": [
+        [
+          "create",
+          [
+            "code-builder"
+          ]
+        ],
+        [
+          "readme",
+          [
+            "tech-writer"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "code-builder",
+        "tech-writer"
+      ],
+      "ambiguous": true,
+      "no_match": false
+    },
+    {
+      "message": "what's the architecture tradeoff",
+      "trigger_hits": [
+        [
+          "architecture",
+          [
+            "architecture-advisor"
+          ]
+        ],
+        [
+          "tradeoff",
+          [
+            "architecture-advisor"
+          ]
+        ]
+      ],
+      "predicted_agents": [
+        "architecture-advisor"
+      ],
+      "ambiguous": false,
+      "no_match": false
+    }
+  ]
+}

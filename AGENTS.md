@@ -36,7 +36,7 @@
 |--------|-------|---------------|
 | Build/create/modify code | `code-builder` | build, create, add, implement, refactor, make, write, change, modify, update, develop, code, script |
 | Fix errors/bugs | `bug-fixer` | fix, error, bug, broken, not working, crash, debug, arreglar, falla, doesn't work, issue |
-| Code review/quality | `code-reviewer` | review code, quality check, check for bugs, critique, evaluate code |
+| Code review/quality | `code-reviewer` | review code, quality check, check for bugs, critique, evaluate code, review my pull request, review pull request, review pr |
 | UI/Frontend/Design | `code-builder` | UI, frontend, dashboard, CSS, theme, make it look |
 | Landing page design | `designer` | landing page, design a landing page, mockup |
 | Scan/analyze project | `code-analyzer` | scan, analyze, detect, structure, tech stack, map, code audit, dependencies, health |
@@ -53,10 +53,7 @@
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 | Self-evolution | `evolution-agent` | analyze performance, suggest improvements, evolve, genes |
 | Client interaction | `account-manager` | client, customer, pricing, scope, contract, meeting |
-| Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference |
-| Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | User/client support | `support` | support, how do I, doesn't work, broken, help, error, problem, complaint, ticket, customer |
-| Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 
 **Note:** `audit` without a prefix routes to `cybersecurity` (security audit); `code audit` or `structure audit` routes to `code-analyzer`.
 

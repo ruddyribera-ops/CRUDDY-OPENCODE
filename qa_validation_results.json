@@ -1,0 +1,590 @@
+[
+  {
+    "file": "account-manager.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 11,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 11,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": false,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 569,
+    "raw_when_line": "when: \"Use for: new project, kickoff, status, demo, blocker, escalation, client communication."
+  },
+  {
+    "file": "architecture-advisor.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 10,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": false,
+      "has_routes_to_me": false,
+      "position_ok": false
+    },
+    "line_count": 421,
+    "raw_when_line": "when: \"Use when architectural decision is needed: framework choice, data model design, integration approach, scaling strategy, technology selection. architecture-advisor produces trade-off analysis and ADRs. NEVER for: writing code, deploying, making unilateral decisions, choosing without evidence.\""
+  },
+  {
+    "file": "bug-fixer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 12,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 208,
+    "raw_when_line": "when: \"Use for: something is broken, throwing errors, crashing, or behaving incorrectly. bug-fixer reproduces the issue, finds root cause, fixes it, and verifies. NEVER for: new features, refactoring working code, deploying unfixed code, talking to client.\""
+  },
+  {
+    "file": "code-analyzer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 10,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 8,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 271,
+    "raw_when_line": "when: \"Use when the user wants to understand a codebase, find patterns, map dependencies, or audit health. code-analyzer produces a report \u2014 never modifies code. NEVER for: writing code, fixing bugs, deploying, modifying files.\""
+  },
+  {
+    "file": "code-builder.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 14,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 8,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": false,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 315,
+    "raw_when_line": "when: \"Use when the user wants to add new functionality, modify existing code, or refactor. code-builder writes the smallest, cleanest change that solves the problem.\""
+  },
+  {
+    "file": "code-explainer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 9,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 6,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 239,
+    "raw_when_line": "when: \"Use when: user wants to understand what code does, how it works, or what a concept means. code-explainer produces explanations \u2014 never modifies code. NEVER for: writing new code, fixing bugs, refactoring, deploying.\""
+  },
+  {
+    "file": "code-reviewer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 10,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 6,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 265,
+    "raw_when_line": "when: \"Use when code is complete and needs review before merge. code-reviewer produces a review report \u2014 never modifies code. NEVER for: writing new code, fixing bugs found in review, deploying, test execution.\""
+  },
+  {
+    "file": "cybersecurity.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 14,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 342,
+    "raw_when_line": "when: \"Use when security audit, threat model, vulnerability scan, or penetration test is needed. cybersecurity produces audit reports \u2014 never modifies code. NEVER for: writing new code, fixing vulnerabilities found in audit, deploying without security review, hiding vulnerabilities.\""
+  },
+  {
+    "file": "delivery-engineer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 13,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 6,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": false,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 106,
+    "raw_when_line": "when: \"Use after the engineering team (code-builder, bug-fixer, etc.) have a feature complete and tested. The Delivery Engineer takes it to staging, records a 90s walkthrough video via auto-browser, and hands URL + video to the PM. NEVER write code, NEVER run tests, NEVER talk to the client.\""
+  },
+  {
+    "file": "designer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 15,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 400,
+    "raw_when_line": "when: \"Use for: UI/UX design tasks \u2014 design systems, component specs, visual mockups, design tokens, color palette, typography, layout. designer produces design artifacts. NEVER for: writing application code, fixing bugs, deploying, changing existing functionality.\""
+  },
+  {
+    "file": "evolution-agent.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 12,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": false
+    },
+    "line_count": 349,
+    "raw_when_line": "when: \"Use for: post-session analysis, performance improvement identification, pattern detection across agent interactions, config tuning recommendations. evolution-agent produces analysis reports and proposals. NEVER for: writing user-facing code, deploying unilaterally, modifying live configs without approval, making architecture decisions.\""
+  },
+  {
+    "file": "main-coordinator.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 8,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 318,
+    "raw_when_line": "when: \"Use for: complex multi-step technical work requiring 2+ specialists, internal routing decisions, fan-in coordination, parallel dispatch decisions. NEVER for: client-facing communication (AM), writing code (code-builder), sprint planning (PM), architecture decisions (solutions-architect), deployment (delivery-engineer).\""
+  },
+  {
+    "file": "project-generator.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 12,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 361,
+    "raw_when_line": "when: \"Use for: full project scaffolding from approved brief. project-generator orchestrates solutions-architect + tech-lead + code-builder + delivery-engineer. NEVER for: client communication (account-manager), architecture decisions (solutions-architect), single-file code changes (code-builder), mid-sprint work.\""
+  },
+  {
+    "file": "project-manager.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 13,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 5,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": false,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 101,
+    "raw_when_line": "when: \"Use after the Account Manager has written a brief AND the client said 'go'. The PM takes the brief and breaks it into actionable work. NEVER talk to the client, NEVER write code, NEVER design architecture, NEVER run tests, NEVER deploy.\""
+  },
+  {
+    "file": "qa-engineer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 11,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 8,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": false,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 98,
+    "raw_when_line": "when: \"Use after code-builder completes a feature. The QA Engineer writes a test plan, runs tests, verifies against the brief's acceptance criteria, and either signs off or files a bug. NEVER write code, NEVER run tests on someone else's behalf, NEVER talk to the client.\""
+  },
+  {
+    "file": "skill-manager.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 10,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 374,
+    "raw_when_line": "when: \"Use for: creating new skills from successful workflows, managing skill lifecycle, importing/exporting skills, deduplication. skill-manager works on the skills/ folder, not agents/. NEVER for: writing application code, deploying, managing agent files, modifying agent behavior.\""
+  },
+  {
+    "file": "solutions-architect.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 13,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 5,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": false,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 120,
+    "raw_when_line": "when: \"Use after the PM has a brief AND before any code is written. The Architect picks the stack in 1-2 days. NEVER write code, NEVER run tests, NEVER talk to the client, NEVER override the brief's hard constraints.\""
+  },
+  {
+    "file": "standup-summary.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 12,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 269,
+    "raw_when_line": "when: \"Use for: daily standup reports, cross-project status aggregation, morning briefings. standup-summary produces digests \u2014 never modifies state. NEVER for: writing code, deploying, modifying project state, talking to client.\""
+  },
+  {
+    "file": "support.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 13,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 310,
+    "raw_when_line": "when: \"Use for: post-delivery support tickets, customer questions, internal escalation handling. support triages and escalates with full context. NEVER for: writing code, fixing bugs, making code changes, talking to client directly (that's account-manager).\""
+  },
+  {
+    "file": "tech-lead.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 8,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 5,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": false,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 103,
+    "raw_when_line": "when: \"Use after the Architect writes decisions.md. The Tech Lead scaffolds the project, then routes work to the right specialist based on the task. NEVER write code yourself, NEVER talk to the client, NEVER design architecture.\""
+  },
+  {
+    "file": "tech-writer.md",
+    "parse_ok": true,
+    "parse_error": null,
+    "fields_present": [
+      "name",
+      "description",
+      "when",
+      "do_not",
+      "triggers",
+      "forbidden_triggers"
+    ],
+    "fields_missing": [],
+    "trigger_count": 11,
+    "triggers_bad_format": [],
+    "forbidden_trigger_count": 7,
+    "forbidden_triggers_bad_format": [],
+    "when_quoted": true,
+    "when_has_colon": true,
+    "handoff": {
+      "has_handoff_heading": true,
+      "has_dispatch_to": true,
+      "has_routes_to_me": true,
+      "position_ok": true
+    },
+    "line_count": 321,
+    "raw_when_line": "when: \"Use when documentation is needed: README, tutorial, how-to guide, API reference, or architecture explanation. tech-writer produces docs following Diataxis structure. NEVER for: writing application code, fixing bugs, deploying, changing functionality.\""
+  }
+]

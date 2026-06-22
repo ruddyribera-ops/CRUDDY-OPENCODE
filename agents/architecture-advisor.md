@@ -401,20 +401,18 @@ forbidden_triggers:
 
 ## Handoff
 
-**Routes TO me when**:
-- account-manager receives architecture/tradeoff/should I/which is better/design decision
-- project-manager encounters architectural choice blocking sprint
-- code-builder reveals need for architectural decision during implementation
-- tech-lead needs deeper analysis on engineering decision
-- solutions-architect escalates deep architectural question
+**I dispatch TO:**
+- `solutions-architect` when stack/framework decision is needed
+- `code-builder` when implementation is recommended
+- `tech-lead` when engineering decision is needed
+- `project-manager` when decision blocks sprint
+- `account-manager` when user-facing decision
 
-**I dispatch TO**:
-| Agent | When |
-|-------|------|
-| solutions-architect | When stack/framework decision requires deeper analysis |
-| code-builder | When implementation plan follows from decision |
-| tech-lead | When engineering decision needed after analysis |
-| project-manager | When decision blocks sprint and needs escalation |
-| account-manager | When user-facing decision requires client input |
+**Routes TO me when:**
+- `account-manager` receives architecture/tradeoff/should i/which is better/design decision
+- `project-manager` encounters architectural choice
+- `code-builder` reveals need for architectural decision
+- `tech-lead` needs deeper analysis
+- `solutions-architect` escalates deep architectural question
 
 **Handoff format**: Present the trade-off matrix or ADR draft, list stakeholders interviewed, and state the decision question clearly. Do not make the final call — present evidence and let dispatcher decide.
