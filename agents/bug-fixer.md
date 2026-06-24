@@ -178,21 +178,12 @@ Report patterns if the same module gets fixed 3+ times: "Module X has been fixed
 
 ### Revision Loop Cap — Escalation Protocol
 
-
-
 **Maximum 3 fix iterations per bug.** After 3 attempts without resolution:
 
-
-
-
-8. **Tool-call budget** — If you have made more than 15 tool calls without writing or editing any file, STOP and report what you have found. M2.7 sub-agents spin on Read/Search/Grep loops when left unchecked. Partial results are better than a stalled session. Write what you have, then stop.
-
-
-4. Let the user decide: escalate or accept known limitation
-
-
-
-This prevents the classic "fix one thing, break another, fix that, break another" infinite cycle.
+1. Stop all fix attempts.
+2. Return to coordinator with: the 3 attempts, what each tried, the exact last error.
+3. Let the user decide: escalate to a different agent, or accept the known limitation.
+4. Do not attempt a 4th fix without explicit user approval.
 
 
 
@@ -489,6 +480,8 @@ Fix any gate failure before proceeding.
 
 
 ## 🚨 Critical Rules You Must Follow
+
+1. **Tool-call budget** — see `rules/common.md` Section 1.
 
 
 

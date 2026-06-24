@@ -1,4 +1,4 @@
-# t2-complete.ps1
+﻿# t2-complete.ps1
 # T2 (Task Complete) Protocol - Single-call wrapper
 # Replaces the need for coordinator to remember 8+ manual steps.
 #
@@ -34,6 +34,9 @@ $sessionLog = "$memoryDir\session_log.md"
 $yamlPath = "$memoryDir\session.yaml"
 $scriptsDir = "$configDir\scripts"
 
+# Regex patterns (extracted to variables to avoid PS5.1 tokenizer mis-parsing [ as type annotation)
+$sessionNamePattern = 'session_name:\s*"([^"]+)"'
+
 # Truncate task name for table fit
 $shortName = if ($TaskName.Length -gt 80) { $TaskName.Substring(0, 77) + "..." } else { $TaskName }
 $tokensEst = if ($Tokens -gt 0) { "~$Tokens" } else { "~500" }
@@ -66,7 +69,7 @@ if ($Tokens -gt 0) {
     $tokenScript = "$scriptsDir\track-tokens.ps1"
     if (Test-Path $tokenScript) {
         try {
-            & $tokenScript -Action "add" -Agent $Agent -Tokens $Tokens 2>$null | Out-Null
+            & $tokenScript -Action "record" -Agent $Agent -Tokens $Tokens 2>$null | Out-Null
             $results += "tokens"
         } catch {
             $failed += "tokens: $($_.Exception.Message)"
@@ -102,7 +105,6 @@ if (Test-Path $autoMemScript) {
 
 # ── 6b. OUTCOME RECORDING ─ track task outcome to patterns.jsonl ──
 # Also tracks gene activations for gene_fitness.jsonl (DNA gene fitness scoring)
-$taskTypeMap = @{
 $taskTypeMap = @{
     "code-builder"        = "implementation"
     "bug-fixer"           = "bug-fix"
@@ -197,7 +199,7 @@ if ((Test-Path $graphScript) -and (Test-Path $graphHelper)) {
         $sessionName = "unknown"
         if (Test-Path $yamlPath) {
             $yamlContent = Get-Content $yamlPath -Raw
-            if ($yamlContent -match 'session_name:\s*"([^"]+)"') {
+            if ($yamlContent -match $sessionNamePattern) {
                 $sessionName = $matches[1]
             }
         }

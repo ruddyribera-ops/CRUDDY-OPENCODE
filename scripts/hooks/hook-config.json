@@ -30,5 +30,12 @@
       "enabled": true,
       "description": "Update current_sprint.md with today's date at session end"
     }
+  },
+  "sessionStart": {
+    "memoryRetrieval": {
+      "enabled": true,
+      "script": ".opencode/hooks/session_start.py",
+      "description": "Injects relevant memories at session start via memory_retrieval hook system"
+    }
   }
 }

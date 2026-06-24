@@ -1,350 +1,425 @@
 ---
 name: api-patterns
-description: RESTful API design, HTTP semantics, error handling, input validation, pagination, versioning, and documentation patterns. FastAPI and Express focused.
-triggers: [api, rest, endpoint, route, http, fastapi, express, nestjs, controller, handler, middleware, request, response, json, serializer, error-handler, validation, pagination, rate-limit, middleware, webhook, websocket]
+description: REST API design patterns, error handling, and response format standards. Use when designing or reviewing REST APIs, error handling, pagination, versioning. Triggers: REST API, REST, HTTP, JSON, error response, pagination, versioning, idempotency, rate limit, status code.
 ---
 
 # API Patterns
 
-## Core Principles
+## When to use this
 
-1. **Consistent responses** — every endpoint returns the same shape for success and error
-2. **HTTP semantics** — use the right status code, method, and headers for the operation
-3. **Validate at the boundary** — all input is validated before reaching business logic
-4. **Backward compatible** — never break existing clients without a version bump
+Load this skill when designing a new REST API, reviewing API code for correctness, implementing error handling, or adding pagination and versioning to existing endpoints.
 
 ---
 
-## 1. Response Format
+## Core Principles
 
-### Success Response
+1. **REST is resource-oriented, not action-oriented** — URLs represent resources (nouns), not actions (verbs). Use HTTP methods to express operations: GET for read, POST for create, PUT/PATCH for update, DELETE for delete.
 
-```json
-{
-  "data": { ... },
-  "meta": {
-    "request_id": "req_abc123",
-    "timestamp": "2026-05-22T10:00:00Z"
-  }
-}
+2. **Return the correct status codes** — HTTP status codes communicate the result of a request. Misusing them (returning 200 for errors) breaks client expectations and monitoring.
+
+3. **RFC 7807 Problem Details for errors** — Standardize error responses across your entire API using a machine-readable format that clients can parse consistently.
+
+4. **Version before breaking changes** — When an API contract must change in a breaking way, introduce a new version. Never break existing clients.
+
+5. **Idempotency keys prevent duplicate operations** — For POST and PUT requests that create or modify data, accept an idempotency key so retries do not create duplicate records.
+
+6. **Pagination prevents unbounded responses** — Never return all records for a collection endpoint. Use cursor or offset pagination with a sensible default limit.
+
+7. **Rate limit headers are a contract** — Tell clients how many requests they have remaining and when to retry. This prevents accidental DoS of your own API.
+
+---
+
+## Patterns
+
+### RESTful URL Design
+
+```bash
+# GOOD: Resource-oriented URLs (nouns)
+GET    /users              # List users
+GET    /users/123          # Get user 123
+POST   /users              # Create user
+PUT    /users/123          # Replace user 123
+PATCH  /users/123           # Update user 123 (partial)
+DELETE /users/123          # Delete user 123
+
+GET    /users/123/orders   # Get orders for user 123
+POST   /users/123/orders   # Create order for user 123
+
+# GOOD: Actions as query parameters for filtering
+GET    /users?status=active&role=admin
+GET    /users?sort=created_at&order=desc
+
+# BAD: Verbs in URLs
+POST   /users/create       # Wrong — POST creates resources
+POST   /users/123/delete   # Wrong — DELETE removes resources
+GET    /getUser/123        # Wrong — GET retrieves resources
+GET    /fetchOrdersByUser?user=123  # Wrong — use path resources
 ```
 
-### List Response (Paginated)
+### Standard Response Format (Success)
 
 ```json
+// Single resource response
 {
-  "data": [ ... ],
-  "meta": {
-    "page": 1,
-    "per_page": 20,
-    "total": 142,
-    "total_pages": 8,
-    "has_next": true,
-    "has_prev": false
-  }
-}
-```
-
-### Error Response
-
-```json
-{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Email is required",
-    "details": {
-      "field": "email",
-      "reason": "required"
+  "data": {
+    "id": "123",
+    "type": "user",
+    "attributes": {
+      "email": "alice@example.com",
+      "name": "Alice Smith",
+      "createdAt": "2024-01-15T10:30:00Z"
     }
   },
   "meta": {
-    "request_id": "req_abc123"
+    "requestId": "req_abc123"
+  }
+}
+
+// Collection response (paginated)
+{
+  "data": [
+    { "id": "123", "type": "user", "attributes": { ... } },
+    { "id": "456", "type": "user", "attributes": { ... } }
+  ],
+  "meta": {
+    "total": 1523,
+    "page": 1,
+    "perPage": 20,
+    "requestId": "req_abc123"
+  },
+  "links": {
+    "self": "https://api.example.com/users?page=1",
+    "next": "https://api.example.com/users?page=2",
+    "prev": null,
+    "first": "https://api.example.com/users?page=1",
+    "last": "https://api.example.com/users?page=77"
   }
 }
 ```
 
----
+### RFC 7807 Problem Details (Error Response)
 
-## 2. HTTP Status Code Usage
+```json
+// Error response following RFC 7807 Problem Details
+// Content-Type: application/problem+json
 
-| Code | When |
-|------|------|
-| **200 OK** | Successful GET, PUT, PATCH |
-| **201 Created** | Successful POST (resource created) |
-| **204 No Content** | Successful DELETE |
-| **400 Bad Request** | Malformed input, validation failure |
-| **401 Unauthorized** | Missing or invalid auth |
-| **403 Forbidden** | Authenticated but lacks permission |
-| **404 Not Found** | Resource doesn't exist |
-| **409 Conflict** | Duplicate, state conflict (e.g., deleting non-empty resource) |
-| **422 Unprocessable Entity** | Semantic validation failure |
-| **429 Too Many Requests** | Rate limited |
-| **500 Internal Server Error** | Unhandled server error (never leak details) |
-
----
-
-## 3. RESTful URL Design
-
-### Resource Naming
-
-```
-GET    /users                    # List users
-POST   /users                    # Create user
-GET    /users/:id                # Get user
-PATCH  /users/:id                # Update user (partial)
-DELETE /users/:id                # Delete user
-
-GET    /users/:id/orders         # Nested resource (orders for user)
-POST   /users/:id/orders         # Create order for user
-GET    /orders/:id               # Get specific order
-
-GET    /users/:id/orders/:order_id/items  # Deep nesting (avoid >2 levels)
+{
+  "type": "https://api.example.com/problems/validation-error",
+  "title": "Validation Error",
+  "status": 422,
+  "detail": "The request body contains invalid fields.",
+  "instance": "/users",
+  "requestId": "req_abc123",
+  "errors": [
+    {
+      "field": "email",
+      "message": "Must be a valid email address",
+      "code": "invalid_format",
+      "value": "not-an-email"
+    },
+    {
+      "field": "age",
+      "message": "Must be a positive integer",
+      "code": "invalid_type",
+      "value": "-5"
+    }
+  ]
+}
 ```
 
-### Action Verbs (use sparingly)
+### HTTP Status Code Reference
 
-```
-POST   /users/:id/archive        # Action that doesn't fit CRUD
-POST   /orders/:id/cancel        # State transition
-POST   /auth/login               # Authentication
-POST   /auth/register            # Registration
-POST   /auth/password-reset      # Non-CRUD operation
-```
+| Code | Meaning | When to Use |
+|------|---------|------------|
+| 200 | OK | Successful GET, PATCH, PUT |
+| 201 | Created | Successful POST that creates a resource |
+| 202 | Accepted | Request accepted but processing is async |
+| 204 | No Content | Successful DELETE or PUT with no body |
+| 400 | Bad Request | Malformed request syntax |
+| 401 | Unauthorized | Missing or invalid authentication |
+| 403 | Forbidden | Authenticated but not authorized |
+| 404 | Not Found | Resource does not exist |
+| 409 | Conflict | Resource state conflict (duplicate, version mismatch) |
+| 422 | Unprocessable Entity | Validation errors (semantic) |
+| 429 | Too Many Requests | Rate limit exceeded |
+| 500 | Internal Server Error | Unexpected server error |
+| 502 | Bad Gateway | Upstream service error |
+| 503 | Service Unavailable | Server temporarily unavailable |
 
-### Query Parameters
+### Cursor Pagination
 
-```
-GET /users?role=admin&status=active    # Filtering
-GET /users?sort=created_at&order=desc   # Sorting
-GET /users?page=2&per_page=20          # Pagination
-GET /users?q=search+term               # Search
-GET /users?fields=id,name,email        # Sparse fields (optional)
-```
+```json
+// Cursor pagination (better for large/dynamic datasets)
+// Use when: dataset is large, data changes frequently, consistent ordering is important
 
----
+// Request
+GET /users?limit=20&cursor=eyJpZCI6MTIzfQ
 
-## 4. Input Validation
-
-### FastAPI
-
-```python
-from pydantic import BaseModel, EmailStr, Field
-from fastapi import FastAPI, HTTPException
-
-class CreateUserRequest(BaseModel):
-    email: EmailStr
-    name: str = Field(min_length=1, max_length=100)
-    age: int = Field(ge=18, le=120)  # age must be 18-120
-    role: str = Field(default="user", pattern="^(user|admin|manager)$")
-
-@app.post("/users", status_code=201)
-async def create_user(body: CreateUserRequest, db: Database):
-    existing = await db.find_user_by_email(body.email)
-    if existing:
-        raise HTTPException(409, detail="Email already registered")
-    user = await db.create_user(body.model_dump())
-    return {"data": user}
-```
-
-### Express (Zod)
-
-```typescript
-import { z } from 'zod';
-
-const CreateUserSchema = z.object({
-  email: z.string().email(),
-  name: z.string().min(1).max(100),
-  age: z.number().int().min(18).max(120),
-  role: z.enum(['user', 'admin', 'manager']).default('user'),
-});
-
-router.post('/users', async (req, res) => {
-  const result = CreateUserSchema.safeParse(req.body);
-  if (!result.success) {
-    return res.status(400).json({
-      error: {
-        code: 'VALIDATION_ERROR',
-        message: 'Invalid input',
-        details: result.error.flatten(),
-      },
-    });
+// Response
+{
+  "data": [...],
+  "meta": {
+    "hasMore": true,
+    "nextCursor": "eyJpZCI6MTQzfQ",
+    "prevCursor": "eyJpZCI6MTAzfQ",
+    "total": null
   }
-  // result.data is fully typed and validated
-  const user = await createUser(result.data);
-  return res.status(201).json({ data: user });
-});
+}
 ```
 
----
-
-## 5. Pagination
-
-### Cursor-Based (Keyset) — Preferred for Large Datasets
-
 ```python
-@app.get("/orders")
-async def list_orders(cursor: str | None = None, limit: int = 20, db: Database):
-    query = db.orders.order_by(desc(orders.created_at), desc(orders.id)).limit(limit + 1)
+# Cursor pagination implementation (Python/Flask)
+from base64 import b64encode, b64decode
+import json
+
+def encode_cursor(record):
+    """Encode a record's cursor from its ID and timestamp."""
+    return b64encode(json.dumps({
+        "id": record.id,
+        "ts": record.created_at.isoformat()
+    }).encode()).decode()
+
+def decode_cursor(cursor):
+    """Decode a cursor back to filter values."""
+    return json.loads(b64decode(cursor.encode()).decode())
+
+@app.get("/users")
+def list_users():
+    limit = min(int(request.args.get("limit", 20)), 100)
+    cursor = request.args.get("cursor")
+
+    query = User.query.order_by(User.id.asc())
 
     if cursor:
-        decoded = decode_cursor(cursor)  # base64 encode: {created_at, id}
-        query = query.filter(
-            or_(
-                orders.created_at < decoded["created_at"],
-                and_(orders.created_at == decoded["created_at"], orders.id < decoded["id"])
-            )
-        )
+        decoded = decode_cursor(cursor)
+        query = query.filter(User.id > decoded["id"])
 
-    items = await query.all()
-    has_next = len(items) > limit
-    items = items[:limit]
+    users = query.limit(limit + 1).all()  # Fetch one extra to check hasMore
+    has_more = len(users) > limit
+    users = users[:limit]
+
+    next_cursor = encode_cursor(users[-1]) if has_more else None
 
     return {
-        "data": items,
+        "data": [user.to_dict() for user in users],
         "meta": {
-            "has_next": has_next,
-            "next_cursor": encode_cursor({"created_at": items[-1].created_at, "id": items[-1].id}) if has_next else None,
-            "limit": limit,
+            "hasMore": has_more,
+            "nextCursor": next_cursor
         }
     }
 ```
 
-### Offset-Based — Acceptable for Small Datasets (< 10k rows)
+### Idempotency Key Pattern
+
+```json
+// Client sends an idempotency key with POST requests
+// Server stores results keyed by idempotency key
+// If the same key is seen again, return the cached result
+
+// Request
+POST /payments
+Idempotency-Key: idk_7a9b3c2d
+Content-Type: application/json
+
+{
+  "amount": 99.99,
+  "currency": "USD",
+  "source": "card_abc123"
+}
+
+// Response
+HTTP/1.1 201 Created
+Idempotency-Key: idk_7a9b3c2d
+
+{
+  "data": {
+    "id": "ch_xyz789",
+    "amount": 99.99,
+    "status": "succeeded"
+  }
+}
+
+// If client retries with the same key, response is:
+// HTTP/1.1 201 Created (or 200 OK) with the original response body
+```
 
 ```python
-@app.get("/products")
-async def list_products(page: int = 1, per_page: int = 20, db: Database):
-    offset = (page - 1) * per_page
-    items = await db.products.order_by(products.name).offset(offset).limit(per_page).all()
-    total = await db.products.count()
+# Idempotency implementation
+from functools import wraps
+import redis
+import hashlib
 
-    return {
-        "data": items,
-        "meta": {
-            "page": page,
-            "per_page": per_page,
-            "total": total,
-            "total_pages": ceil(total / per_page),
-            "has_next": offset + per_page < total,
-            "has_prev": page > 1,
-        }
-    }
+r = redis.Redis()
+
+def idempotent(ttl_seconds=86400):
+    """Decorator that deduplicates requests by idempotency key."""
+    def decorator(f):
+        @wraps(f)
+        def wrapper(request, *args, **kwargs):
+            key = request.headers.get("Idempotency-Key")
+            if not key:
+                return f(request, *args, **kwargs)
+
+            # Hash the key to avoid storing sensitive values
+            cache_key = f"idempotent:{hashlib.sha256(key.encode()).hexdigest()}"
+
+            # Check cache
+            cached = r.get(cache_key)
+            if cached:
+                return json.loads(cached)
+
+            # Execute and cache
+            response = f(request, *args, **kwargs)
+            r.setex(cache_key, ttl_seconds, json.dumps(response))
+
+            return response
+        return wrapper
+    return decorator
 ```
 
----
+### API Versioning
 
-## 6. Error Handling
+```bash
+# URL path versioning (most common, most explicit)
+GET /v1/users/123
+GET /v2/users/123
 
-### Global Error Handler Pattern
+# Header versioning (cleaner URLs, requires custom header)
+GET /users/123
+API-Version: 2024-01-01
+
+# Deprecation header (tell clients when to migrate)
+GET /v1/users
+Response Headers:
+  Deprecation: true
+  Sunset: Sat, 01 Mar 2025 00:00:00 GMT
+  Link: <https://api.example.com/v2/users>; rel="successor-version"
+```
 
 ```python
-@app.exception_handler(Exception)
-async def global_error_handler(request: Request, exc: Exception):
-    request_id = request.state.request_id
+# Version routing (Flask)
+from functools import wraps
 
-    if isinstance(exc, HTTPException):
-        return JSONResponse(
-            status_code=exc.status_code,
-            content={"error": {"code": "HTTP_ERROR", "message": exc.detail}, "meta": {"request_id": request_id}}
-        )
+def version(required):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(request, *args, **kwargs):
+            # Check API-Version header or URL
+            version = request.headers.get("API-Version") or "v1"
 
-    if isinstance(exc, ValidationError):
-        return JSONResponse(
-            status_code=422,
-            content={"error": {"code": "VALIDATION_ERROR", "message": str(exc)}, "meta": {"request_id": request_id}}
-        )
+            if version != required:
+                return {
+                    "error": "unsupported_version",
+                    "message": f"Version {required} is not supported. Use {version}."
+                }, 400
 
-    # Log unexpected errors (never expose details to client)
-    logger.exception("Unhandled error", exc_info=exc)
-    return JSONResponse(
-        status_code=500,
-        content={"error": {"code": "INTERNAL_ERROR", "message": "An unexpected error occurred"}, "meta": {"request_id": request_id}}
-    )
+            return f(request, *args, **kwargs)
+        return wrapper
+    return decorator
+
+@app.get("/v1/users/<int:user_id>")
+@version("v1")
+def get_user_v1(user_id):
+    return User.query.get_or_404(user_id).to_dict()
+
+@app.get("/v2/users/<int:user_id>")
+@version("v2")
+def get_user_v2(user_id):
+    # v2 includes additional fields (e.g., preferences)
+    return User.query.get_or_404(user_id).to_dict_v2()
 ```
 
----
-
-## 7. API Versioning
-
-### URL Path Versioning
-
-```
-/api/v1/users
-/api/v2/users
-```
-
-### When to Version
-
-```
-MAJOR: Breaking change (rename field, remove endpoint, change response type)
-MINOR: Non-breaking addition (new field, new endpoint)
-PATCH: Bug fix (same response shape, different values)
-```
-
-### Backward Compatibility Checklist
-
-- [ ] Adding a field to a response → safe (old clients ignore it)
-- [ ] Renaming a field → BREAKING (old clients expect old name)
-- [ ] Removing a field → BREAKING
-- [ ] Changing field type → BREAKING
-- [ ] Making required field optional → safe
-- [ ] Adding new endpoint → safe
-
----
-
-## 8. Rate Limiting
+### Rate Limiting Headers
 
 ```python
-from fastapi import Request, HTTPException
-import time
+# Rate limiting implementation
+from flask import request, jsonify
 
-# Simple in-memory rate limiter (use Redis for production)
-rate_limits = {}
+RATE_LIMIT = 100  # requests per window
+RATE_WINDOW = 60  # seconds
 
-@app.middleware("http")
-async def rate_limit_middleware(request: Request, call_next):
-    client_ip = request.client.host
-    now = time.time()
-    window = 60  # 1 minute
+def rate_limit_key():
+    """Identify the client by API key or IP."""
+    return request.headers.get("X-API-Key") or request.remote_addr
 
-    # Clean old entries
-    rate_limits[client_ip] = [t for t in rate_limits.get(client_ip, []) if t > now - window]
+@app.before_request
+def check_rate_limit():
+    key = f"rate:{rate_limit_key()}"
+    current = r.get(key)
 
-    if len(rate_limits.get(client_ip, [])) >= 100:
-        raise HTTPException(429, detail="Too many requests")
+    if current and int(current) >= RATE_LIMIT:
+        return jsonify({
+            "error": "rate_limit_exceeded",
+            "message": f"Rate limit of {RATE_LIMIT} requests per {RATE_WINDOW}s exceeded",
+            "retryAfter": r.ttl(key)
+        }), 429
 
-    rate_limits.setdefault(client_ip, []).append(now)
-    return await call_next(request)
+    pipe = r.pipeline()
+    pipe.incr(key)
+    pipe.expire(key, RATE_WINDOW)
+    pipe.execute()
+
+@app.after_request
+def add_rate_limit_headers(response):
+    key = f"rate:{rate_limit_key()}"
+    remaining = RATE_LIMIT - int(r.get(key) or 0)
+    response.headers["X-RateLimit-Limit"] = str(RATE_LIMIT)
+    response.headers["X-RateLimit-Remaining"] = str(max(0, remaining))
+    response.headers["X-RateLimit-Reset"] = str(int(time.time()) + RATE_WINDOW)
+    return response
 ```
 
 ---
 
-## 9. Common Anti-Patterns
+## Anti-Patterns
 
-| Anti-Pattern | Why | Fix |
-|-------------|-----|-----|
-| Returning 200 for everything | Client can't distinguish success from error | Use correct HTTP status codes |
-| Stack traces in error responses | Information leak | Log detailed errors, return generic messages |
-| No request ID | Can't correlate errors across services | Generate UUID per request, return in response |
-| Deeply nested resources (3+ levels) | Fragile URLs, hard to maintain | Flatten or use query parameters |
-| Breaking changes without version bump | Silent client breakage | Version API or use backward-compatible changes |
-| Returning all fields including internal ones | Data leak (password_hash, internal IDs) | Use serializers/DTOs to shape response |
-| No pagination on list endpoints | Client must load everything | Always paginate list endpoints |
-| PUT for partial updates | PUT should replace the entire resource | Use PATCH for partial updates |
+- **Using verbs in URLs** — `POST /createUser` violates REST principles and mixes HTTP methods with URL design. Use nouns and HTTP methods.
+
+- **Returning 200 for errors** — A 200 status code means "success". Returning it for errors breaks client error handling, monitoring, and alerting.
+
+- **Exposing internal error details** — Stack traces, SQL errors, and internal paths should never be in API responses. They leak security information.
+
+- **Breaking changes without versioning** — Removing a field, changing a field type, or changing behavior without a new version breaks existing clients.
+
+- **No pagination on collection endpoints** — Returning all records from a large table can cause timeouts, memory exhaustion, and broken clients.
+
+- **Not handling concurrent updates** — Without optimistic locking (ETags) or last-write-wins semantics, concurrent updates can silently overwrite each other.
+
+- **Returning overly verbose error messages** — Error messages should be actionable for the API consumer. "Something went wrong" is not actionable.
 
 ---
 
-## 10. Verification Checklist
+## Quick Reference
 
-- [ ] All responses follow consistent format (success + error)
-- [ ] HTTP status codes used correctly per operation
-- [ ] Input validated at API boundary before business logic
-- [ ] Pagination implemented on all list endpoints
-- [ ] Error handler catches all unhandled exceptions
-- [ ] No stack traces or internal details in error responses
-- [ ] Request ID logged and returned in response
-- [ ] Rate limiting on auth and public endpoints
-- [ ] Versioning strategy in place (URL path or header)
-- [ ] All endpoints have documented request/response examples
-- [ ] Auth middleware applied to protected routes (not forgotten)
-- [ ] CORS configured correctly for production origin
+| Pattern | Correct | Wrong |
+|---------|---------|-------|
+| URLs | `/users/123` | `/getUser?id=123` |
+| Error status | 404 Not Found | 200 with `error: "not found"` |
+| Error body | RFC 7807 Problem Details | `"error": "something went wrong"` |
+| Collection pagination | Cursor or offset with limit | No pagination (all records) |
+| Versioning | URL path (`/v1/`) or header | No versioning (breaks clients) |
+| POST retry safety | Idempotency key | No idempotency (duplicates) |
+| Rate limit | Headers (X-RateLimit-*) | No rate limit info |
+
+### Error Response Template
+
+```json
+{
+  "type": "https://api.example.com/problems/[error-type]",
+  "title": "[Short human-readable title]",
+  "status": [HTTP status code],
+  "detail": "[Specific description of what went wrong]",
+  "instance": "[The request path]",
+  "requestId": "[Unique request identifier for tracing]"
+}
+```
+
+### Required Response Headers
+
+```
+Content-Type: application/json
+X-Request-ID: [UUID — for log correlation]
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 99
+X-RateLimit-Reset: 1700000000
+```

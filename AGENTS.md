@@ -12,6 +12,8 @@
 | `tech-lead` | Technical oversight, code quality, routing | solutions-architect | code-builder, bug-fixer, qa-engineer |
 | `delivery-engineer` | Deploy, Railway, CI/CD, verification | tech-lead | (executes directly) |
 | `qa-engineer` | Test plan, acceptance, bug triage | tech-lead | bug-fixer |
+| `expert-tester` | Adversarial deep tester — hunts edge cases the brief didn't anticipate. Complements qa-engineer (process gate), code-reviewer (static review), bug-fixer (reactive). | main-coordinator | (executes directly) |
+| `ai-evaluator` | LLM output quality specialist — evaluates AI behavior with RAGAS, DeepEval, and LLM-as-judge patterns. Tests hallucination, groundedness, bias, prompt-injection resistance. | main-coordinator | (executes directly) |
 | `architecture-advisor` | Deep architecture, Architect Pack, tradeoffs | project-manager | tech-lead, code-builder |
 | `bug-fixer` | Debug, root cause, error resolution | tech-lead | code-builder (if fix needs code) |
 | `code-analyzer` | Scan, audit, health check, patterns | tech-lead | (read-only, no delegation) |
@@ -27,6 +29,7 @@
 | `designer` | Design systems architect — design tokens, component specs, visual artifacts (designsystemscollective 2026, Agentic Design Systems) | project-manager | code-builder, tech-writer, code-analyzer |
 | `support` | Customer support triage + response — auto-categorize, knowledge-base lookup, no-lost-context handoff (kustomer/bluetweak 2026) | account-manager | bug-fixer, tech-writer, project-manager, cybersecurity |
 | `cybersecurity` | Application security engineer — OWASP ASI 2026, threat modeling, read-only vuln audits (owaspai.org, genai.owasp.org) | tech-lead | code-builder, bug-fixer, account-manager |
+| `observability-sre` | Production observability specialist — distributed tracing, latency monitoring, cost tracking, capacity planning, post-mortem analysis | tech-lead | (executes directly) |
 
 ---
 
@@ -48,6 +51,8 @@
 | Daily status | `standup-summary` | daily, standup, status, summary, what changed, recap, progress |
 | Deploy/verify | `delivery-engineer` | deploy, staging, prod, verify, Railway, push |
 | Test plan/acceptance | `qa-engineer` | test plan, acceptance, QA, smoke test, regression |
+| Adversarial deep testing / property-based / fuzzing | `expert-tester` | test, edge case, fuzz, adversarial, stress, race condition, break it, find what's broken, property test, mutation test, exploratory, SFDIPOT, red team, OWASP LLM, deep test |
+| AI/LLM output quality / hallucination / eval | `ai-evaluator` | evaluate AI, hallucination, RAG eval, prompt injection, model bias, LLM-as-judge, groundedness, response quality, AI output test, RAGAS, DeepEval |
 | Save/create skill | `skill-manager` | save this as a skill, create a skill, remember this procedure |
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 | Self-evolution | `evolution-agent` | analyze performance, suggest improvements, evolve, genes |
@@ -55,6 +60,7 @@
 | Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference, explain |
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | User/client support | `support` | support, how do I, doesn't work, broken, help, error, problem, complaint, ticket, customer |
+| Observability / SRE / monitoring | `observability-sre` | observability, SRE, monitor, trace, latency, error rate, p99, p95, cost, token, capacity, post-mortem, incident, deploy healthy, track costs, trace failure, where tokens, alert |
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 
 ---
@@ -122,3 +128,16 @@ cybersecurity → code-builder (implement fixes), bug-fixer (active exploits), a
 **Deadlock response:**
 - If no output in 3 minutes, agent reports status and stops
 - Coordinator tracks tool-call count per sub-task; >10 calls without output = interrupt
+## Auto-Handoff Pattern (Evaluator-Optimizer)
+
+After `code-reviewer` signs off on a feature change, main-coordinator automatically dispatches `expert-tester` for adversarial deep review. This implements Anthropic canonical evaluator-optimizer workflow.
+
+Trigger conditions:
+- Code-reviewer returned PASS verdict
+- The change touched 3+ files OR introduced new public APIs
+- User did not explicitly opt out via `--no-adversarial`
+
+Skip conditions:
+- Documentation-only changes
+- Sub-10-line typo fixes
+- Pure config edits (opencode.json, AGENTS.md)

@@ -312,3 +312,7 @@ The gate system now closes the loop automatically:
 powershell -File $CONFIG/scripts/gate/retro-analyze.ps1 -TaskCount 10 -WriteGenes
 # Exit 2 → genes written → route to @evolution-agent for approval
 ```
+
+## Auto-Trigger Behavior
+
+After every 5 completed tasks in a session, this agent auto-fires to read `memory/outcomes/patterns.jsonl` and `memory/outcomes/pattern_maturity.yaml`, then proposes new gene candidates to `skills/DNA.yaml`. Triggered by the `session-end-memory` plugin via the post-task hook.

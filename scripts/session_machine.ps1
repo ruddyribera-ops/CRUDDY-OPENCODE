@@ -154,7 +154,10 @@ function Fire-T1 {
 
     if ($resetNeeded) {
         $newYaml = "session_name: `"Session $(Get-Date -Format 'yyyy-MM-dd HH:mm')`"`n"
+        $newYaml += "session_id: `"$sessionId`"`n"
         $newYaml += "started: `"$(Get-Date -Format 'yyyy-MM-ddTHH:mm:ss')`"`n"
+        $newYaml += "last_update: `"$(Get-Date -Format 'yyyy-MM-ddTHH:mm:ss')`"`n"
+        $newYaml += "last_agent: `"main-coordinator`"`n"
         $newYaml += "projects_touched: []`n"
         $newYaml += "tasks: []`n"
         $newYaml += "decisions: []`n"
@@ -164,6 +167,24 @@ function Fire-T1 {
         $newYaml += "state: {}`n"
         $newYaml += "next_steps: []`n"
         $newYaml | Out-File -FilePath $sessionFile -Encoding UTF8
+    } else {
+        # Update last_update timestamp even when reusing existing session
+        try {
+            $yaml = Get-Content $sessionFile -Raw
+            $yaml = $yaml -replace "`r`n", "`n"
+            $nowStamp = "$(Get-Date -Format 'yyyy-MM-ddTHH:mm:ss')"
+            # Update last_update
+            if ($yaml -match '(?m)^last_update:\s*".*"') {
+                $yaml = $yaml -replace '(?m)^last_update:\s*".*"', "last_update: `"$nowStamp`""
+            } else {
+                $yaml = $yaml -replace '(?m)^(session_id:.*$)', "`$1`nlast_update: `"$nowStamp`""
+            }
+            $yaml = $yaml -replace "`n", "`r`n"
+            Set-Content -Path $sessionFile -Value $yaml -Encoding UTF8
+            Write-Host "   Session updated: last_update=$nowStamp"
+        } catch {
+            Write-Host "   Warning: could not update session.yaml: $_"
+        }
     }
 
     $today = Get-Date -Format 'yyyy-MM-dd'

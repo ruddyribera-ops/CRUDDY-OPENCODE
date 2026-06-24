@@ -7,7 +7,7 @@
 //   - tool.execute.before on `bash`           -> checkpoint if command modifies state
 //   - Every 5 minutes of activity (interval)  -> checkpoint current session
 //
-// Storage: delegates to scripts/checkpoint.ps1 via execFile.
+// Storage: delegates to scripts/checkpoint-save.ps1 via execFile.
 // Logs to memory/gate-system.log via `[checkpoint-guard] HH:MM:SS <event>` lines.
 //
 // Runtime notes:
@@ -16,7 +16,7 @@
 //   - `tool.execute.after` is a documented OpenCode hook; in some runtimes it has
 //     historically not fired (see gate-system.js). Pre-task checkpoints still
 //     cover survival even when post-task does not fire.
-//   - The `Files` list passed to checkpoint.ps1 is currently always empty;
+//   - The `Files` list passed to checkpoint-save.ps1 is currently always empty;
 //     a "last-3-modifications" tracker can be added later by reading mtimes
 //     from a small JSON ledger on disk.
 
@@ -33,7 +33,7 @@ const CONFIG_ROOT = process.env.OPENCODE_CONFIG_HOME
 
 const MEMORY_DIR = path.join(CONFIG_ROOT, "memory")
 const GATE_LOG = path.join(MEMORY_DIR, "gate-system.log")
-const CHECKPOINT_SCRIPT = path.join(CONFIG_ROOT, "scripts", "checkpoint.ps1")
+const CHECKPOINT_SAVE_SCRIPT = path.join(CONFIG_ROOT, "scripts", "checkpoint-save.ps1")
 
 const CHECKPOINT_INTERVAL_MS = 5 * 60 * 1000
 
@@ -62,12 +62,12 @@ async function doCheckpoint(taskId, description, files, nextAction, progress) {
       [
         "-NoProfile",
         "-File",
-        CHECKPOINT_SCRIPT,
-        "-TaskId", taskId,
-        "-Description", description,
-        "-Files", files.join(","),
+        CHECKPOINT_SAVE_SCRIPT,
+        "-SessionId", taskId,
+        "-FilesModified", files.join(","),
         "-NextAction", nextAction,
         "-ProgressPercent", String(progress),
+        "-Strategy", "auto-checkpoint",
       ],
       { timeout: 10000, windowsHide: true },
     )

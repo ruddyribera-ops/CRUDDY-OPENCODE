@@ -704,7 +704,9 @@ When choosing tools, classify the action into one of four tiers and adjust your 
 
 6. **Fix verification failures, don't report them** — if lint fails, fix the lint errors. If tests fail, fix the tests. Then re-verify.
 
-7. **Windows shell rules Ruddy runs PowerShell. Commands you show the user MUST be PowerShell. Your Bash tool runs git bash (POSIX OK there). Consult memory/feedback_windows_shell.md for translation table.\n\n8. **Tool-call budget**  If you have made more than 15 tool calls without writing or editing any file, STOP and report what you have found. M2.7 sub-agents spin on Read/Search/Grep loops when left unchecked. Partial results are better than a stalled session. Write what you have, then stop.
+7. **Windows shell rules Ruddy runs PowerShell. Commands you show the user MUST be PowerShell. Your Bash tool runs git bash (POSIX OK there). Consult memory/feedback_windows_shell.md for translation table.
+
+8. **Tool-call budget** — see `rules/common.md` Section 1.
 
 
 

@@ -1,301 +1,258 @@
 ---
 name: deployment-patterns
-description: Deployment, CI/CD, environment management, Docker, Railway, and infrastructure patterns. Production-hardened deployment practices for full-stack apps.
-triggers: [deploy, deployment, railway, docker, dockerfile, docker-compose, ci, cd, github-actions, pipeline, environment, env, staging, production, vercel, netlify, cloudflare, aws, release, build, npm-build, docker-build, push, container]
+description: Docker, docker-compose, Railway, containerization, and environment configuration. Use when containerizing apps, deploying to Railway, configuring production environments. Triggers: containerize, Docker, docker-compose, Railway, deploy, health check, Dockerfile, rolling deploy, blue green.
 ---
 
 # Deployment Patterns
 
+## When to use this
+
+Load this skill when you are packaging an application into a container, deploying to Railway, configuring environment variables for production, or setting up deployment strategies like rolling or blue/green deployments.
+
+---
+
 ## Core Principles
 
-1. **Build once, deploy many** — same artifact goes through staging → production
-2. **Immutable infrastructure** — never SSH into production to "fix things"
-3. **Environment parity** — dev/staging/prod are as identical as possible
-4. **Rollback is a feature** — every deploy must be reversible in < 5 minutes
+1. **Multi-stage builds reduce image size** — Separate the build environment from the runtime environment to exclude build tools from the final image.
+
+2. **Layer caching is your friend** — Order Dockerfile instructions from least to most frequently changing so that rebuilds are fast.
+
+3. **Railway has an ephemeral filesystem** — Any data written outside of persistent volumes (databases, uploaded files) is lost on redeploy.
+
+4. **Health checks prevent premature traffic routing** — Both the Docker HEALTHCHECK directive and Railway readiness probes should validate that your app is actually ready to serve traffic.
+
+5. **Environment variables for secrets, never baked into images** — Use Railway's environment variable system or a secrets manager. Never RUN npm install with credentials in the Dockerfile.
+
+6. **Rolling deploys are safer than recreate** — When possible, update pods in batches so that traffic is never fully dropped during a deploy.
+
+7. **Rollback plan before you deploy** — Know the exact command or procedure to roll back before you push. Post-deploy regret is not a strategy.
 
 ---
 
-## 1. Project Configuration
+## Patterns
 
-### Environment Variables
-
-```bash
-# .env.example — committed to git, template with placeholder values
-DATABASE_URL=postgresql://user:pass@host:5432/db
-NEXT_PUBLIC_API_URL=http://localhost:3000
-JWT_SECRET=change-me-in-production
-```
-
-```bash
-# .env — NEVER committed to git
-DATABASE_URL=postgresql://user:realpassword@localhost:5432/dev_db
-```
-
-```python
-# ✅ CORRECT: Access pattern
-from pydantic_settings import BaseSettings
-
-class Settings(BaseSettings):
-    database_url: str
-    jwt_secret: str
-    environment: str = "development"
-
-    class Config:
-        env_file = ".env"
-```
-
-```javascript
-// ✅ CORRECT (Node.js):
-import 'dotenv/config';
-const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) throw new Error('DATABASE_URL is required');
-```
-
-### Environment-Specific Config
-
-```
-.env.example           ← template (committed)
-.env.development       ← local dev defaults
-.env.staging           ← staging overrides
-.env.production         ← production overrides (CI injects these, never in repo)
-```
-
----
-
-## 2. Docker
-
-### Dockerfile Best Practices
+### Multi-Stage Dockerfile (Node.js example)
 
 ```dockerfile
-# 1. Multi-stage build
+# Stage 1: Build
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci --only=production
 COPY . .
 RUN npm run build
 
-FROM node:20-alpine AS runner
+# Stage 2: Runtime
+FROM node:20-alpine AS runtime
 WORKDIR /app
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./
-USER nextjs  # ← NEVER run as root
+# Do NOT copy node_modules from builder — use fresh prod deps
+COPY package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+COPY --from=builder /app/dist ./dist
 EXPOSE 3000
 ENV NODE_ENV=production
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.js"]
 ```
 
+### Multi-Stage Dockerfile (Python example)
+
 ```dockerfile
-# ✅ Python multi-stage
 FROM python:3.12-slim AS builder
 WORKDIR /app
+RUN pip install --user uv
 COPY requirements.txt .
 RUN pip install --user -r requirements.txt
 
-FROM python:3.12-slim
+FROM python:3.12-slim AS runtime
 WORKDIR /app
-RUN adduser --system --uid 1001 appuser
 COPY --from=builder /root/.local /root/.local
-COPY . .
 ENV PATH=/root/.local/bin:$PATH
-USER appuser
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY . .
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-### Dockerignore
-
-```dockerfile
-# .dockerignore — prevents sending unnecessary context to docker daemon
-node_modules/
-.git/
-.env
-*.md
-.DS_Store
-```
-
-### docker-compose.yml (Development)
+### docker-compose for Local Development
 
 ```yaml
-version: '3.8'
+version: "3.9"
 services:
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: devpassword
-      POSTGRES_DB: app_dev
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
   app:
-    build: .
+    build:
+      context: .
+      target: builder
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgresql://app:devpassword@db:5432/app_dev
+      - DATABASE_URL=postgres://user:pass@db:5432/mydb
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules  # preserve container node_modules
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   pgdata:
 ```
 
----
-
-## 3. Railway Deployment
-
-### Critical Config
-
-```toml
-# railway.toml
-[build]
-  builder = "nixpacks"
-  buildCommand = "npm run build"
-
-[deploy]
-  startCommand = "node server.js"
-  numReplicas = 1
-
-[service]
-  port = 3000
-```
-
-### Railway Reminders
-
-```
-⚠️  Railway filesystem is EPHEMERAL
-    → Use Postgres plugin for databases (never SQLite on disk)
-    → Use volume mounts for uploads/temp files
-    → Don't rely on local file persistence between restarts
-
-⚠️  Railway rebuilds on every deploy
-    → Build cache stays between deploys
-    → Env vars set in Railway dashboard override .env files
-
-✅  Stale-build caching has burned us before
-    → Verify commit hash matches between build and deploy
-    → Use commit-hash-verify step (see Verify-Deploy.ps1)
-```
-
----
-
-## 4. CI/CD Pipeline
-
-### GitHub Actions Template
-
-```yaml
-name: CI/CD
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
-
-jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run lint
-
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_PASSWORD: test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm test
-
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: [lint, test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Railway
-        run: npx railway up --service ${{ vars.RAILWAY_SERVICE }}
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-```
-
----
-
-## 5. Environment Management
-
-| Env | Purpose | Database | Deploy Trigger |
-|-----|---------|----------|----------------|
-| local | Development | Local Docker Postgres | Manual |
-| staging | QA/Testing | Railway Postgres (restore from prod backup) | Push to develop |
-| production | Live | Railway Postgres (production) | Push to main |
-
-### Deployment Workflow
+### Railway Deployment Checklist
 
 ```bash
-# 1. Check CI passes (lint + test)
-# 2. Create migration
-# 3. Run migration against staging first
-# 4. Deploy to staging, verify
-# 5. Run migration against production (if needed)
-# 6. Deploy to production
-# 7. Run Verify-Deploy.ps1
-# 8. Monitor logs for 10 minutes
+# Environment variables (set in Railway dashboard or via CLI)
+PORT=3000                    # Railway injects this; your app must respect it
+NODE_ENV=production
+DATABASE_URL=${DATABASE_URL} # reference a Railway Postgres instance
+# DO NOT set: secret keys, API tokens — use Railway Secrets instead
+
+# Health check endpoint (must return 200 for Railway to route traffic)
+# In Express:
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
+
+# Railway start command override (in railway.json or Procfile)
+# railway.json:
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "numInstances": 2,
+    "sleepApplication": false
+  }
+}
+```
+
+### Rolling Deploy with Docker Compose
+
+```yaml
+# docker-compose.prod.yml
+services:
+  app:
+    image: myapp:v2.0.0
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first  # start new before stopping old
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+```
+
+### Blue/Green Deploy (manual Railway pattern)
+
+```bash
+# Deploy new version to a separate directory
+git clone git@github.com:myorg/myapp.git myapp-blue
+
+cd myapp-blue
+railway login
+railway init --project-id $PROJECT_ID
+railway up --service app-blue
+
+# Point traffic to new service (Railway uses your domain — swap via env)
+# 1. In Railway dashboard, set environment variable SERVICE=blue
+# 2. Or use nginx as a reverse proxy and swap upstream
+
+# Verify blue is healthy, then decommission green
+railway down --service app-green
+```
+
+### Rollback Procedure
+
+```bash
+# Docker rollback (if using docker-compose)
+docker-compose -f docker-compose.prod.yml pull
+docker-compose -f docker-compose.prod.yml up -d
+
+# Railway rollback (deploy previous image)
+railway log --deployment $PREVIOUS_DEPLOYMENT_ID
+railway rollback --deployment $PREVIOUS_DEPLOYMENT_ID
+
+# Image rollback (if using tags)
+docker pull myapp:v1.9.0
+docker tag myapp:v1.9.0 myapp:latest
+docker-compose -f docker-compose.prod.yml up -d
 ```
 
 ---
 
-## 6. Secrets Management
+## Anti-Patterns
 
-```
-DO NOT:
-  - Commit .env files to git
-  - Hardcode API keys in source code
-  - Share secrets via chat/email
+- **Using :latest tag in production** — You cannot roll back to a known-good version because you do not know which version :latest pointed to when the bug was introduced. Always use explicit version tags (v1.2.3, git SHA).
 
-DO:
-  - Railway dashboard → Variables → Add
-  - GitHub → Settings → Secrets → Actions
-  - For local dev: .env (in .gitignore)
-  - Rotate immediately on suspected exposure
-```
+- **Baking secrets into the Docker image** — Credentials in the Dockerfile survive in the image layers forever, even if you remove them from your repo. Use environment variables or Docker secrets.
 
----
+- **Running containers as root** — The default container user is root. Create and switch to a non-root user: `RUN addgroup -S appgroup && adduser -S appuser -G appgroup`.
 
-## 7. Anti-Patterns
+- **Not having a health check** — Without HEALTHCHECK, Docker and Railway assume the container is healthy as soon as the process starts. If your app needs 10 seconds to connect to the DB, Railway routes traffic to it immediately and returns 502s.
 
-| Anti-Pattern | Why | Fix |
-|-------------|-----|-----|
-| "It works on my machine" | Environment differences | Dockerize or use nixpacks |
-| SSH-ing into production to debug | State drift, unreproducible fixes | Read logs, fix locally, redeploy |
-| Deploying on Friday afternoon | Weekend incidents | Deploy early week, give 24h monitoring window |
-| No health check endpoint | Don't know if app is alive | Add GET /health endpoint |
-| Running as root in container | Security vulnerability | Add USER directive to Dockerfile |
-| Different config per environment | The "works on staging but not prod" classic | Environment parity |
+- **Single-stage builds for compiled languages** — A Go or Rust binary built in the same image as the runtime includes the entire build toolchain. Multi-stage drops image size from 1GB to 10MB.
+
+- **Ignoring Railway's ephemeral filesystem** — Writing session data, caches, or temporary uploads to the container filesystem means they disappear on the next deploy. Use a persistent volume or an external cache (Redis).
 
 ---
 
-## 8. Verification Checklist
+## Quick Reference
 
-- [ ] Build once, same artifact promoted through environments
-- [ ] .env.example committed with all required vars (no real values)
-- [ ] Secrets injected via environment, never in code
-- [ ] Dockerfile uses multi-stage build, non-root user
-- [ ] docker-compose.yml for local development
-- [ ] CI runs lint + test before deploy
-- [ ] Railway: Postgres plugin used, not SQLite on disk
-- [ ] Verify-Deploy.ps1 runs and exits 0 after push
-- [ ] Rollback plan documented and tested
-- [ ] Health check endpoint returns 200
-- [ ] Migration run before or after code deploy (tested both ways on staging)
+| Concern | Correct Pattern | Anti-Pattern |
+|---------|----------------|--------------|
+| Image size | Multi-stage build | Single-stage with all deps |
+| Secrets | Environment variables / Railway Secrets | Hardcoded in Dockerfile |
+| Health checks | HEALTHCHECK + readiness probe | No health check |
+| Deploy strategy | Rolling (start-first) or blue/green | Recreate (downtime) |
+| Rollback | Explicit version tags, known SHA | :latest tag |
+| User in container | Non-root (adduser -S) | Running as root |
+| Railway storage | Persistent volumes for data | Container filesystem |
+| Caching | Layer order: deps first, code last | Cache bust by reordering |
+
+### One-Command Health Check (for Alpine-based images)
+
+```dockerfile
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD wget --spider -q http://localhost:${PORT:-3000}/health || exit 1
+```
+
+### Railway Service Configuration (railway.json)
+
+```json
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm run build",
+    "startCommand": "npm start"
+  },
+  "deploy": {
+    "numInstances": 2,
+    "sleepApplication": false,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+```
