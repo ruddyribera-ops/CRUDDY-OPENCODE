@@ -11,6 +11,7 @@ gates/.density-warning
 gates/.gate-system-init.marker
 gates/.memory-bridge-load.txt
 gates/.task-counter.json
+gates/.session-start-memory.done
 
 # CASS counter
 memory/cass/.counter
@@ -19,6 +20,55 @@ memory/cass/meta.json
 # Session/checkpoint index
 memory/checkpoints/checkpoint_index.jsonl
 
+# Runtime logs (added v0.5.0)
+memory/*.log
+hook-errors.log
+**/*.log
+
+# Runtime state JSONL (added v0.5.0)
+memory/audit.jsonl
+memory/token-tracking.jsonl
+memory/factory/audit.jsonl
+
+# Memory state files (runtime, not source)
+memory/mailboxes/
+memory/schedule.yaml
+memory/token_budget.yaml
+memory/user_preferences.md
+memory/test_importance.md
+memory/session_log.md
+memory/session.yaml
+memory/project_active.md
+memory/audit.jsonl
+
+# Memory working notes (research drafts, scratch)
+memory/research_factory_*.md
+memory/research_poa_*.md
+memory/opencode_audit_phase1_*.md
+memory/opencode_config_audit_*.md
+memory/gap-analysis-*.md
+memory/gap-audit-*.md
+memory/gap-research-*.md
+memory/auto_browser_*.md
+memory/PDC_LOSS_INVENTORY.md
+memory/ENHANCEMENTS_BIOME_FORKS_SWARM.md
+memory/poa_*.md
+memory/reference_*.md
+memory/hermes_bridge.md
+
+# Python build artifacts
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Node modules
+node_modules/
+plugins/node_modules/
+
 # OS noise
 .DS_Store
 Thumbs.db
+
+# Project-level opencode override (runtime)
+.opencode/gates/
+.opencode/memory.db
