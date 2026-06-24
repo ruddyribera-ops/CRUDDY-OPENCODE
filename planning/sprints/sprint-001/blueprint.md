@@ -1,0 +1,419 @@
+# Blueprint — OpenCode Config Health Fix Sprint 001
+
+---
+
+## Architecture Summary
+
+The OpenCode global config is a single `opencode.json` plus supporting directories (`agents/`, `skills/`, `plugins/`, `mcp/`). Fixes are applied file-by-file with per-area snapshot-and-verify discipline. No new services or infrastructure are introduced.
+
+---
+
+## Step 0: Snapshot (MUST happen before ANY edit)
+
+```powershell
+$dst = "C:\Users\Windows\.config\opencode\planning\sprints\sprint-001\backups"
+New-Item -ItemType Directory -Path $dst -Force
+Copy-Item "C:\Users\Windows\.config\opencode\opencode.json" "$dst/opencode.json.pre-fix"
+# Also snapshot agents/ and skills/ directories
+Copy-Item "C:\Users\Windows\.config\opencode\agents" "$dst/agents.pre-fix" -Recurse -Force
+Write-Output "Snapshot complete: $dst"
+```
+
+---
+
+## Area 0: Plugin Runtime Verification (Gate — determines Area 1 scope)
+
+**Goal:** Determine whether the 10 existing plugins load correctly AS-IS (named exports) before we touch them.
+
+**Files to inspect:** `plugins/*.js` (all 10)
+
+**Verification command:**
+```powershell
+# Option A: Check if opencode starts without plugin errors
+opencode --version 2>&1 | Select-String "plugin|error|loaded"
+# Option B: Start a throwaway session and check hook-errors.log
+# hook-errors.log at C:\Users\Windows\.config\opencode\hook-errors.log should remain 0 bytes
+```
+
+**If plugins load without errors** ? Mark F1 as PASS (no plugin changes needed). Skip Area 1 entirely.
+
+**If plugins fail to load** ? Proceed with Area 1 (add `export default` wrappers).
+
+**Evidence from reading 3 plugins:**
+- `memory-bridge.js` line 209: `export const MemoryBridge = async () => { return { "shell.env": ..., event: ..., "session.compacted": ... } }` — named export of a hook-object factory
+- `post-turn-biome.js` line 120: `export const PostTurnBiome = async ({ project, client, $, directory }) => { return { "tool.execute.after": ..., "session.idle": ... } }` — named export
+- `gate-system.js` line 55: `export const GateSystem = async () => { return { "shell.env": ..., event: ... } }` — named export
+
+All 10 follow the same pattern. Whether OpenCode Go's plugin loader calls `plugin.default` or iterates named exports is the critical unknown.
+
+---
+
+## Area 1: Agent Inline Dedup
+
+**Goal:** Remove duplicate inline `agent:` blocks from `opencode.json` (lines 277-327). Keep the `agents/*.md` file-form as the authoritative source per OpenCode merge rules.
+
+**File:** `C:\Users\Windows\.config\opencode\opencode.json`
+
+**Change:** Remove the entire `agent:` block (lines 277-327). The 16 agents are fully defined in `agents/*.md`. The inline `agent:` blocks for `account-manager`, `project-manager`, `solutions-architect`, `tech-lead`, `delivery-engineer`, `qa-engineer`, `architecture-advisor`, `bug-fixer`, `code-analyzer`, `code-builder`, `code-explainer`, `evolution-agent`, `main-coordinator`, `project-generator`, `skill-manager`, `standup-summary` are redundant.
+
+**Exception:** Keep `main-coordinator` inline only if it has fields NOT in the .md that you want to preserve (e.g., custom `steps` or `model` overrides). Check `agents/main-coordinator.md` first.
+
+**Verification:**
+```powershell
+# Before editing: diff the inline agent block vs the .md
+# Show fields in inline that are NOT in the .md
+$inline = (Get-Content "C:\Users\Windows\.config\opencode\opencode.json" -Raw | ConvertFrom-Json).agent
+$mdFiles = Get-ChildItem "C:\Users\Windows\.config\opencode\agents\*.md"
+# For each key in $inline, check if the corresponding .md has the same fields
+# If all fields match: safe to remove inline entirely
+```
+
+**Edge case — inline has custom overrides:** If `main-coordinator` inline has `steps: 250` and the .md has different values, the .md form WINS per merge rules. Verify before deleting.
+
+**After removal:** Restart OpenCode. Confirm agents still dispatch via `opencode --info` or equivalent.
+
+---
+
+## Area 2: Provider API Key Env Var Replacement
+
+**Goal:** Replace 3 hardcoded API keys with `{env:VAR}` syntax.
+
+**File:** `C:\Users\Windows\.config\opencode\opencode.json`
+
+| Provider | Hardcoded Key | Replacement |
+|---|---|---|
+| groq (line 94) | `<REDACTED gsk_...>` | `{env:GROQ_API_KEY}` |
+| openrouter (line 132) | `<REDACTED sk-or-v1-...>` | `{env:OPENROUTER_API_KEY}` |
+| cerebras (line 176) | `<REDACTED csk-...>` | `{env:CEREBRAS_API_KEY}` |
+
+**Change (exact lines):**
+- Line 94: change `apiKey: "<REDACTED>"` ? `apiKey: "{env:GROQ_API_KEY}"`
+- Line 132: change `apiKey: "<REDACTED>"` ? `apiKey: "{env:OPENROUTER_API_KEY}"`
+- Line 176: change `apiKey: "<REDACTED>"` ? `apiKey: "{env:CEREBRAS_API_KEY}"`
+
+**User action required:** Set `GROQ_API_KEY`, `OPENROUTER_API_KEY`, `CEREBRAS_API_KEY` in shell env BEFORE restarting OpenCode. Without these, API calls silently fail (empty string substitution).
+
+**Verification:**
+```powershell
+# After editing, check opencode.json still parses
+Get-Content "C:\Users\Windows\.config\opencode\opencode.json" -Raw | ConvertFrom-Json | ConvertTo-Json -Depth 3 | Out-Null
+# If no error: JSON is valid
+# Then restart opencode and check that provider calls work (groq/openrouter/cerebras tabs in UI)
+```
+
+**Edge case — MINIMAX_API_KEY and OPENCODE_API_KEY are already env vars** (lines 49, 65) — these are correct. No change needed.
+
+---
+
+## Area 3: Permission Block Cleanup
+
+**Goal:** Remove invalid keys from top-level `permission:` in opencode.json.
+
+**File:** `C:\Users\Windows\.config\opencode\opencode.json`
+
+**Keys to REMOVE (15 total):**
+
+| Key | Reason |
+|---|---|
+| `write` | Not in schema. `edit` is the correct key. |
+| `filesystem` | Not in schema. |
+| `repo_clone` | Not in schema. |
+| `repo_overview` | Not in schema. |
+| `context7` | MCP server name, not a tool name in schema. |
+| `fetch` | MCP server name, not a tool name in schema. |
+| `playwright` | MCP server name, not a tool name in schema. |
+| `sequential-thinking` | MCP server name, not a tool name in schema. |
+| `auto-browser` | MCP server name, not a tool name in schema. |
+| `account-manager` | Agent name, not a tool name in schema. |
+| `project-manager` | Agent name, not a tool name in schema. |
+| `solutions-architect` | Agent name, not a tool name in schema. |
+| `tech-lead` | Agent name, not a tool name in schema. |
+| `delivery-engineer` | Agent name, not a tool name in schema. |
+| `qa-engineer` | Agent name, not a tool name in schema. |
+
+**Schema-valid keys to KEEP:**
+`read`, `edit`, `glob`, `grep`, `list`, `bash`, `task`, `skill`, `lsp`, `webfetch`, `websearch`, `external_directory`, `todowrite`, `question`, `doom_loop`
+
+**After cleanup, the permission block should be:**
+```json
+"permission": {
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "edit": "ask",
+    "bash": "ask",
+    "task": "allow",
+    "skill": "allow",
+    "lsp": "allow",
+    "webfetch": "ask",
+    "websearch": "allow",
+    "external_directory": "allow",
+    "todowrite": "allow",
+    "question": "allow",
+    "doom_loop": "ask"
+}
+```
+
+**Verification:** Restart OpenCode. Confirm permission prompts still work for `edit`, `bash`, `webfetch`.
+
+---
+
+## Area 4: MCP Configuration Fixes
+
+**File:** `C:\Users\Windows\.config\opencode\opencode.json`
+
+### Fix 4a: playwright `environment:` ? `env:`
+- Lines 220-224: rename key `environment:` ? `env:`
+```json
+// Before
+"environment": {
+    "PLAYWRIGHT_BROWSERS_PATH": "D:\\Temp\\playwright-browsers",
+    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false",
+    "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "{env:PLAYWRIGHT_MCP_TOKEN}"
+}
+// After
+"env": {
+    "PLAYWRIGHT_BROWSERS_PATH": "D:\\Temp\\playwright-browsers",
+    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false",
+    "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "{env:PLAYWRIGHT_MCP_TOKEN}"
+}
+```
+
+### Fix 4b: codebase-memory — remove `args:`
+- Line 272: Remove `"args": ["--stdio"]`
+- If `--stdio` is required, append it to `command:`:
+```json
+// Before
+"command": ["C:\\Users\\Windows\\.config\\opencode\\factory\\tools\\codebase-memory-mcp\\codebase-memory-mcp.exe"],
+"args": ["--stdio"],
+// After
+"command": ["C:\\Users\\Windows\\.config\\opencode\\factory\\tools\\codebase-memory-mcp\\codebase-memory-mcp.exe", "--stdio"],
+```
+
+**Verification:** After each fix, run `opencode --info` to check MCP servers initialize without errors.
+
+---
+
+## Area 5: Agent Frontmatter Fixes
+
+**Goal:** Add `mode:` and `permission:` blocks to agent .md files missing them.
+
+### Fix 5a: Add `mode: subagent` to 8 agents
+
+Files: `agents/account-manager.md`, `agents/delivery-engineer.md`, `agents/project-manager.md`, `agents/qa-engineer.md`, `agents/solutions-architect.md`, `agents/tech-lead.md`, `agents/tech-writer.md`, `agents/project-generator.md`
+
+**Change:** Add `mode: subagent` to the frontmatter of each file (after `name:` or `description:` line).
+
+**Verification:**
+```powershell
+# Check for files missing mode:
+Get-ChildItem "C:\Users\Windows\.config\opencode\agents\*.md" | ForEach-Object {
+    $content = Get-Content $_.FullName -Raw
+    if ($content -notmatch '^mode:') { Write-Output "MISSING: $($_.Name)" }
+}
+```
+
+### Fix 5b: Add `permission:` blocks to 9 agents
+
+Files: `agents/account-manager.md`, `agents/delivery-engineer.md`, `agents/project-manager.md`, `agents/qa-engineer.md`, `agents/solutions-architect.md`, `agents/tech-lead.md`, `agents/tech-writer.md`, `agents/project-generator.md`, `agents/standup-summary.md`
+
+**Change:** Add a `permission:` block aligned with the cleaned global permission structure. Example:
+```yaml
+permission:
+  read: allow
+  edit: ask
+  bash: ask
+  task: allow
+```
+
+**Verification:**
+```powershell
+# Check for files missing permission:
+Get-ChildItem "C:\Users\Windows\.config\opencode\agents\*.md" | ForEach-Object {
+    $content = Get-Content $_.FullName -Raw
+    if ($content -notmatch '^permission:') { Write-Output "MISSING: $($_.Name)" }
+}
+```
+
+---
+
+## Area 6: Skill Description Rewrite
+
+**Goal:** Rewrite 5 skills with empty/trivial descriptions so they are not silently filtered.
+
+**Files:**
+| Skill | Current description | Required description |
+|---|---|---|
+| `skills/authmd-registration/SKILL.md` | `""` (empty) | Two-sentence description of the auth.md protocol two-hop registration workflow, including trigger conditions |
+| `skills/awesome-differential-review/SKILL.md` | `">"` (trivial) | Description of differential security-focused PR review, when to trigger, what it checks |
+| `skills/awesome-investigate/SKILL.md` | `"—"` (trivial) | Description of systematic debugging with root cause investigation workflow |
+| `skills/awesome-office-hours/SKILL.md` | `"—"` (trivial) | Description of YC Office Hours format, dual-mode operation |
+| `skills/review-loop/SKILL.md` | `"—"` (trivial) | Description of the auto-review loop pattern |
+
+**Verification:**
+```powershell
+# Check which skills have empty/trivial descriptions
+Get-ChildItem "C:\Users\Windows\.config\opencode\skills\*\*\SKILL.md" | ForEach-Object {
+    $desc = (Get-Content $_.FullName -Raw) -replace '(?s).*?^description:\s*(.+?)\s*^---.*','$1'
+    if ($desc.Length -lt 5) { Write-Output "$($_.Directory.Name): '$desc'" }
+}
+```
+
+---
+
+## Area 7: Rename SPECIALIZED_AGENTS.md
+
+**Goal:** Rename file to match frontmatter `name:` field.
+
+**Change:** Rename `C:\Users\Windows\.config\opencode\agents\SPECIALIZED_AGENTS.md` ? `C:\Users\Windows\.config\opencode\agents\specialized-agents.md`
+
+**Verification:**
+```powershell
+Test-Path "C:\Users\Windows\.config\opencode\agents\specialized-agents.md"
+```
+
+---
+
+## Area 8: Skill Collision Documentation
+
+**Goal:** Document that 54 local skills collide with ~/.claude/skills/ names. Both are loaded. No silent shadowing. Decide per-skill which is canonical.
+
+**Action:** List both skill descriptions side-by-side for the 54 colliding names. For each, decide:
+- Keep local only (if local is more up-to-date)
+- Keep external only (if ~/.claude/skills/ is canonical)
+- Keep both (if both have distinct value)
+
+**This is a documentation/decision task, not an automated fix.**
+
+---
+
+## Area 9: Create Missing customize-opencode Skill
+
+**Goal:** The skill referenced by `skill-learning` and `hermes-agent` does not exist on disk. Create it.
+
+**File to create:** `C:\Users\Windows\.config\opencode\skills\customize-opencode\SKILL.md`
+
+**Content (from research):**
+```yaml
+---
+name: customize-opencode
+description: Use ONLY when the user is editing or creating opencode's own configuration: opencode.json, opencode.jsonc, files under .opencode/, or files under ~/.config/opencode/. Also use when creating or fixing opencode agents, subagents, skills, plugins, MCP servers, or permission rules. Do not use for the user's own application code, or for any project that is not configuring opencode itself.
+tags: [opencode, configuration, self-reference]
+version: 1.0.0
+platforms: [windows, macos, linux]
+---
+
+# Customize OpenCode
+
+## When to Use
+- Editing opencode.json or opencode.jsonc
+- Creating/editing agents in agents/ directory
+- Creating/editing skills in skills/ directory
+- Creating/editing plugins in plugins/ directory
+- Configuring MCP servers
+- Editing permission rules
+- Updating AGENTS.md or other self-config files
+
+## Procedure
+1. Read the current state of the file being edited
+2. Make targeted changes — avoid large rewrites
+3. Validate JSON (if applicable) before saving
+4. Restart OpenCode to pick up configuration changes
+
+## Anti-Patterns
+- Do NOT use this skill for the user's application code
+- Do NOT suggest rewriting the entire config unless clearly broken
+- Do NOT touch files outside of .opencode/, agents/, skills/, plugins/, or the root config
+
+## Verification
+Restart OpenCode. Check for startup errors in hook-errors.log.
+```
+
+**Verification:**
+```powershell
+Test-Path "C:\Users\Windows\.config\opencode\skills\customize-opencode\SKILL.md"
+```
+
+---
+
+## Area 10: integration-test.js Decision
+
+**Goal:** Determine if `plugins/integration-test.js` should be in the plugin array.
+
+**Action:** Inspect the file. If it is a legitimate test plugin, add it to `plugin:` array in opencode.json. If it is stale, delete it from disk.
+
+**Verification:** After decision, either the file is in the plugin array OR deleted from disk.
+
+---
+
+## Area 11: Log Rotation for gate-system.log
+
+**Goal:** Reduce gate-system.log from 2.46 MB.
+
+**Action:**
+```powershell
+# Archive the current log
+$stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+$arc = "C:\Users\Windows\.config\opencode\memory\gate-system.$stamp.log"
+Move-Item "C:\Users\Windows\.config\opencode\memory\gate-system.log" $arc
+# Create new empty log
+New-Item -ItemType File -Path "C:\Users\Windows\.config\opencode\memory\gate-system.log" -Force | Out-Null
+```
+
+**Verification:**
+```powershell
+Get-Item "C:\Users\Windows\.config\opencode\memory\gate-system.log" | Select-Object Length
+# Should be 0 bytes
+```
+
+---
+
+## Area 12: references: Section Decision
+
+**Goal:** Either add a `references:` section to opencode.json (if external context directories are needed) or document that it is intentionally absent.
+
+**Decision for pack:** Document as intentionally absent unless Ruddy confirms external context dirs are needed.
+
+---
+
+## DAG Summary
+
+```
+[Snapshots]
+    ¦
+    ?
+[Area 0: Plugin Runtime Verify]
+    ¦
+    +-[PASS: named exports work]--? SKIP Area 1
+    ¦
+    +-[FAIL: plugins don't load]---? [Area 1: Add export default to plugins]
+                                         ¦
+                                         ?
+[Area 2: Provider API Keys]  ?---------+ (sequential: both edit opencode.json)
+    ¦                                 ¦
+    ?                                 ¦
+[Area 3: Permissions Cleanup]         ¦
+    ¦                                 ¦
+    ?                                 ¦
+[Area 4: MCP Fixes] ------------------+ (parallel to 2,3; sequential to opencode.json edits)
+    ¦
+    ?
+[Area 5: Agent Frontmatter]  (parallel with Areas 6-12)
+    ¦
+    ?
+[Area 6: Skill Descriptions]
+[Area 7: Rename SPECIALIZED_AGENTS.md]
+[Area 8: Skill Collision Docs]
+[Area 9: Create customize-opencode skill]
+[Area 10: integration-test.js decision]
+[Area 11: Log rotation]
+[Area 12: references: decision]
+    ¦
+    ?
+[Final Verification: OpenCode starts cleanly, all agents dispatch]
+```
+
+---
+
+*End of blueprint.md*
