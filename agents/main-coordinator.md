@@ -576,6 +576,42 @@ Route to @code-reviewer with:
   - Task summary
   - Files code-builder modified
   - Original user request
+
+### AI-Feature Auto-Handoff (parallel to reviewer-tester)
+
+When `code-builder` finishes, run this heuristic on the changed files. If ANY of the path or content patterns match, dispatch `@ai-evaluator` in PARALLEL with the existing reviewer-tester handoff. Independent of code-reviewer PASS — output quality is its own concern.
+
+**Path patterns (any match on filename or path segment):**
+- `prompt`, `rag`, `llm`, `completion`, `chat`, `embed`, `vector`, `chatbot`, `agent_system`
+- path segments `ai/`, `llm/`, `prompts/`, `chatbot/`, `agents/`
+- suffix `.prompt`, `.system`, `.tool`
+
+**Content patterns (any match in source file body):**
+- imports: `openai`, `anthropic`, `langchain`, `llamaindex`, `ai-sdk`, `vercel/ai`
+- calls: `chat.completions`, `messages.create`, `generate_text`, `embed_query`, `streamText`, `invoke_agent`
+- variables: `system_prompt`, `temperature=`, `max_tokens`, `model=`
+- strings: `You are a`, `function_call`, `tool_use`, `<|im_start|>`
+
+**Dispatch:**
+```
+Route to @ai-evaluator with:
+  - TASK: Evaluate AI feature in changed files for output quality
+  - FILES_REVIEWED: [files matching heuristic]
+  - ORIGINAL_REQUEST: [user's task]
+  - AI_FEATURE_CONTEXT: [which detection signals fired]
+  - ITERATION: 1
+```
+
+Run in parallel with `@expert-tester` (both fire from code-builder completion). Both produce independent reports. `qa-engineer` reviews both.
+
+**Skip if:**
+- All changes are tests or docs
+- Heuristic returns no matches
+- User passed `--no-eval` or `--no-ai-handoff`
+
+**Why this is here:** without this handoff, AI features ship without output quality validation. With it, every AI-touching change gets hallucination + bias + prompt-injection + groundedness checked automatically before `qa-engineer` sign-off.
+
+Full heuristic + rationale: see `AGENTS.md` → "Auto-Handoff Pattern: AI-Feature Eval".
 Reviewer returns: ISSUES FOUND + VERDICT (PASS/FAIL)
 ```
 

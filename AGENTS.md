@@ -141,3 +141,53 @@ Skip conditions:
 - Documentation-only changes
 - Sub-10-line typo fixes
 - Pure config edits (opencode.json, AGENTS.md)
+## Auto-Handoff Pattern: AI-Feature Eval (parallel to reviewer-tester)
+
+After `code-builder` finishes a feature change, main-coordinator checks whether the change touches AI-feature code. If yes, dispatch `ai-evaluator` in parallel with the existing reviewer-tester handoff.
+
+Why parallel (not sequential): `ai-evaluator` tests AI BEHAVIOR (hallucination, prompt injection, groundedness) which is independent of code quality. Waiting for `expert-tester` to finish would double the latency for AI-feature builds without adding signal.
+
+Trigger conditions (ALL must be true):
+- `code-builder` finished a non-trivial change (3+ files OR new public API)
+- At least one changed file matches the AI-feature detection heuristic
+- User did not explicitly opt out via `--no-eval`
+
+AI-feature detection heuristic (OR logic â€” false positives OK, false negatives are the real risk):
+
+**Path patterns (any match):**
+- Filename contains: `prompt`, `rag`, `llm`, `completion`, `chat`, `embed`, `vector`, `chatbot`, `agent_system`
+- Path segments: `ai/`, `llm/`, `prompts/`, `chatbot/`, `agents/`
+- Suffix: `.prompt`, `.system`, `.tool` (prompt files)
+
+**Content patterns (any match in source files):**
+- Imports: `openai`, `anthropic`, `langchain`, `llamaindex`, `ai-sdk`, `vercel/ai`
+- Calls: `chat.completions`, `messages.create`, `generate_text`, `embed_query`, `streamText`, `invoke_agent`
+- Variables: `system_prompt`, `temperature=`, `max_tokens`, `model=`
+- Strings: `You are a`, `function_call`, `tool_use`, `<|im_start|>`
+
+Skip conditions:
+- All test-only changes
+- Documentation-only changes
+- No source file matches path OR content patterns (heuristic returned false)
+
+Handover format (consistent with expert-tester):
+```
+TASK: Evaluate AI feature in changed files for output quality
+FILES_REVIEWED: [list of changed files matching AI-feature heuristic]
+ORIGINAL_REQUEST: [user's original task description]
+AI_FEATURE_CONTEXT: [which detection signals fired, why these files are AI-feature]
+ITERATION: [1/2/3]
+```
+
+`ai-evaluator` runs its standard 7-step workflow (charter â†’ eval dataset â†’ RAGAS/DeepEval metrics â†’ LLM-as-judge sample â†’ OWASP LLM Top 10 sweep â†’ reproduce failures â†’ report) against the changed files.
+
+Output: structured report with Findings (severity-ordered), Coverage Gaps, Recommendations, Risk Assessment. Same format as `expert-tester`.
+
+User opt-out flags:
+- `--no-eval` skips this handoff (alongside existing `--no-adversarial` for reviewer-tester)
+- `--no-ai-handoff` skips only this one
+
+Why this matters: Without this handoff, AI features ship without output quality validation. With it, every AI-touching change gets hallucination + bias + prompt-injection + groundedness checked automatically before QA sign-off.
+
+Wired: this section is documentation. The actual dispatch logic lives in `agents/main-coordinator.md`'s routing table. If you find AI features slipping through unevaluated, that's the file to check.
+
