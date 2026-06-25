@@ -30,6 +30,12 @@
 | `support` | Customer support triage + response — auto-categorize, knowledge-base lookup, no-lost-context handoff (kustomer/bluetweak 2026) | account-manager | bug-fixer, tech-writer, project-manager, cybersecurity |
 | `cybersecurity` | Application security engineer — OWASP ASI 2026, threat modeling, read-only vuln audits (owaspai.org, genai.owasp.org) | tech-lead | code-builder, bug-fixer, account-manager |
 | `observability-sre` | Production observability specialist — distributed tracing, latency monitoring, cost tracking, capacity planning, post-mortem analysis | tech-lead | (executes directly) |
+| `ocr-tools` | OCR tools skill — Tesseract, EasyOCR, PaddleOCR, RapidOCR, Surya, preprocessing pipelines | (ad-hoc) | (read-only) |
+| `ui-design` | UI/UX design skill — typography, spacing, color, accessibility, Tailwind, shadcn | (ad-hoc) | (read-only) |
+| `superpowers-subagent-driven-development` | Subagent orchestration skill — implementer/reviewer split, task briefs, review packages | (ad-hoc) | (read-only) |
+| `superpowers-writing-skills` | Skill authoring meta-skill — Anthropic best practices, persuasion principles, graphviz | (ad-hoc) | (read-only) |
+| `awesome-ask-questions-if-underspecified` | Pause-and-clarify skill — Trail of Bits methodology for ambiguous requests | (ad-hoc) | (read-only) |
+| `awesome-office-hours` | Brainstorm/design partner skill — YC-style demand forcing + builder mode | (ad-hoc) | (read-only) |
 
 ---
 
@@ -61,6 +67,12 @@
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | User/client support | `support` | support, how do I, doesn't work, broken, help, error, problem, complaint, ticket, customer |
 | Observability / SRE / monitoring | `observability-sre` | observability, SRE, monitor, trace, latency, error rate, p99, p95, cost, token, capacity, post-mortem, incident, deploy healthy, track costs, trace failure, where tokens, alert |
+| OCR / text extraction | `code-builder` | ocr, text extraction, image to text, document scanning, tesseract, easyocr, paddleocr, pdf to text |
+| UI/UX design patterns | `designer` | UI design, UX, design system, typography, color palette, spacing, accessibility, tailwind, shadcn |
+| Subagent orchestration | `code-builder` | subagent task, parallel review, implementer prompt, task brief, review package |
+| Writing skills | `skill-manager` | write a skill, author skill, skill design, skill trigger, skill testing, skill review |
+| Clarify underspecified requests | `main-coordinator` | clarify, ambiguous, underspecified, ask user, scope unclear, constraints missing |
+| Brainstorm / design partner | `main-coordinator` | brainstorm, design partner, YC-style, demand validation, office hours, ideation, new project |
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 
 ---
