@@ -72,3 +72,14 @@ Thumbs.db
 # Project-level opencode override (runtime)
 .opencode/gates/
 .opencode/memory.db
+
+
+# Python virtual environments (added v0.5.1)
+**/.venv/
+
+
+
+# Agent learning state (runtime, regenerated each session)
+memory/outcomes/gene_fitness.jsonl
+memory/outcomes/patterns.jsonl
+
