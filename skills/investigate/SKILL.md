@@ -369,3 +369,82 @@ Before starting the deep investigation:
 4. Identify who else needs to be involved (DBA, SRE, network engineer)
 5. Create the investigation notes document
 ```
+
+---
+
+## 4-Phase Methodology (from gstack)
+
+The gstack 4-phase methodology (`awesome-investigate`) complements the gstack GATHER→STACK→TRACK→ACK→NARRATE→COMPLETE pattern above. Use it when you need a structured root-cause-first workflow:
+
+### Phase 1: Root Cause Investigation
+
+Gather context before forming any hypothesis:
+1. **Collect symptoms** — error messages, stack traces, reproduction steps
+2. **Read the code** — trace the code path from symptom back to potential causes
+3. **Check recent changes** — `git log --oneline -20 -- <affected-files>`
+4. **Reproduce** — trigger the bug deterministically if possible
+5. **Check investigation history** — recurring bugs in the same area are an architectural smell
+
+Output: **"Root cause hypothesis: ..."** — a specific, testable claim.
+
+### Phase 2: Pattern Analysis
+
+Check if the bug matches a known pattern:
+
+| Pattern | Signature | Where to look |
+|---------|-----------|---------------|
+| Race condition | Intermittent, timing-dependent | Concurrent access to shared state |
+| Nil/null propagation | NoMethodError, TypeError | Missing guards on optional values |
+| State corruption | Inconsistent data, partial updates | Transactions, callbacks, hooks |
+| Integration failure | Timeout, unexpected response | External API calls, service boundaries |
+| Configuration drift | Works locally, fails in staging/prod | Env vars, feature flags, DB state |
+| Stale cache | Shows old data, fixes on cache clear | Redis, CDN, browser cache |
+
+Also check TODOS.md and `git log` for prior fixes in the same area.
+
+### Phase 3: Hypothesis Testing
+
+Before writing ANY fix, verify your hypothesis:
+1. **Confirm** — add temporary log/assertion, run reproduction
+2. **If wrong** — search error pattern (sanitized), return to Phase 1
+3. **3-strike rule** — if 3 hypotheses fail, STOP and escalate or add logging
+
+**Red flags:** "quick fix" before tracing data flow, each fix reveals new problems.
+
+### Phase 4: Implementation
+
+Once root cause confirmed:
+1. Fix the root cause, not the symptom — smallest change that eliminates the problem
+2. **Minimal diff** — fewest files/lines, resist refactoring adjacent code
+3. **Write regression test** — fails without fix, passes with fix
+4. **Run full test suite** — no regressions allowed
+5. If fix touches >5 files, ask about blast radius
+
+### Phase 5: Verification & Report
+
+**Fresh verification:** Reproduce original bug scenario and confirm fixed. Run test suite.
+
+Output structured debug report:
+```
+DEBUG REPORT
+═══════════════════════════════════════
+Symptom:         [what the user observed]
+Root cause:      [what was actually wrong]
+Fix:             [what was changed, with file:line references]
+Evidence:        [test output, reproduction showing fix works]
+Regression test: [file:line of the new test]
+Related:         [TODOS.md items, prior bugs, architectural notes]
+Status:          DONE | DONE_WITH_CONCERNS | BLOCKED
+═══════════════════════════════════════
+```
+
+### Iron Law
+
+**NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.** Fixing symptoms creates whack-a-mole debugging. Every fix that doesn't address root cause makes the next bug harder to find.
+
+### Important Rules
+
+- 3+ failed fix attempts → STOP and question the architecture
+- Never apply a fix you cannot verify
+- Never say "this should fix it" — verify and prove it
+- If fix touches >5 files → ask about blast radius before proceeding

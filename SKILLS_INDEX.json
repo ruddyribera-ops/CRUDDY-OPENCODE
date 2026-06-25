@@ -416,5 +416,26 @@
         "Version":  "1.0.0",
         "Triggers":  null,
         "Path":  "skills/authmd-registration/SKILL.md"
+    },
+    {
+        "Name":  "production-readiness",
+        "Description":  "Production readiness checklist — deploy, monitor, trace, track costs. Composes deployment-patterns, tracing, cost-tracking, and no-silent-failure. Use when shipping to production, deploying a new feature, doing a release readiness review, or auditing an existing service for production fitness.",
+        "Version":  "1.0.0",
+        "Triggers":  "production ready, deploy check, ship it, release readiness, monitor this, cost audit, runtime safety, rollback plan",
+        "Path":  "skills/production-readiness/SKILL.md"
+    },
+    {
+        "Name":  "secure-coding",
+        "Description":  "Secure coding practices — OWASP Top 10, input validation, parameterized queries, security-focused code review. Composes security-basics, sql-safety, and differential-review. Use when writing or reviewing code that handles user input, authentication, database queries, or external API calls.",
+        "Version":  "1.0.0",
+        "Triggers":  "security check, secure this, vulnerability, OWASP, sql injection, auth bypass, xss, csrf, parameterized query",
+        "Path":  "skills/secure-coding/SKILL.md"
+    },
+    {
+        "Name":  "testing-and-debugging",
+        "Description":  "End-to-end testing and debugging methodology — bug investigation, property-based testing, performance, end-to-end webapp testing. Composes systematic-debugging, investigate, webapp-testing, and performance-optimization. Use when chasing a bug, designing tests, investigating failures, or auditing performance.",
+        "Version":  "1.0.0",
+        "Triggers":  "debug this, fix this bug, test this feature, find what's broken, performance issue, race condition, flapping test, repro, root cause, investigate, slow query",
+        "Path":  "skills/testing-and-debugging/SKILL.md"
     }
 ]

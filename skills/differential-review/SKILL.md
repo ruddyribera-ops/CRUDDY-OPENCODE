@@ -293,3 +293,65 @@ git diff main...feature-branch | grep -E "passwd|secret|token|\.env|password"
 # Check for removed security controls
 git diff main...feature-branch | grep -E "auth|require|valid|check"
 ```
+
+---
+
+## Trail of Bits Methodology (`references/`)
+
+The `references/` directory contains the full Trail of Bits differential review methodology:
+
+| File | Purpose |
+|------|---------|
+| `methodology.md` | 6-phase workflow: Intake → Changed Code Analysis → Test Coverage → Blast Radius → Deep Context → Adversarial |
+| `adversarial.md` | Phase 5 adversarial vulnerability analysis — attacker modeling, attack vector identification, exploitability rating, full exploit scenario construction |
+| `patterns.md` | Common vulnerability patterns: security regressions, double decrease bugs, missing validation, underflow/overflow, reentrancy, access control bypass, race conditions, timestamp manipulation, unchecked returns, denial of service |
+| `reporting.md` | Phase 6 report generation — 9-section report structure (Executive Summary, What Changed, Critical Findings, Test Coverage, Blast Radius, Historical Context, Recommendations, Methodology, Appendices) |
+
+**Attribution:** This methodology is from [trailofbits/skills](https://github.com/trailofbits/skills) (MIT licensed). The agents/openai.yaml and assets/trail-of-bits-mark.svg are also from this source.
+
+### Quick Detection Commands (from patterns.md)
+
+```bash
+# Find removed security checks:
+git diff <range> | grep "^-" | grep -E "require|assert|revert"
+
+# Find new external calls:
+git diff <range> | grep "^+" | grep -E "\.call|\.delegatecall|\.staticcall"
+
+# Find changed access modifiers:
+git diff <range> | grep -E "onlyOwner|onlyAdmin|internal|private|public|external"
+
+# Find arithmetic changes:
+git diff <range> | grep -E "\+|\-|\*|/"
+```
+
+### Vulnerability Report Template (from adversarial.md)
+
+```markdown
+## [SEVERITY] Vulnerability Title
+
+**Attacker Model:**
+- WHO: [Specific attacker type]
+- ACCESS: [Exact privileges]
+- INTERFACE: [Specific entry point]
+
+**Attack Vector:**
+[Step-by-step exploit through accessible interfaces]
+
+**Exploitability:** EASY/MEDIUM/HARD
+**Justification:** [Why this rating]
+
+**Concrete Impact:**
+[Specific, measurable harm - not theoretical]
+
+**Proof of Concept:**
+```code
+// Exact code to reproduce
+```
+
+**Root Cause:**
+[Reference specific code change at file.sol:L123]
+
+**Blast Radius:** [N callers affected]
+**Baseline Violation:** [Which invariant/pattern broken]
+```

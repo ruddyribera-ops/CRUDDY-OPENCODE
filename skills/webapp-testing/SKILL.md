@@ -335,3 +335,37 @@ test('page has no console errors', async ({ page }) => {
   expect(errors).toHaveLength(0);
 });
 ```
+
+---
+
+## Companion Scripts and References
+
+### Python Examples (`references/`)
+
+The `references/` directory contains Python Playwright examples from the Anthropic skills collection:
+
+| File | Purpose |
+|------|---------|
+| `console_logging.py` | Captures browser console logs during test execution |
+| `element_discovery.py` | Dynamic element discovery and selector strategies |
+| `static_html_automation.py` | Automation patterns for static HTML pages |
+
+**Attribution:** These examples are from [anthropics/skills](https://github.com/anthropics/skills) (MIT licensed). See `LICENSE.txt` for full attribution.
+
+### Server Lifecycle Script (`scripts/`)
+
+| File | Purpose |
+|------|---------|
+| `with_server.py` | Manages local web server lifecycle for testing — starts/stops server, waits for readiness, handles port allocation |
+
+### Testing Anti-Patterns (`references/testing-anti-patterns.md`)
+
+From [obra/superpowers](https://github.com/obra/superpowers) — strict TDD anti-patterns including:
+
+- **Iron Laws:** Never test mock behavior, never add test-only methods to production classes, never mock without understanding dependencies
+- **Anti-Pattern 1:** Testing mock existence instead of real component behavior
+- **Anti-Pattern 2:** Test-only methods in production classes (use test utilities instead)
+- **Anti-Pattern 3:** Mock without understanding dependencies
+- **Gate function:** Before asserting on any mock element, ask "Am I testing real component behavior or just mock existence?"
+
+See `references/testing-anti-patterns.md` for the full 299-line reference.

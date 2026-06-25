@@ -287,3 +287,63 @@ If you cannot create a minimal reproduction, the bug is likely:
 - A race condition (try running 10 times with --count=10)
 - A data-dependent issue (check what data is in the DB)
 ```
+
+---
+
+## Deep Patterns (`references/`)
+
+The `references/` directory contains advanced debugging patterns from [obra/superpowers](https://github.com/obra/superpowers):
+
+| File | Purpose |
+|------|---------|
+| `root-cause-tracing.md` | Trace backward through call chain to find original trigger — never fix just where error appears, fix at source. Includes stack trace instrumentation and `find-polluter.sh` usage. |
+| `condition-based-waiting.md` | Wait for conditions, not guesses — eliminates flaky tests caused by arbitrary delays. Includes polling implementation and common mistakes. |
+| `defense-in-depth.md` | Validate at every layer data passes through — entry point, business logic, environment guards, debug instrumentation. Makes bugs structurally impossible. |
+| `test-pressure-*.md` | Test pressure scenarios for stress-testing edge cases |
+| `test-academic.md` | Academic testing patterns and theory |
+
+### Scripts (`scripts/`)
+
+| File | Purpose |
+|------|---------|
+| `condition-based-waiting-example.ts` | TypeScript implementation of `waitFor`, `waitForEvent`, `waitForEventCount`, `waitForEventMatch` from real debugging sessions |
+| `find-polluter.sh` | Bisection script to find which test pollutes shared state — runs tests one-by-one, stops at first polluter |
+
+### Root Cause Tracing Principle
+
+**Never fix just where the error appears.** Trace backward through the call chain:
+
+```
+Symptom appears deep in stack
+  → Find immediate cause
+  → Ask: What called this?
+  → Keep tracing up
+  → Find original trigger
+  → Fix at source
+  → Add validation at each layer (defense-in-depth)
+```
+
+**4-Layer Defense-in-Depth:**
+1. **Entry validation** — reject obviously invalid input at API boundary
+2. **Business logic validation** — ensure data makes sense for the operation
+3. **Environment guards** — prevent dangerous operations in specific contexts (e.g., refuse git init outside tmpdir during tests)
+4. **Debug instrumentation** — capture context for forensics when other layers fail
+
+### Condition-Based Waiting Principle
+
+**Wait for the actual condition, not a guess about timing:**
+
+```typescript
+// ❌ WRONG: Arbitrary delay
+await new Promise(r => setTimeout(r, 50));
+const result = getResult();
+
+// ✅ RIGHT: Wait for condition
+await waitFor(() => getResult() !== undefined);
+const result = getResult();
+```
+
+**Requirements if arbitrary timeout IS correct:**
+1. First wait for the triggering condition
+2. Based on known timing (not guessing)
+3. Comment explaining WHY the delay is necessary
