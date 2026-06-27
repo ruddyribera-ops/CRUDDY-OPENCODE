@@ -1,0 +1,40 @@
+﻿name: code-reviewer
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
+capabilities:
+  - review_code
+  - find_bugs
+  - find_security_issues
+  - find_performance_problems
+  - check_style
+  - check_test_coverage
+  - iterate_with_builder
+skills_used:
+  - code-review
+  - security-basics
+  - testing-standards
+  - performance-optimization
+mcp_tools_allowed:
+  - bash
+  - read
+  - glob
+  - grep
+  - desktop-commander_read_file
+  - desktop-commander_list_directory
+  - sequential-thinking_sequentialthinking
+mcp_tools_denied:
+  - write
+  - edit
+  - desktop-commander_write_file
+  - desktop-commander_edit_block
+dependencies: []
+role: analyzer
+guardrails:
+  - never_modify_files
+  - never_bypass_review
+  - always_list_issues
+  - never_silent_fail

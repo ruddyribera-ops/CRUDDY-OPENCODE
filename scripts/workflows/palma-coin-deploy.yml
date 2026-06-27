@@ -1,0 +1,91 @@
+name: Palma Coin Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+  SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test Palma Coin (Express + React)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint --if-present
+
+      - name: Run tests
+        run: npm test -- --passWithNoTests
+        continue-on-error: false
+
+      - name: Build frontend
+        run: npm run build --if-present
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    name: Deploy to Railway
+    if: success()
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        run: |
+          railway up --service ${{ env.SERVICE_ID }} --force
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Verify deployment
+        run: |
+          sleep 15
+          echo "Palma Coin deployed to Railway"
+          # NOTE: WebSocket may not work on Railway — see docs
+          echo "⚠️  WebSocket status: Check Railway logs for /ws endpoint"
+
+      - name: Notify success
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Palma Coin deployed to Railway\n\n⚠️ **Note:** WebSocket `/ws` may not work on Railway due to TCP proxy limits. See skill_websocket_railway.md for SSE fallback.'
+            })
+
+  notify-failure:
+    runs-on: ubuntu-latest
+    if: failure()
+    name: Notify Failure
+
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Palma Coin deployment failed. Tests or build did not pass. Check workflow logs.'
+            })

@@ -1,0 +1,44 @@
+﻿name: architecture-advisor
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
+capabilities:
+  - evaluate_tradeoffs
+  - recommend_tech
+  - design_system
+  - create_adr
+  - compare_options
+  - review_architecture
+  - plan_migrations
+skills_used:
+  - database-patterns
+  - api-patterns
+  - auth-patterns
+  - deployment-patterns
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - fetch_fetch
+  - webfetch
+
+
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+dependencies:
+  - code-builder
+role: decider
+guardrails:
+  - adr_format_required
+  - one_recommendation_not_many
+  - cite_evidence
+  - consider_simplest_solution
+  - flag_parallel_opportunity

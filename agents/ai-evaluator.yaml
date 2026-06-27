@@ -1,0 +1,7 @@
+name: ai-evaluator
+description: LLM output quality specialist — evaluates AI behavior with RAGAS, DeepEval, and LLM-as-judge patterns. Tests hallucination, groundedness, bias, prompt-injection resistance.
+mode: subagent
+model_tier: 2
+model: minimax/minimax-m2.7
+steps: 60
+color: "#9333EA"

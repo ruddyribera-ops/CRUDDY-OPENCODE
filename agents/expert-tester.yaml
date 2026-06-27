@@ -1,0 +1,7 @@
+name: expert-tester
+description: World-class software tester — adversarial deep testing that hunts edge cases the brief didn't anticipate. Complements qa-engineer (process gate), code-reviewer (static review), bug-fixer (reactive).
+mode: subagent
+model_tier: 2
+model: minimax/minimax-m2.7
+steps: 60
+color: "#DC2626"

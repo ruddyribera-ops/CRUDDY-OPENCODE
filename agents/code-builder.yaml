@@ -1,0 +1,50 @@
+﻿name: code-builder
+version: 1.0.0
+
+mode: primary
+model: minimax/minimax-m2.7
+model_tier: 2
+capabilities:
+  - write_code
+  - modify_code
+  - refactor
+  - scaffold
+  - create_files
+  - run_tests
+  - implement_features
+skills_used:
+  - api-patterns
+  - auth-patterns
+  - database-patterns
+  - testing-standards
+  - deployment-patterns
+mcp_tools_allowed:
+  - bash
+  - write
+  - edit
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - desktop-commander_read_file
+  - desktop-commander_write_file
+  - desktop-commander_edit_block
+  - desktop-commander_create_directory
+  - desktop-commander_list_directory
+  - desktop-commander_start_search
+mcp_tools_denied:
+  - desktop-commander_force_terminate
+  - desktop-commander_kill_process
+dependencies: []
+role: executor
+guardrails:
+  - no_ts_ignore
+  - no_any_type
+  - no_empty_dirs
+  - poa_required_for_multifile
+  - completion_audit_required
+  - never_report_done_with_failing_checks
+  - never_silent_scope_expansion
+  - flag_parallel_opportunity

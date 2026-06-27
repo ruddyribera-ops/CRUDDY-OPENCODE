@@ -1,0 +1,40 @@
+﻿name: code-analyzer
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 1
+model: minimax/minimax-m2.7
+capabilities:
+  - scan_project
+  - analyze_structure
+  - detect_tech_stack
+  - audit_dependencies
+  - check_code_health
+  - security_review
+  - find_patterns
+skills_used:
+  - api-patterns
+  - database-patterns
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+  - sequential-thinking_sequentialthinking
+  - fetch_fetch
+
+
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+dependencies: []
+role: analyzer
+guardrails:
+  - read_only
+  - no_code_modifications
+  - no_file_writes
+  - flag_security_issues
+  - flag_structural_issues

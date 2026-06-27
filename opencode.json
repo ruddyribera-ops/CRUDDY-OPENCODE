@@ -1,0 +1,221 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "minimax/minimax-m2.7",
+    "small_model": "minimax/minimax-m2.5",
+    "instructions": [
+        "AGENTS.md"
+    ],
+    "experimental": {
+        "outputTokenMax": 32000
+    },
+    "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "list": "allow",
+        "edit": "ask",
+        "bash": "ask",
+        "task": "allow",
+        "skill": "allow",
+        "lsp": "allow",
+        "webfetch": "ask",
+        "websearch": "allow",
+        "external_directory": "allow",
+        "todowrite": "allow",
+        "question": "allow",
+        "doom_loop": "ask"
+    },
+    "provider": {
+        "minimax": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "MiniMax",
+            "options": {
+                "baseURL": "https://api.minimax.io/v1",
+                "apiKey": "{env:MINIMAX_API_KEY}",
+                "timeout": 300000
+            },
+            "models": {
+                "minimax-m2.7": {
+                    "name": "minimax-m2.7"
+                },
+                "minimax-m3": {
+                    "name": "minimax-m3",
+                    "description": "High-reasoning burst mode only Ã¢â‚¬â€ token intensive, use sparingly for complex tasks Ã¢â€°Â¤5min"
+                }
+            }
+        },
+        "opencode-go": {
+            "name": "OpenCode Go",
+            "options": {
+                "apiKey": "{env:OPENCODE_API_KEY}"
+            },
+            "models": {
+                "deepseek-v4-flash": {
+                    "name": "deepseek-v4-flash",
+                    "options": {
+                        "baseURL": "https://opencode.ai/zen/go/v1/chat/completions",
+                        "thinking": "@{type=enabled; reasoningEffort=high}",
+                        "reasoningEffort": "low"
+                    }
+                },
+                "deepseek-v4-pro": {
+                    "name": "deepseek-v4-pro",
+                    "options": {
+                        "baseURL": "https://opencode.ai/zen/go/v1/chat/completions",
+                        "thinking": "@{type=enabled; reasoningEffort=xhigh}"
+                    }
+                },
+                "minimax-m3": {
+                    "name": "minimax-m3",
+                    "options": {
+                        "baseURL": "https://opencode.ai/zen/go/v1/messages"
+                    }
+                }
+            }
+        },
+        "groq": {
+            "options": {
+                "baseURL": "https://api.groq.com/openai/v1",
+                "apiKey": "{env:GROQ_API_KEY}"
+            },
+            "models": {
+                "llama-3.3-70b-versatile": {
+                    "name": "llama-3.3-70b-versatile"
+                },
+                "llama-3.1-8b-instant": {
+                    "name": "llama-3.1-8b-instant"
+                },
+                "qwen-27b": {
+                    "name": "qwen/qwen3.6-27b"
+                },
+                "qwen-32b": {
+                    "name": "qwen/qwen3-32b"
+                },
+                "gpt-oss-120b": {
+                    "name": "openai/gpt-oss-120b"
+                },
+                "gpt-oss-20b": {
+                    "name": "openai/gpt-oss-20b"
+                },
+                "llama-4-scout": {
+                    "name": "meta-llama/llama-4-scout-17b-16e-instruct"
+                },
+                "allam-2-7b": {
+                    "name": "allam-2-7b"
+                },
+                "compound-mini": {
+                    "name": "groq/compound-mini"
+                },
+                "compound": {
+                    "name": "groq/compound"
+                }
+            }
+        }
+    },
+    "mcp": {
+        "sequential-thinking": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ],
+            "enabled": true
+        },
+        "context7": {
+            "type": "remote",
+            "url": "https://mcp.context7.com/mcp",
+            "enabled": true
+        },
+        "fetch": {
+            "type": "local",
+            "command": [
+                "uvx",
+                "mcp-server-fetch"
+            ],
+            "enabled": true
+        },
+        "playwright": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "@playwright/mcp@latest",
+                "--extension"
+            ],
+            "enabled": true,
+            "env": {
+                "PLAYWRIGHT_BROWSERS_PATH": "D:\\Temp\\playwright-browsers",
+                "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false",
+                "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "{env:PLAYWRIGHT_MCP_EXTENSION_TOKEN}"
+            }
+        },
+        "MiniMax": {
+            "type": "local",
+            "command": [
+                "uvx",
+                "minimax-coding-plan-mcp",
+                "-y"
+            ],
+            "enabled": true
+        },
+        "chrome-devtools": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "chrome-devtools-mcp",
+                "--browserUrl",
+                "http://127.0.0.1:9222"
+            ],
+            "enabled": false
+        },
+        "desktop-commander": {
+            "type": "local",
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "D:\\Temp\\opencode",
+                "{env:USERPROFILE}\\Desktop"
+            ],
+            "enabled": true
+        },
+        "codebase-memory": {
+            "type": "local",
+            "command": [
+                "{env:USERPROFILE}\\.config\\opencode\\factory\\tools\\codebase-memory-mcp\\codebase-memory-mcp.exe"
+            ],
+            "args": [
+                "--stdio"
+            ],
+            "enabled": true
+        },
+        "vibe-trading": {
+            "type": "local",
+            "command": [
+                "{env:USERPROFILE}\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\vibe-trading-mcp.exe"
+            ],
+            "enabled": true
+        }
+    },
+    "default_agent": "main-coordinator",
+    "agent": {},
+    "shell": "pwsh",
+    "lsp": true,
+    "share": "manual",
+    "autoupdate": "notify",
+    "plugin": [
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\memory-bridge.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\gate-system.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\post-turn-biome.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\compaction-survival.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\session-title-guard.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\pre-tool-guard.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\post-tool-guard.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\sub-agent-guard.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\checkpoint-guard.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\session-start-memory.js",
+        "{env:USERPROFILE}\\.config\\opencode\\plugins\\main-coordinator-tracing.js"
+    ]
+}

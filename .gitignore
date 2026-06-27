@@ -1,0 +1,46 @@
+# Runtime data (never commit)
+memory/
+.opencode/
+deepwork/
+audits/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+
+# Logs
+*.log
+logs/
+
+# Temp / backups
+*.tmp
+*.bak
+*.swp
+*~
+
+# Secrets / local config
+.env
+.env.local
+*.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Specific exclusions
+# factory/tools/ contains a Windows binary (codebase-memory-mcp.exe) — exclude
+factory/tools/
+# factory/scripts/ contains a heavy Python venv — exclude root, but track specific scripts via separate means if needed
+factory/scripts/
+# opencode-build artifacts
+dist/
+build/

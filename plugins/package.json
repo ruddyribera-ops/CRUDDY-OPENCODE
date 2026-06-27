@@ -1,0 +1,16 @@
+{
+  "name": "opencode-gate-plugins",
+  "version": "1.0.0",
+  "description": "Gate system plugins for OpenCode v1.15.13",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test plugins/*.test.js",
+    "test:gate": "node --test plugins/gate-system.test.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {}
+}

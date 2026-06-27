@@ -1,0 +1,41 @@
+﻿name: tech-writer
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
+capabilities:
+  - write_docs
+  - write_README
+  - write_tutorial
+  - write_howto
+  - write_reference
+  - geo_optimization
+  - diataxis_structuring
+  - doc_template
+skills_used:
+  - frontend-design
+  - auth-patterns
+  - api-patterns
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - list
+  - skill
+  - webfetch
+  - edit
+  - write
+  - lsp
+mcp_tools_denied:
+  - bash
+dependencies: []
+role: executor
+guardrails:
+  - must_have_worked_example
+  - must_have_tldr_50words
+  - must_cite_source_and_date
+  - no_marketing_language
+  - no_undocumented_features
+  - last_verified_stamp_required

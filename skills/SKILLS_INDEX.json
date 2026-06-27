@@ -1,0 +1,346 @@
+[
+    {
+        "Name":  "account-manager",
+        "Description":  "\"Client-facing persona of the AI Software Factory. Only agent the user talks to. Asks discovery questions in plain language, writes briefs, dispatches work to the team, reports progress with Hill chart + auto-browser demos. Speaks English or Spanish. Triggers: new project, kickoff, where is my app, status, demo, blocker, when will it be done, sign off, support, help, idea.\"",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/account-manager\\SKILL.md"
+    },
+    {
+        "Name":  "android-native-dev",
+        "Description":  "Android native application development and UI design guide. Covers Material Design 3, Kotlin/Compose development, project configuration, accessibility, and build troubleshooting. Read this before Android native application development.",
+        "Tags":  "[mobile, android, kotlin, compose]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/android-native-dev\\SKILL.md"
+    },
+    {
+        "Name":  "api-patterns",
+        "Description":  "RESTful API design, HTTP semantics, error handling, input validation, pagination, versioning, and documentation patterns. FastAPI and Express focused.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[api, rest, endpoint, route, http, fastapi, express, nestjs, controller, handler, middleware, request, response, json, serializer, error-handler, validation, pagination, rate-limit, middleware, webhook, websocket]",
+        "Path":  "skills/api-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "authmd-registration",
+        "Description":  "|",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "",
+        "Path":  "skills/authmd-registration\\SKILL.md"
+    },
+    {
+        "Name":  "auth-patterns",
+        "Description":  "Authentication and authorization patterns — OAuth 2.0, JWT, session management, password handling, MFA, RBAC. Expert-level coverage of auth flows, security boundaries, and common pitfalls.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[login, register, signup, signin, auth, oauth, jwt, session, token, password, mfa, 2fa, rbac, permission, role, sso, saml, openid, keycloak, auth0, clerk, next-auth, passport]",
+        "Path":  "skills/auth-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "browser-robust",
+        "Description":  "\"CloakBrowser + Scrapling hybrid — reliable browser automation that handles bot detection, site changes, and CDP flakiness. Use instead of Playwright MCP for any browser task. Triggers: navigate a site, click something, fill a form, scrape a page, extract data from a page, click button, fill input, browser automation, web scraping, cloudflare bypass, turnstile bypass.\"",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/browser-robust\\SKILL.md"
+    },
+    {
+        "Name":  "ci-cd-patterns",
+        "Description":  "CI/CD pipeline patterns — GitHub Actions, Railway auto-deploy, Docker build caching, environment promotion, and verification gates.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "ci, cd, github-actions, pipeline, deploy, github actions, ci/cd, workflow",
+        "Path":  "skills/ci-cd-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "code-review",
+        "Description":  "Code review patterns and checklists — PR review workflow, common anti-patterns, security scanning, performance review, and style consistency checks.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "review, code-review, pr, pull-request, audit, quality, cr",
+        "Path":  "skills/code-review\\SKILL.md"
+    },
+    {
+        "Name":  "cs-fundamentals",
+        "Description":  "Explain core computer science concepts, algorithms, data structures, complexity, concurrency, networking, and systems design with precise examples.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/cs-fundamentals\\SKILL.md"
+    },
+    {
+        "Name":  "data-analysis",
+        "Description":  "Data analysis patterns — pandas, CSV/JSON/Excel processing, ETL pipelines, data validation, and reporting. Covers file parsing, cleaning, transformation, and export.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "data, csv, json, excel, pandas, analysis, etl, parsing, dataframe",
+        "Path":  "skills/data-analysis\\SKILL.md"
+    },
+    {
+        "Name":  "database-patterns",
+        "Description":  "Database design, migrations, query optimization, ORM patterns, indexing, and data modeling. PostgreSQL-focused with SQLite patterns for development. Covers schema design, migrations, seeds, and production query tuning.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[database, sql, query, migration, schema, table, index, postgresql, sqlite, prisma, drizzle, sqlalchemy, sequelize, typeorm, knex, model, relation, join, n+1, slow query, optimize query]",
+        "Path":  "skills/database-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "delivery-engineer",
+        "Description":  null,
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/delivery-engineer\\SKILL.md"
+    },
+    {
+        "Name":  "deployment-patterns",
+        "Description":  "Deployment, CI/CD, environment management, Docker, Railway, and infrastructure patterns. Production-hardened deployment practices for full-stack apps.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[deploy, deployment, railway, docker, dockerfile, docker-compose, ci, cd, github-actions, pipeline, environment, env, staging, production, vercel, netlify, cloudflare, aws, release, build, npm-build, docker-build, push, container]",
+        "Path":  "skills/deployment-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "design",
+        "Description":  "Universal design system with variants, tweaks, and progressive sub-skills. Inspired by Huashu Design. Triggers: design a page, make a landing page, create UI, build a dashboard, style this, make it look good, redesign, landing page, web design, frontend design.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/design\\SKILL.md"
+    },
+    {
+        "Name":  "desktop-manager",
+        "Description":  "Run desktop cleanup scripts using natural language (English or Spanish). Handles Windows 11 desktop organization, temp cleanup, and browser cache management.",
+        "Tags":  "[windows, utility, cleanup, os]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/desktop-manager\\SKILL.md"
+    },
+    {
+        "Name":  "evaluator-optimizer",
+        "Description":  "Evaluator-optimizer loop — code-builder implements, code-reviewer critiques, loop until quality passes. Use when: complex task, multi-file change, thorough review needed, quality gates, iterative improvement.",
+        "Tags":  "[loop, quality, review, build, iterate, critique]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/evaluator-optimizer\\SKILL.md"
+    },
+    {
+        "Name":  "flutter-dev",
+        "Description":  "Flutter and Dart development — cross-platform mobile UI, widgets, state management, layouts, and debugging.",
+        "Tags":  "[mobile, flutter, dart, frontend]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/flutter-dev\\SKILL.md"
+    },
+    {
+        "Name":  "frontend-design",
+        "Description":  "Frontend design expertise — modern React patterns, CSS/Tailwind mastery, responsive design, accessibility (a11y), component architecture, animations, and performance optimization. Covers shadcn/ui, Tailwind, Framer Motion, and design system thinking.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[frontend, react, nextjs, vue, svelte, css, tailwind, scss, component, layout, design, ui, responsive, mobile-first, accessibility, a11y, animation, transition, shadcn, radix, headless-ui, framer-motion, design-system, storybook, figma, prototype, mockup, wireframe, landing, dashboard, form, modal, dropdown, navbar, sidebar, card, button, input, select, checkbox, radio, toggle, slider, tabs, accordion, dialog, tooltip, popover, toast, skeleton, spinner, loading, empty-state, error-state, dark-mode, theme, color, typography, spacing]",
+        "Path":  "skills/frontend-design\\SKILL.md"
+    },
+    {
+        "Name":  "git-workflow",
+        "Description":  "Git workflow patterns — branching strategy, commit conventions, merge/rebase rules, Railway auto-deploy, and safety protocols for solo development.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "git, commit, branch, merge, rebase, push, pull, stash",
+        "Path":  "skills/git-workflow\\SKILL.md"
+    },
+    {
+        "Name":  "ios-application-dev",
+        "Description":  "iOS native application development with Swift, SwiftUI, UIKit, and Apple platform features.",
+        "Tags":  "[mobile, ios, swift, apple]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/ios-application-dev\\SKILL.md"
+    },
+    {
+        "Name":  "js-modern-patterns",
+        "Description":  "Modern JavaScript/TypeScript patterns — React 19, hooks, async patterns, ES2024+, type-safe idioms. Covers component architecture, state management, error boundaries, and performance patterns.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "typescript, react, javascript, frontend, async, hooks, tsx, jsx, modern-js",
+        "Path":  "skills/js-modern-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "jwt-security",
+        "Description":  "Secure JWT configuration — claims, TTL, cookie flags, session invalidation on password change.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[jwt, token, login, auth, session-cookie, refresh-token, access-token, bearer]",
+        "Path":  "skills/jwt-security\\SKILL.md"
+    },
+    {
+        "Name":  "karpathy-guidelines",
+        "Description":  "Karpathy\u0027s 4 principles for AI coding agents — Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution. Loads automatically for all code-builder tasks. Derived from Andrej Karpathy\u0027s observations on LLM coding pitfalls (153k stars).",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "build, create, add, implement, refactor, code, write, modify, edit, fix",
+        "Path":  "skills/karpathy-guidelines\\SKILL.md"
+    },
+    {
+        "Name":  "msoffice-tools",
+        "Description":  "Microsoft Office file generation and parsing — Excel (.xlsx), Word (.docx), PowerPoint (.pptx) via programmatic libraries. Covers openpyxl, python-docx, PptxGenJS patterns.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "excel, xlsx, word, docx, powerpoint, pptx, office, spreadsheet, document",
+        "Path":  "skills/msoffice-tools\\SKILL.md"
+    },
+    {
+        "Name":  "no-silent-failure",
+        "Description":  "Never bare except:pass or catch{}. Always log + re-raise minimum. Structured logging with trace IDs.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[error, exception, catch, try-except, error-handling, logging, observability, trace-id]",
+        "Path":  "skills/no-silent-failure\\SKILL.md"
+    },
+    {
+        "Name":  "ocr-tools",
+        "Description":  "OCR (Optical Character Recognition) tools and patterns — Tesseract, EasyOCR, PaddleOCR, RapidOCR, Surya, docTR. Covers installation (Windows/Linux/macOS), preprocessing pipelines, hybrid strategies, postprocessing, and document analysis. Use when extracting text from images, scanned documents, screenshots, or PDFs; building OCR pipelines; or comparing OCR engines for your use case.",
+        "Tags":  "[ocr, document, python, extraction]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/ocr-tools\\SKILL.md"
+    },
+    {
+        "Name":  "opensource",
+        "Description":  "Fetch library source code as agent context. Clone any open-source GitHub repo so the agent reads real code instead of docs. Triggers: clone a repo, fetch source code, need to understand library, reference the codebase.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/opensource\\SKILL.md"
+    },
+    {
+        "Name":  "password-security",
+        "Description":  "Bcrypt/Argon2 password hashing. Rejects MD5, SHA, plain, or custom hashes. Unified error messages for auth failures.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[password, hash, bcrypt, argon2, encrypt, credential, login, signup, register]",
+        "Path":  "skills/password-security\\SKILL.md"
+    },
+    {
+        "Name":  "performance-optimization",
+        "Description":  "Performance Optimization Patterns and Best Practices across React, API, DB, and bundle optimization",
+        "Tags":  "[performance, optimization, react, backend]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/performance-optimization\\SKILL.md"
+    },
+    {
+        "Name":  "project-manager",
+        "Description":  "\"Internal project manager of the AI Software Factory. Takes briefs from the Account Manager, decomposes work into 3-7 sub-tasks, schedules handoffs, tracks blockers, generates the daily 9am digest. Never talks to the client. Triggers: sprint plan, what is next, blocker, handoff, standup, sprint review, retrospective, kickoff, where are we, status.\"",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/project-manager\\SKILL.md"
+    },
+    {
+        "Name":  "python-patterns",
+        "Description":  "Modern Python patterns — FastAPI, Pydantic v2, SQLAlchemy 2.0 async, type hints, testing with pytest. Covers project structure, dependency injection, and async patterns.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "python, fastapi, pydantic, sqlalchemy, async, pytest, type-hints",
+        "Path":  "skills/python-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "qa-engineer",
+        "Description":  null,
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/qa-engineer\\SKILL.md"
+    },
+    {
+        "Name":  "react-native-dev",
+        "Description":  "Cross-platform mobile development with React Native, JavaScript/TypeScript, and native module integration.",
+        "Tags":  "[mobile, react-native, javascript, frontend]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/react-native-dev\\SKILL.md"
+    },
+    {
+        "Name":  "realtime-patterns",
+        "Description":  "WebSocket, Server-Sent Events (SSE), polling, and live update patterns. Covers connection management, reconnection strategies, broadcasting, and Railway-specific WebSocket quirks.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "websocket, sse, realtime, live, broadcast, polling, events, streaming",
+        "Path":  "skills/realtime-patterns\\SKILL.md"
+    },
+    {
+        "Name":  "review-loop",
+        "Description":  "Auto-review changed files until they pass quality gates. Inspired by Greptile + GrepLoop. Triggers: review my code, check for issues, run quality checks, find bugs, gate check.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/review-loop\\SKILL.md"
+    },
+    {
+        "Name":  "secrets-management",
+        "Description":  "All secrets in env vars or secret manager. .env.example for templates, never real values. Key rotation on exposure.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[secret, env, api-key, password, token, credential, dotenv, vault, key-rotation]",
+        "Path":  "skills/secrets-management\\SKILL.md"
+    },
+    {
+        "Name":  "security-basics",
+        "Description":  "Security best practices, vulnerability prevention, and secure development across web applications, APIs, networks, and embedded systems. Covers input validation, cryptography, OWASP Top 10, AppSec (SAST/DAST), malware analysis, CTF, fuzzing, incident response, IoT security.",
+        "Tags":  "[security, web-security, best-practices, hardening]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/security-basics\\SKILL.md"
+    },
+    {
+        "Name":  "skill-learning",
+        "Description":  "Agent-managed skill creation — save successful workflows as reusable skills. Auto-triggered after complex tasks (5+ tool calls). Integrates with Hermes Agent\u0027s skill system.",
+        "Tags":  "[skills, learning, self-improvement, creation]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/skill-learning\\SKILL.md"
+    },
+    {
+        "Name":  "solutions-architect",
+        "Description":  "\"Internal solutions architect of the AI Software Factory. Reads the brief from the PM, picks the tech stack, integrations, and security model. Writes decisions to memory. Never talks to the client. Triggers: stack, framework, integrations, security model, what should we use, which database, which auth, where to host, scaffolding decisions.\"",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/solutions-architect\\SKILL.md"
+    },
+    {
+        "Name":  "sql-safety",
+        "Description":  "Parameterized queries only. PostgreSQL/SQLite type discipline. Idempotent migrations via ON CONFLICT.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[sql, query, database, migration, select, insert, update, delete, postgresql, sqlite, orm, sqlalchemy, prisma]",
+        "Path":  "skills/sql-safety\\SKILL.md"
+    },
+    {
+        "Name":  "tech-lead",
+        "Description":  "\"Internal tech lead of the AI Software Factory. Receives stack decisions from the Architect, scaffolds the project, routes work to the right engineering specialist, runs parallel work. Never talks to the client. Coordinates the engineering team. Triggers: dispatch, assign, who works on, parallel, which engineer, scaffold, kickoff engineering, who is doing what.\"",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/tech-lead\\SKILL.md"
+    },
+    {
+        "Name":  "testing-standards",
+        "Description":  "Testing patterns, TDD approach, mocking, coverage standards, and test architecture for full-stack apps. Python (pytest) and TypeScript (vitest/jest) focused. MANDATORY: write tests BEFORE implementation code (red-green-refactor). Never declare done with 0% coverage on new features.",
+        "Tags":  "",
+        "Version":  null,
+        "Triggers":  "[test, pytest, jest, vitest, coverage, tdd, mock, unittest, e2e, integration-test, unit-test, test-suite, test-file, assertion, describe, it, expect, assert, before-each, after-each, setup, teardown, fixture, spy, stub, snapshot, cypress, playwright, testing-library, react-testing-library]",
+        "Path":  "skills/testing-standards\\SKILL.md"
+    },
+    {
+        "Name":  "ui-design",
+        "Description":  "UI/UX design patterns — typography, spacing, color, accessibility, and framework-specific design systems (Tailwind, shadcn/ui, Streamlit theming)",
+        "Tags":  "[design, ui, ux, frontend, accessibility]",
+        "Version":  null,
+        "Triggers":  null,
+        "Path":  "skills/ui-design\\SKILL.md"
+    }
+]

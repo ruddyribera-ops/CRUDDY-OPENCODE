@@ -1,0 +1,32 @@
+﻿name: code-explainer
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 1
+model: minimax/minimax-m2.7
+capabilities:
+  - explain_code
+  - describe_architecture
+  - teach_concept
+  - walk_through
+  - simplify_complexity
+skills_used:
+  - cs-fundamentals
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - context7_query-docs
+  - context7_resolve-library-id
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+dependencies: []
+role: analyzer
+guardrails:
+  - read_only
+  - no_code_modifications
+  - assume_non_programmer_audience
+  - never_implement

@@ -1,0 +1,36 @@
+﻿name: designer
+version: 1.0.0
+
+mode: primary
+model: minimax/minimax-m2.7
+capabilities:
+  - design_tokens
+  - component_spec
+  - visual_mockup
+  - design_system
+  - color_palette
+  - typography
+  - ui_layout
+  - brand_guidelines
+skills_used:
+  - ui-design
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - list
+  - skill
+  - webfetch
+  - write
+  - lsp
+mcp_tools_denied:
+  - bash
+dependencies: []
+role: executor
+guardrails:
+  - no_raw_hex_values
+  - no_design_without_tokens
+  - no_component_without_use_case
+  - no_visual_only_mockup
+  - no_ai_slop_gradients
+  - token_spec_is_deliverable

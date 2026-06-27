@@ -1,0 +1,48 @@
+﻿name: skill-manager
+version: 1.0.0
+
+model_tier: 2
+mode: primary
+model_tier: 2
+model: minimax/minimax-m2.7
+capabilities:
+  - create_skill
+  - update_skill
+  - import_skill
+  - mirror_skill
+  - manage_memory
+  - enrich_skills
+  - deduplicate_skills
+  - create_skill
+  - update_skill
+  - import_skill
+  - mirror_skill
+  - manage_memory
+  - enrich_skills
+  - deduplicate_skills
+skills_used:
+  - skill-learning
+mcp_tools_allowed:
+  - read
+  - write
+  - edit
+  - glob
+  - grep
+  - bash
+
+
+
+
+
+
+mcp_tools_denied: []
+dependencies: []
+role: curator
+guardrails:
+  - no_code_changes
+  - skills_only
+  - respect_progressive_disclosure
+  - never_modify_application_code
+  - always_create_from_template
+
+
