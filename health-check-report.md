@@ -1,7 +1,7 @@
 # Health Check Report — CRUDDY-OPENCODE
 
 **Generated:** 2026-07-01
-**Last major change:** Delegation enforcement sprint + Audit fixup sprint (Sprint 4)
+**Last major change:** Config Hardening Sprint (ECC adoption, OpenMythos patterns, CI functional, path portability Stage 4) + Delegation enforcement sprint + Audit fixup sprint
 
 ---
 
@@ -167,15 +167,33 @@ Plus `_shared.js` — shared utilities module.
 ### P1 — Real Bugs (NEED FIX)
 - **None** — all previously identified P1 bugs have been resolved
 
-### P2 — Drift Between Validators and Data
-- `validate-manifests.ps1` flags ~83 issues across 26 manifests — likely validator schema mismatch with current manifest format (**DRIFT** — not a data bug)
-- `check-rules.py` flags 2 rules with missing `condition` field
-- 34 skills lack `triggers` and `applies_to` frontmatter (validator-vs-actual-format drift)
-- **Action required:** Confirm drift scope before mass-editing manifests or validator schema
+### P2 — Path Portability (PARTIALLY FIXED — 4 of ~30 scripts)
+- **Action needed:** ~25 PS1 scripts still hardcode `$env:USERPROFILE\.config\opencode` directly instead of using the 4-tier env-var fallback (OPENCODE_CONFIG_HOME → USERPROFILE → HOME → relative)
+- 4 files updated: opencode.json, nightly_run.ps1, watcher_run.ps1, batch-add-skill-fields.py
+- Remaining scripts need staged migration: many are local-only health checks that shouldn't run in CI anyway
 
-### P3 — Cleanup (LOW PRIORITY)
-- **DEFERRED.md L-2:** 11 plugins with hardcoded `C:\Users\Windows\.config\opencode\` paths — low value to fix for single-machine Windows user
-- **gate-system.js plugin** uses a 2.46 MB log file — deferred log rotation
+### P2 — Manifest/Validator Drift (MOSTLY RESOLVED)
+- 14 manifests got `description:` field added (BOM was root cause for some)
+- 11 duplicate `model_tier:` keys fixed (silent YAML overwrite bug)
+- `cybersecurity.yaml` duplicate removed
+- 34 skills now have `triggers:` and `applies_to:` fields (tier-2 warnings: 34 → 0)
+- `agent-registry.py` established as canonical schema source
+- 97% of manifest schema failures fixed
+
+### P3 — Behavioral Tests (DEFERRED)
+- **No behavioral tests for agents** — only schema conformance tests. Agents could produce wrong outputs while passing schema checks.
+- **No rollback workflow** — git history is the only recovery path for config corruption.
+
+## Dual-Context Validation Principle
+
+The system has TWO execution contexts that require DIFFERENT validators:
+
+| Context | Path | Validators that SHOULD run | Validators that MUST NOT run |
+|---------|------|---------------------------|------------------------------|
+| **Live machine** | `C:\Users\Windows\.config\opencode\` | validate-config.ps1, validate-manifests.ps1, skill-version-check.ps1 | tests/test-manifest-schema.mjs (CI-only) |
+| **CI runner** | ubuntu-latest / windows-latest | tests/test-manifest-schema.mjs, validate-skills.ts, check-rules.py | validate-config.ps1 (local paths), skill-version-check.ps1 (local paths) |
+
+**Design rule:** Local health checks (`validate-*.ps1`) should NEVER be wired into CI. Repo-state checks (`tests/*.mjs`, `scripts/validate-skills.ts`) should ONLY run in CI.
 
 ---
 

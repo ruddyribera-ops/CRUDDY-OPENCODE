@@ -594,3 +594,86 @@ Built a complete Master POA (`MASTER_POA_memory_state_handover.md`) with impleme
 
 ---
 
+## [2026-07-01] Config Hardening Sprint — Dual-Context Validation + Path Portability
+
+**Context:** Multi-sprint session covering ECC adoption, spec-miner/loop-operator contracts, delegation enforcement, OpenMythos patterns, CI setup, validator rewrites, manifest validation alignment, skill fixes, JSON Schema migration, schema conformance tests, and path portability.
+
+**What happened:**
+
+1. **ECC adoption (3 patterns imported):**
+   - Created `agents/spec-miner.md` + `agents/spec-miner.yaml` + `rules/spec-validation.md` (PRELIMINARY/VALIDATED/REJECTED contract for brownfield spec extraction)
+   - Created `agents/loop-operator.md` + `agents/loop-operator.yaml` + `rules/loop-operator-safety.md` (4-rail safety contract: max_iterations, cost_ceiling, no_progress_detector, human_escalation)
+   - Created `skills/codemap/` (fast codebase orientation via markdown overview)
+   - Populated 4 missing skills + fixed 24 skill YAML frontmatter bugs
+
+2. **Delegation enforcement (architecture fix):**
+   - `main-coordinator` permissions changed: `edit: deny`, `bash: deny` (with read-only exceptions)
+   - Created `rules/agent-handoff-contract.md` + `skills/safe-delegation/SKILL.md` (4-element handoff + pre-flight checks)
+   - `AGENTS.md` updated with delegation policy
+   - Fixed 14 empty catch blocks across 5 critical scripts
+
+3. **OpenMythos patterns (3 borrowed):**
+   - Rail 5 (act_halting / convergence detection) added to loop-operator contract
+   - Rail 6 (per_iteration_injection / context preservation) added
+   - New `plugins/routing-stability.js` (oscillation + stagnation detection)
+   - All 3 wired, force-pushed, T2 passing
+
+4. **CI setup (zero → functional):**
+   - Created `.github/workflows/ci.yml` with Linux Node + Windows PowerShell matrix
+   - Validator rewrite: tiered FAIL/WARN/INFO (per Anthropic SKILL.md spec)
+   - New `tests/test-manifest-schema.mjs` (10 schema conformance tests)
+   - Multiple CI bug fixes: script-relative paths, removed YAML glob from jsonc step, removed nonexistent `microsoft/powershell-actions`, hardcoded paths in test files
+
+5. **Manifest validation alignment:**
+   - `agent-registry.py` is now the canonical schema source
+   - Both validators (`validate-manifests.ps1`, `validate-definitive.ps1`) reference it
+   - 14 manifests got `description:` field added (BOM was the root cause for some)
+   - 11 duplicate `model_tier:` keys fixed (silent YAML overwrite bug)
+   - `cybersecurity.yaml` duplicate removed
+   - `opencode.json` MCP env→environment keys fixed
+
+6. **JSON Schema migration:**
+   - Created `agents/agent.schema.json` (canonical, draft-07)
+   - `agents/agent-schema.yaml` as derived reference
+   - 34 skills got `triggers:` and `applies_to:` fields (tier-2 warnings: 34 → 0)
+   - Package.json scripts added for npm-runner wiring
+
+7. **Path portability (Stage 4):**
+   - 4 files updated: opencode.json (12 paths relative), nightly_run.ps1, watcher_run.ps1, batch-add-skill-fields.py
+   - 4-tier env-var fallback pattern: OPENCODE_CONFIG_HOME → USERPROFILE → HOME → relative
+   - Note: Many other PS1 scripts still hardcode `$env:USERPROFILE\.config\opencode` — incomplete
+
+**What we got wrong:**
+
+- **Validators passing locally ≠ passing in CI** — repeatedly claimed "T2 8/8 passed" without checking the actual CI runner. The cwd is different in CI, USERPROFILE is undefined on Linux, and microsoft/powershell-actions doesn't exist as a public action.
+- **Local-only health checks wired into CI** — validate-config.ps1, validate-manifests.ps1, validate-definitive.ps1, skill-version-check.ps1 are for the user's live machine at `~/.config/opencode`, not for CI. Added them anyway.
+- **Path portability work was incomplete** — only 4 files updated. The remaining ~25 PS1 scripts still hardcode `$env:USERPROFILE\.config\opencode`.
+- **The `edit: deny` permissions were theoretical** — the system now correctly restricts main-coordinator, but I should have included the dual-context design principle (live machine + CI runner) in the memory.
+
+**Design principle: Dual-context validation**
+
+The system has TWO execution contexts:
+1. **Live machine** (`C:\Users\Windows\.config\opencode\`) — health checks verify the running config
+2. **CI runner** (`ubuntu-latest`/`windows-latest`) — repo validators verify the repo state
+
+These need DIFFERENT validation sets:
+- Local-only health checks (`validate-config.ps1`, etc.) should NEVER run in CI
+- Repo-state checks (`tests/test-manifest-schema.mjs`, `validate-skills.ts`, etc.) SHOULD run in CI
+
+**Status:**
+- `cruddy/master` HEAD: `20106abbc` (pre-memory-update)
+- CI: green (both Linux Node + Windows PowerShell jobs)
+- 27 agents, 38 skills, 6 safety contracts, 12 plugins, 8 scripts
+- All Tier-1 validators in CI
+- 97% of manifest schema failures fixed
+
+**What's left for a future sprint:**
+- Finish path portability (remaining ~25 PS1 scripts with hardcoded paths)
+- Behavioral tests for agents (not just schema conformance)
+- Documentation for outsiders (system too complex to pick up without hand-holding)
+- Rollback workflow for live config corruption
+
+**Category:** `architecture`, `workflow`, `automation`, `security`
+**Cross-reference:** `rules/agent-handoff-contract.md`, `rules/spec-validation.md`, `rules/loop-operator-safety.md`, `rules/t2-protocol-contract.md`, `skills/safe-delegation/SKILL.md`, `.github/workflows/ci.yml`, `agents/agent.schema.json`
+
+---

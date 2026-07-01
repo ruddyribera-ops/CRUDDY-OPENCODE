@@ -11,6 +11,7 @@
     "validate:config": "pwsh -File scripts/validate-config.ps1",
     "validate:manifests": "pwsh -File scripts/validate-manifests.ps1",
     "lint:js": "npx biome lint plugins/ scripts/",
-    "test:manifests": "node tests/test-manifest-schema.mjs"
+    "test:manifests": "node tests/test-manifest-schema.mjs",
+    "update:memory": "node scripts/update-memory.mjs"
   }
 }
