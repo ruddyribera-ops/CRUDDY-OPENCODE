@@ -1,5 +1,5 @@
 {
-    "$schema": "https://opencode.ai/config.json",
+    "$schema": "https:\/\/opencode.ai\/config.json",
     "model": "minimax/minimax-m2.7",
     "small_model": "minimax/minimax-m2.5",
     "instructions": [
@@ -30,7 +30,7 @@
             "npm": "@ai-sdk/openai-compatible",
             "name": "MiniMax",
             "options": {
-                "baseURL": "https://api.minimax.io/v1",
+                "baseURL": "https:\/\/api.minimax.io/v1",
                 "apiKey": "{env:MINIMAX_API_KEY}",
                 "timeout": 300000
             },
@@ -53,7 +53,7 @@
                 "deepseek-v4-flash": {
                     "name": "deepseek-v4-flash",
                     "options": {
-                        "baseURL": "https://opencode.ai/zen/go/v1/chat/completions",
+                        "baseURL": "https:\/\/opencode.ai/zen/go/v1/chat/completions",
                         "thinking": "@{type=enabled; reasoningEffort=high}",
                         "reasoningEffort": "low"
                     }
@@ -61,21 +61,21 @@
                 "deepseek-v4-pro": {
                     "name": "deepseek-v4-pro",
                     "options": {
-                        "baseURL": "https://opencode.ai/zen/go/v1/chat/completions",
+                        "baseURL": "https:\/\/opencode.ai/zen/go/v1/chat/completions",
                         "thinking": "@{type=enabled; reasoningEffort=xhigh}"
                     }
                 },
                 "minimax-m3": {
                     "name": "minimax-m3",
                     "options": {
-                        "baseURL": "https://opencode.ai/zen/go/v1/messages"
+                        "baseURL": "https:\/\/opencode.ai/zen/go/v1/messages"
                     }
                 }
             }
         },
         "groq": {
             "options": {
-                "baseURL": "https://api.groq.com/openai/v1",
+                "baseURL": "https:\/\/api.groq.com/openai/v1",
                 "apiKey": "{env:GROQ_API_KEY}"
             },
             "models": {
@@ -124,7 +124,7 @@
         },
         "context7": {
             "type": "remote",
-            "url": "https://mcp.context7.com/mcp",
+            "url": "https:\/\/mcp.context7.com/mcp",
             "enabled": true
         },
         "fetch": {
@@ -163,7 +163,7 @@
                 "-y",
                 "chrome-devtools-mcp",
                 "--browserUrl",
-                "http://127.0.0.1:9222"
+                "http:\/\/127.0.0.1:9222"
             ],
             "enabled": true
         },

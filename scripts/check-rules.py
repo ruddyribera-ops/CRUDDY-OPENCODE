@@ -322,6 +322,10 @@ def main():
 
     print(json.dumps(result, indent=2))
 
+    # Exit non-zero when validation has issues
+    if args.cmd == "validate" and not result.get("ok"):
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
