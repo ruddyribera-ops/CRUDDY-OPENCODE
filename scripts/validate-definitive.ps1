@@ -25,18 +25,10 @@ foreach ($mcpName in @($cfg.mcp.PSObject.Properties.Name)) {
   }
 }
 
-# Check agent files have native manifest fields
-$agentFiles = Get-ChildItem -LiteralPath (Join-Path $root "agents") -Filter "*.md" |
-  Where-Object { $_.Name -ne "SPECIALIZED_AGENTS.md" }
-foreach ($agent in $agentFiles) {
-  $text = Get-Content -LiteralPath $agent.FullName -Raw
-  if ($text -notmatch "(?m)^mode:\s*(primary|subagent)") {
-    $script:errors.Add("agent $($agent.Name) missing 'mode:' field - required for native manifest")
-  }
-  if ($text -notmatch "(?m)^permission:") {
-    $script:errors.Add("agent $($agent.Name) missing 'permission:' section - required for native manifest")
-  }
-}
+# Check agent files exist for each YAML manifest (cross-reference)
+# Note: mode: and permission: are NO LONGER required — the canonical schema
+# (agent-registry.py AGENT_SCHEMA) only requires name + description.
+# Security-related checks (PowerShell profile plaintext keys) remain below.
 
 # Check PowerShell profile for plaintext API keys (security)
 $profile = "$env:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"

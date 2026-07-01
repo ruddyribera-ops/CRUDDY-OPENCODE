@@ -1,5 +1,6 @@
-﻿name: tech-writer
+name: tech-writer
 version: 1.0.0
+description: "Document engineer — writes human + AI-reader docs (GEO, Diataxis, buildwithfern/fluidtopics 2026)"
 
 model_tier: 2
 mode: primary

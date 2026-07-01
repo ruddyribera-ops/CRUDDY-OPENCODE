@@ -1,5 +1,6 @@
-﻿name: code-explainer
+name: code-explainer
 version: 1.0.0
+description: "Plain-language code explanation"
 
 model_tier: 2
 mode: primary

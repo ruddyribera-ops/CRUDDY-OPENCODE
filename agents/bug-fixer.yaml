@@ -1,5 +1,6 @@
-﻿name: bug-fixer
+name: bug-fixer
 version: 1.0.0
+description: "Debug, root cause, error resolution"
 
 model_tier: 2
 mode: primary

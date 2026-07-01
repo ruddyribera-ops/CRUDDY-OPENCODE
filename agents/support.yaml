@@ -1,5 +1,6 @@
-﻿name: support
+name: support
 version: 1.0.0
+description: "Customer support triage + response — auto-categorize, knowledge-base lookup, no-lost-context handoff (kustomer/bluetweak 2026)"
 
 model_tier: 2
 mode: primary

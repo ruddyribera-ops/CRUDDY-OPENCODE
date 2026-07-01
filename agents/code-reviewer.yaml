@@ -1,5 +1,6 @@
-﻿name: code-reviewer
+name: code-reviewer
 version: 1.0.0
+description: "Code quality reviewer — evaluates implementation against quality gates, finds bugs, security issues, style problems"
 
 model_tier: 2
 mode: primary

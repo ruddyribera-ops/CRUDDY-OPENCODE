@@ -1,5 +1,6 @@
-﻿name: code-builder
+name: code-builder
 version: 1.0.0
+description: "Write code, implement features, refactor"
 
 mode: primary
 model: minimax/minimax-m2.7

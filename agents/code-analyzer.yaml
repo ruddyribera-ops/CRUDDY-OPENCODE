@@ -1,5 +1,6 @@
-﻿name: code-analyzer
+name: code-analyzer
 version: 1.0.0
+description: "Scan, audit, health check, patterns"
 
 model_tier: 2
 mode: primary

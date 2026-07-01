@@ -1,5 +1,6 @@
-﻿name: designer
+name: designer
 version: 1.0.0
+description: "Design systems architect — design tokens, component specs, visual artifacts (designsystemscollective 2026, Agentic Design Systems)"
 
 mode: primary
 model: minimax/minimax-m2.7

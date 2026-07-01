@@ -1,5 +1,6 @@
-﻿name: standup-summary
+name: standup-summary
 version: 1.0.0
+description: "Daily status, git activity, progress"
 
 model_tier: 2
 mode: primary

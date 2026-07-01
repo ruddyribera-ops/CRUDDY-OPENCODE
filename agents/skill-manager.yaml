@@ -1,5 +1,6 @@
-﻿name: skill-manager
+name: skill-manager
 version: 1.0.0
+description: "Skill creation, management, import/export"
 
 model_tier: 2
 mode: primary

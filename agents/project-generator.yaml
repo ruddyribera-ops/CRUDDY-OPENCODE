@@ -1,5 +1,6 @@
-﻿name: project-generator
+name: project-generator
 version: 1.0.0
+description: "New project scaffolding, full planning"
 
 model_tier: 2
 mode: primary

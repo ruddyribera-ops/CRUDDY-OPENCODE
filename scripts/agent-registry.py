@@ -23,8 +23,41 @@ AGENTS_DIR = Path.home() / ".config" / "opencode" / "agents"
 AGENT_SCHEMA = {
     "required_fields": ["name", "description"],
     "optional_fields": ["triggers", "trigger_words", "color", "emoji", "vibe", "model", "skills", "tools", "duties", "guardrails"],
+    "field_types": {
+        "name": str,
+        "description": str,
+        "triggers": list,
+        "trigger_words": list,
+        "color": str,
+        "emoji": str,
+        "vibe": str,
+        "model": str,
+        "skills": list,
+        "tools": list,
+        "duties": list,
+        "guardrails": list,
+    },
+    "validation_rules": [
+        "name must match YAML filename (excluding .yaml extension)",
+        "description must be a non-empty string",
+        "triggers must be a list of strings if present",
+        "skills must be a list of strings if present",
+    ],
     "trigger_type": list,
 }
+
+
+def cmd_print_schema():
+    """Print the AGENT_SCHEMA as JSON for consumption by external validators."""
+    return {
+        "ok": True,
+        "schema": {
+            "required_keys": AGENT_SCHEMA["required_fields"],
+            "optional_keys": AGENT_SCHEMA["optional_fields"],
+            "field_types": {k: str(v) for k, v in AGENT_SCHEMA["field_types"].items()},
+            "validation_rules": AGENT_SCHEMA["validation_rules"],
+        }
+    }
 
 
 def _load_agents():
@@ -39,7 +72,7 @@ def _load_agents():
             continue
         import yaml
         try:
-            with open(f, "r") as fh:
+            with open(f, "r", encoding="utf-8-sig") as fh:
                 data = yaml.safe_load(fh)
             if data and isinstance(data, dict):
                 agents[name] = data
@@ -184,6 +217,7 @@ def main():
     sub.add_parser("validate")
     sub.add_parser("graph")
     sub.add_parser("report")
+    sub.add_parser("print-schema")
 
     args = parser.parse_args()
 
@@ -192,6 +226,7 @@ def main():
         "validate": cmd_validate,
         "graph": cmd_graph,
         "report": cmd_report,
+        "print-schema": cmd_print_schema,
     }
 
     result = cmd_map[args.cmd]()

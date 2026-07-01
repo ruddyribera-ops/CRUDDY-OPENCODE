@@ -143,7 +143,7 @@
                 "@playwright/mcp@latest"
             ],
             "enabled": false,
-            "env": {
+            "environment": {
                 "PLAYWRIGHT_BROWSERS_PATH": "D:/Temp/playwright-browsers"
             }
         },
@@ -193,7 +193,7 @@
             "command": [
                 "C:/Users/Windows/AppData/Local/Programs/Python/Python312/Scripts/vibe-trading-mcp.exe"
             ],
-            "env": {
+            "environment": {
                 "VIBE_TRADING_ALLOWED_RUN_ROOTS": "D:/Temp/opencode"
             },
             "enabled": true

@@ -67,5 +67,8 @@ jobs:
       - name: Validate agent manifests
         run: pwsh -File scripts/validate-manifests.ps1
 
+      - name: Validate definitive config
+        run: pwsh -File scripts/validate-definitive.ps1
+
       - name: Validate skill versions
         run: pwsh -File scripts/skill-version-check.ps1

@@ -1,9 +1,9 @@
-﻿name: cybersecurity
+name: cybersecurity
 version: 1.0.0
+description: "Application security engineer — OWASP ASI 2026, threat modeling, read-only vuln audits (owaspai.org, genai.owasp.org)"
 
-model_tier: 2
-mode: primary
 model_tier: 3
+mode: primary
 model: minimax/minimax-m3
 capabilities:
   - security_audit
