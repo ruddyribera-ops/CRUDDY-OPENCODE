@@ -55,7 +55,10 @@ gbrain:
       glob: "~/.gstack/analytics/eureka.jsonl"
       tail: 5
       render_as: "## Recent eureka moments"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 {{PREAMBLE}}
 

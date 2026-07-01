@@ -18,8 +18,11 @@ import sys
 from pathlib import Path
 
 AGENTS_DIR = Path.home() / ".config" / "opencode" / "agents"
+SCHEMA_PATH = AGENTS_DIR / "agent.schema.json"
 
 # Schema: expected fields per agent type
+# NOTE: The canonical schema is agents/agent.schema.json (JSON Schema draft-07).
+# This dict is the runtime validation schema — kept in sync with the JSON Schema.
 AGENT_SCHEMA = {
     "required_fields": ["name", "description"],
     "optional_fields": ["triggers", "trigger_words", "color", "emoji", "vibe", "model", "skills", "tools", "duties", "guardrails"],

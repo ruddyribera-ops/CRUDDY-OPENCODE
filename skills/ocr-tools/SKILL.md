@@ -1,7 +1,17 @@
 ---
 name: ocr-tools
 description: "OCR tools comparison and pipelines — Tesseract, EasyOCR, PaddleOCR, RapidOCR, Surya. Use when extracting text from images, scanned documents, screenshots, or PDFs; building OCR pipelines; comparing engines. Triggers: OCR, text extraction, image to text, document scanning, Tesseract, EasyOCR, PaddleOCR."
+triggers:
+  - "ocr-tools"
+  - "ocr tools"
+  - "when to use ocr tools"
+  - "how to ocr tools"
+  - "ocr tools examples"
+  - "ocr tools pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # OCR Tools Skill
 

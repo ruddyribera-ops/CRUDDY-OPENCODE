@@ -1,7 +1,17 @@
 ---
 name: superpowers-writing-skills
 description: "Meta-skill — how to write good skills. Anthropic best practices for skill authoring, persuasion principles for trigger phrases, graphviz conventions for diagrams, testing skills with subagents. Use when authoring a new skill, refining an existing skill's triggers, or reviewing skill quality. Triggers: write a skill, author skill, skill design, skill trigger, skill testing, skill review."
+triggers:
+  - "superpowers-writing-skills"
+  - "superpowers writing skills"
+  - "when to use superpowers writing skills"
+  - "how to superpowers writing skills"
+  - "superpowers writing skills examples"
+  - "superpowers writing skills pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Writing Skills Skill
 

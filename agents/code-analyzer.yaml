@@ -4,7 +4,6 @@ description: "Scan, audit, health check, patterns"
 
 model_tier: 2
 mode: primary
-model_tier: 1
 model: minimax/minimax-m2.7
 capabilities:
   - scan_project

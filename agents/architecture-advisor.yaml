@@ -4,7 +4,6 @@ description: "Deep architecture, Architect Pack, tradeoffs"
 
 model_tier: 2
 mode: primary
-model_tier: 2
 model: minimax/minimax-m2.7
 capabilities:
   - evaluate_tradeoffs

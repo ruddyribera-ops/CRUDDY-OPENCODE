@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/ruddyribera-ops/CRUDDY-OPENCODE/agents/agent.schema.json",
+  "title": "OpenCode Agent Manifest",
+  "description": "Canonical schema for agent manifest files in agents/ directory. Derived from agent-registry.py runtime consumer requirements.",
+  "type": "object",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Lowercase-kebab agent name. Must match filename without .yaml extension."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "One-line summary of the agent's purpose and trigger keywords."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version (e.g., 1.0.0). Optional but recommended."
+    },
+    "model": {
+      "type": "string",
+      "description": "Model identifier (e.g., minimax/minimax-m2.7)."
+    },
+    "model_tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "description": "Model tier: 1=Flash, 2=Pro, 3=M2.7"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["primary", "subagent"],
+      "description": "Whether this is a primary agent (user-facing) or subagent (delegated to)."
+    },
+    "color": {"type": "string", "description": "Hex color code for UI."},
+    "emoji": {"type": "string", "description": "Emoji identifier for the agent."},
+    "vibe": {"type": "string", "description": "One-line personality description."},
+    "triggers": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Phrases that activate this agent. Recommended for discoverability."
+    },
+    "trigger_words": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "anti_triggers": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Phrases that should NOT route to this agent."
+    },
+    "skills": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Skills this agent can use."
+    },
+    "tools": {
+      "type": "object",
+      "description": "Tool permission overrides."
+    },
+    "permission": {
+      "type": "object",
+      "description": "Permission overrides for this agent."
+    },
+    "budget": {
+      "type": "object",
+      "description": "Token budget overrides."
+    },
+    "mcp": {
+      "description": "MCP tools this agent can use. Can be an array of tool names OR an object mapping tool names to permission values.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        }
+      ]
+    },
+    "escalation": {
+      "type": "object",
+      "description": "When/how to escalate to other agents."
+    },
+    "handoff_targets": {
+      "type": "array",
+      "items": {"type": "object"},
+      "description": "Agents this agent can hand off to."
+    },
+    "prompt_file": {
+      "type": "string",
+      "description": "Path to the agent's prompt file (.md)."
+    },
+    "steps": {
+      "type": "integer",
+      "description": "Max steps for this agent's session."
+    },
+    "tone": {
+      "description": "Tone/persona instructions. Can be a string or an object with tone properties.",
+      "oneOf": [
+        {"type": "string"},
+        {"type": "object"}
+      ]
+    },
+    "never_do": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Explicit anti-patterns the agent must avoid."
+    },
+    "duties": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Primary duties/responsibilities."
+    },
+    "guardrails": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Safety guardrails the agent must respect."
+    }
+  },
+  "additionalProperties": true
+}

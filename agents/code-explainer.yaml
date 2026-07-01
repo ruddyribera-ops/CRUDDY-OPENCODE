@@ -4,7 +4,6 @@ description: "Plain-language code explanation"
 
 model_tier: 2
 mode: primary
-model_tier: 1
 model: minimax/minimax-m2.7
 capabilities:
   - explain_code

@@ -4,7 +4,6 @@ description: "Skill creation, management, import/export"
 
 model_tier: 2
 mode: primary
-model_tier: 2
 model: minimax/minimax-m2.7
 capabilities:
   - create_skill

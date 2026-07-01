@@ -1,7 +1,17 @@
 ---
 name: tracing
 description: "Distributed tracing for AI agent systems — nested spans, agent-to-tool-call hierarchy, MCP integration, failure attribution. Use when debugging multi-step agent failures or building observability. Triggers: trace, span, agent invocation, tool call, MCP, distributed tracing, latency, debug."
+triggers:
+  - "tracing"
+  - "tracing"
+  - "when to use tracing"
+  - "how to tracing"
+  - "tracing examples"
+  - "tracing pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Distributed Tracing Skill
 

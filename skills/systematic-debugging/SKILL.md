@@ -1,7 +1,17 @@
 ---
 name: systematic-debugging
 description: "Systematic debugging methodology — root cause investigation, hypothesis-driven exploration, eliminating causes one by one. Use when encountering any bug, test failure, or unexpected behavior. Triggers: bug, error, broken, not working, debug, root cause, hypothesis, repro, trace, stack trace."
+triggers:
+  - "systematic-debugging"
+  - "systematic debugging"
+  - "when to use systematic debugging"
+  - "how to systematic debugging"
+  - "systematic debugging examples"
+  - "systematic debugging pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Systematic Debugging
 

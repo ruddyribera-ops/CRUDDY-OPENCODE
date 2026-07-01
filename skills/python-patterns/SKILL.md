@@ -1,7 +1,17 @@
 ---
 name: python-patterns
 description: "Modern Python 3.10+ patterns — type hints (PEP 604 union syntax), FastAPI with Pydantic v2, async/await with asyncio, error handling with specific exception types, and idiomatic patterns for the user's stack (FastAPI, SQLAlchemy 2.0 async, Streamlit). Use when writing or reviewing Python code that uses modern features. Triggers: python, fastapi, pydantic, sqlalchemy, async, type hints, asyncio, streamlit."
+triggers:
+  - "python-patterns"
+  - "python patterns"
+  - "when to use python patterns"
+  - "how to python patterns"
+  - "python patterns examples"
+  - "python patterns pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Python Patterns — Modern Python 3.10+ Idioms
 

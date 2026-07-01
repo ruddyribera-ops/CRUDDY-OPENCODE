@@ -1,7 +1,17 @@
 ---
 name: differential-review
 description: "Security-focused differential code review — comparing changes against baseline, identifying security regressions, supply-chain risks, and OWASP ASI 2026 threats. Triggers: PR review, differential review, security regression, supply chain, CVE, OWASP, blast radius, code diff, blast radius assessment."
+triggers:
+  - "differential-review"
+  - "differential review"
+  - "when to use differential review"
+  - "how to differential review"
+  - "differential review examples"
+  - "differential review pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Differential Review
 

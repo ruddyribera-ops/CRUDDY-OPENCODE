@@ -1,7 +1,17 @@
 ---
 name: codemap
 description: "Fast codebase orientation via markdown overview. Generates two deterministic markdown files (codemap.md + modules.md, each capped at 8 KiB) in seconds using pure stdlib Python. Use when cold-starting on a new or unfamiliar codebase, need a quick structural overview, want a shareable markdown doc, or onboarding to a project. Triggers: new repo orientation, codebase map, fast overview, what's in this repo, give me a tour, summarize this repo, codebase overview. NOT for deep graph queries (use codebase-memory MCP), specific function lookup (use grep or Read), health/quality analysis (use code-analyzer), security review (use cybersecurity), or design decisions (use architecture-advisor)."
+triggers:
+  - "codemap"
+  - "codemap"
+  - "when to use codemap"
+  - "how to codemap"
+  - "codemap examples"
+  - "codemap pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Codemap — Fast Codebase Orientation
 

@@ -1,7 +1,17 @@
 ---
 name: api-patterns
 description: "REST API design patterns, error handling, and response format standards. Use when designing or reviewing REST APIs, error handling, pagination, versioning. Triggers: REST API, REST, HTTP, JSON, error response, pagination, versioning, idempotency, rate limit, status code."
+triggers:
+  - "api-patterns"
+  - "api patterns"
+  - "when to use api patterns"
+  - "how to api patterns"
+  - "api patterns examples"
+  - "api patterns pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # API Patterns
 

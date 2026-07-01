@@ -1,7 +1,17 @@
 ---
 name: performance-optimization
 description: "Performance Optimization Patterns and Best Practices across React, API, DB, and bundle optimization. Use when optimizing app performance, query speed, or bundle size. Triggers: performance, optimize, React memo, bundle size, code splitting, lazy loading, N+1, query optimization, caching, profiling."
+triggers:
+  - "performance-optimization"
+  - "performance optimization"
+  - "when to use performance optimization"
+  - "how to performance optimization"
+  - "performance optimization examples"
+  - "performance optimization pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Performance Optimization
 

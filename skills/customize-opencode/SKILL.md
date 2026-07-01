@@ -1,7 +1,17 @@
 ---
 name: customize-opencode
 description: Use when editing or creating OpenCode's own configuration (opencode.json, opencode.jsonc, files under .opencode/, or ~/.config/opencode/). Also use when creating or fixing OpenCode agents, subagents, skills, MCP servers, or permission rules. Do not use for the user's own application code, or for any project that is not configuring opencode itself.
+triggers:
+  - "customize-opencode"
+  - "customize opencode"
+  - "when to use customize opencode"
+  - "how to customize opencode"
+  - "customize opencode examples"
+  - "customize opencode pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Customize OpenCode
 

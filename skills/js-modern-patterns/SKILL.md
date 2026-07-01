@@ -1,7 +1,17 @@
 ---
 name: js-modern-patterns
 description: "Modern ES2022+ and TypeScript patterns for cleaner, more efficient code. Covers top-level await, optional chaining, nullish coalescing, modern array methods (at, findLast, toSorted), Object.hasOwn, Error.cause, structuredClone, and idiomatic patterns for the user's stack (Next.js 14, React 19, Vite, Express, Node.js, TypeScript). Use when writing or reviewing JavaScript/TypeScript code with modern features. Triggers: javascript, typescript, es2022, modern js, ts patterns, react patterns, next.js, express."
+triggers:
+  - "js-modern-patterns"
+  - "js modern patterns"
+  - "when to use js modern patterns"
+  - "how to js modern patterns"
+  - "js modern patterns examples"
+  - "js modern patterns pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # JS/TS Modern Patterns — ES2022+ Idioms
 

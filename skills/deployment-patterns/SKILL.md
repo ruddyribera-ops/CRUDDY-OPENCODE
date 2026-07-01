@@ -1,7 +1,17 @@
 ---
 name: deployment-patterns
 description: "Docker, docker-compose, Railway, containerization, and environment configuration. Use when containerizing apps, deploying to Railway, configuring production environments. Triggers: containerize, Docker, docker-compose, Railway, deploy, health check, Dockerfile, rolling deploy, blue green."
+triggers:
+  - "deployment-patterns"
+  - "deployment patterns"
+  - "when to use deployment patterns"
+  - "how to deployment patterns"
+  - "deployment patterns examples"
+  - "deployment patterns pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Deployment Patterns
 

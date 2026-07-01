@@ -4,7 +4,6 @@ description: "New project scaffolding, full planning"
 
 model_tier: 2
 mode: primary
-model_tier: 3
 model: minimax/minimax-m2.7
 capabilities:
   - scaffold_project

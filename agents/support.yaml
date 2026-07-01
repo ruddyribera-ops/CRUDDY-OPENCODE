@@ -4,7 +4,6 @@ description: "Customer support triage + response — auto-categorize, knowledge-
 
 model_tier: 2
 mode: primary
-model_tier: 2
 model: minimax/minimax-m2.7
 capabilities:
   - triage

@@ -1,7 +1,17 @@
 ---
 name: investigate
 description: "Deep investigation methodology — gstack pattern, full-stack evidence gathering, root cause through systematic exploration. Use when standard debugging is not enough; for complex multi-system bugs. Triggers: investigate, deep dive, gstack, multi-system bug, complex issue, full-stack investigation."
+triggers:
+  - "investigate"
+  - "investigate"
+  - "when to use investigate"
+  - "how to investigate"
+  - "investigate examples"
+  - "investigate pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Investigate
 

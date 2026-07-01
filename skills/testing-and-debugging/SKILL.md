@@ -1,7 +1,17 @@
 ---
 name: testing-and-debugging
 description: "End-to-end testing and debugging methodology — bug investigation, property-based testing, performance, end-to-end webapp testing. Use when chasing a bug, designing tests, investigating failures, or auditing performance. Triggers: debug this, fix this bug, test this feature, find what's broken, performance issue, race condition, flapping test, repro, root cause, investigate, slow query."
+triggers:
+  - "testing-and-debugging"
+  - "testing and debugging"
+  - "when to use testing and debugging"
+  - "how to testing and debugging"
+  - "testing and debugging examples"
+  - "testing and debugging pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Testing and Debugging
 

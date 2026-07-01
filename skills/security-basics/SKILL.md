@@ -1,7 +1,17 @@
 ---
 name: security-basics
 description: "Security best practices, vulnerability prevention, and secure development across web applications, APIs, networks, and embedded systems. Triggers: security, OWASP, vulnerability, SAST, DAST, input validation, XSS, SQL injection, CSRF, auth, bcrypt, JWT, SAST, DAST, incident response."
+triggers:
+  - "security-basics"
+  - "security basics"
+  - "when to use security basics"
+  - "how to security basics"
+  - "security basics examples"
+  - "security basics pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Security Basics
 

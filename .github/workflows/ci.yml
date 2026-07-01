@@ -36,6 +36,9 @@ jobs:
       - name: Validate JSONC config files
         run: node scripts/validate-jsonc.js opencode.json agents/*.yaml
 
+      - name: Test manifest schema conformance
+        run: node tests/test-manifest-schema.mjs
+
   validate-windows:
     name: Validate (Windows / PowerShell)
     runs-on: windows-latest

@@ -1,7 +1,17 @@
 ---
 name: cost-tracking
 description: "LLM cost attribution and FinOps — per-model pricing, per-span token tracking, caching strategies, rate limiting, cost anomaly detection. Use when tracking AI spend, optimizing costs, or detecting cost anomalies. Triggers: cost, token, FinOps, spend, pricing, cache, rate limit, per-user cost, per-feature cost."
+triggers:
+  - "cost-tracking"
+  - "cost tracking"
+  - "when to use cost tracking"
+  - "how to cost tracking"
+  - "cost tracking examples"
+  - "cost tracking pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # Cost Tracking Skill — LLM FinOps
 

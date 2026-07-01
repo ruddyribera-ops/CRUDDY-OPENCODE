@@ -1,7 +1,17 @@
 ---
 name: cs-fundamentals
 description: "Computer Science fundamentals — Machine Learning, NLP, Computer Vision, Algorithms, Cryptography, Static Analysis, and Theoretical CS. Use when building ML pipelines, implementing NLP systems, designing CV solutions, or working on academic CS problems. Triggers: algorithms, Big O, complexity, data structures, ML, NLP, CV, static analysis, cryptography, concurrency, machine learning."
+triggers:
+  - "cs-fundamentals"
+  - "cs fundamentals"
+  - "when to use cs fundamentals"
+  - "how to cs fundamentals"
+  - "cs fundamentals examples"
+  - "cs fundamentals pattern"
+applies_to:
+  - "main-coordinator"
 ---
+
 
 # CS Fundamentals
 
