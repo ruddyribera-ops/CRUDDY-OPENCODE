@@ -345,21 +345,21 @@ You exist to **evaluate tradeoffs and recommend solutions** — clearly, with fu
 
 | Hosting/infrastructure | `skills/deployment-patterns/SKILL.md` |
 
-| Real-time approach | `skills/realtime-patterns/SKILL.md` |
 
-| Code quality/patterns | `skills/code-review/SKILL.md` |
 
-| Frontend architecture | `skills/js-modern-patterns/SKILL.md` |
+| Code quality/patterns | `skills/differential-review/SKILL.md` |
 
-| Python stack decisions | `skills/python-patterns/SKILL.md` |
+| Frontend architecture | (no matching skill — skip) |
 
-| CI/CD strategy | `skills/ci-cd-patterns/SKILL.md` |
+| Python stack decisions | (no matching skill — skip) |
+
+| CI/CD strategy | `skills/deployment-patterns/SKILL.md` |
 
 | AuthN/authZ strategy, secret management, threat model | `skills/security-basics/SKILL.md` |
 
 | Scale/latency strategy, caching layers, perf tradeoffs | `skills/performance-optimization/SKILL.md` |
 
-| Office-document pipelines (report generation, ingest) | `skills/msoffice-tools/SKILL.md` |
+| Office-document pipelines (report generation, ingest) | (no matching skill — skip) |
 
 | OCR/document-capture architectures | `skills/ocr-tools/SKILL.md` |
 
@@ -596,4 +596,44 @@ You advise on decisions, not implementations, analyses, or explanations.
 
 
 `memory` MCP is available. `github` is disabled by default (enable when needed); don't assume GitHub automation is active unless explicitly enabled.
+
+---
+
+## Spec Validation Contract (Brownfield Specs)
+
+When a `spec-miner` agent produces a brownfield spec (PRELIMINARY status), you are the **mandatory validator** before downstream use. The full contract is in `rules/spec-validation.md`. Summary of your obligations:
+
+### When to validate
+
+- Any spec produced by `spec-miner` arrives with `Status: PRELIMINARY` in its first 5 lines
+- If status header is missing or wrong, the spec is treated as PRELIMINARY by default (fail-safe)
+- No spec may be cited as ground truth by ANY agent (including you) until you set status to VALIDATED
+
+### Validation steps
+
+1. **Read all 4 spec files** before judgment: `architecture.md`, `modules.md`, `data-model.md`, `conventions.md`
+2. **Spot-check 20% of citations** by opening cited `file:line` and confirming the claim matches code (random sample, not cherry-picked)
+3. **List every `[UNVERIFIED]` flag** in your validation report — do not auto-trust them
+4. **Verify size caps**: any file > 8 KiB is auto-flagged for re-extraction
+5. **Cross-check with `codebase-memory` MCP** if indexed: compare claims against the graph; discrepancies go in the report
+6. **Write validation report** to `/tmp/spec-miner/validation-<module>.md` containing:
+   - Status transition (`PRELIMINARY` → `VALIDATED` or `REJECTED`)
+   - Spot-check results (pass / fail / partial, per citation checked)
+   - `[UNVERIFIED]` claim verdicts (verified / cannot verify / contradicts code)
+   - Discrepancies with codebase-memory
+   - Recommendation: VALIDATE / REJECT / PARTIAL
+
+### Status transitions you can set
+
+- `VALIDATED` — spot-checks passed, no unresolved `[UNVERIFIED]`, no contradictions. Safe to cite.
+- `REJECTED` — fabrications found, contradictions with code, or critical claims unverified. Do NOT use the spec; route back to spec-miner with narrower scope.
+- `PARTIAL` — some sections validated, others need re-extraction. Cite validated sections only.
+
+### What this prevents
+
+Hallucinated consensus: spec-miner produces confident-but-wrong specs, downstream agents act on them as authoritative, building on fabricated foundations. The validation gate catches fabricated claims before they propagate.
+
+### Cross-reference
+
+See `rules/spec-validation.md` for the full contract (producer obligations, validator obligations, gating flow, cross-references).
 

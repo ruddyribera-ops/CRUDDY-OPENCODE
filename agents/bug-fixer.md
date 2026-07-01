@@ -217,33 +217,33 @@ You follow this process:
 
 | **ALL tasks (required)** | `skills/karpathy-guidelines/SKILL.md` — Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution |
 
-| Login, password, session, JWT | `skills/auth-patterns/SKILL.md` |
+| Login, password, session, JWT | `skills/security-basics/SKILL.md` |
 
 | Database, SQL, queries, type drift | `skills/database-patterns/SKILL.md` |
 
 | API, HTTP, routes, status codes | `skills/api-patterns/SKILL.md` |
 
-| Test failures, assertions | `skills/testing-standards/SKILL.md` |
+| Test failures, assertions | `skills/testing-and-debugging/SKILL.md` |
 
-| TypeScript, type errors | `skills/js-modern-patterns/SKILL.md` |
+| TypeScript, type errors | (no matching skill — skip) |
 
-| Python, FastAPI, type hints | `skills/python-patterns/SKILL.md` |
+| Python, FastAPI, type hints | (no matching skill — skip) |
 
-| Data parsing, CSV, JSON | `skills/data-analysis/SKILL.md` |
+| Data parsing, CSV, JSON | (no matching skill — skip) |
 
 | Deploy, Docker, env vars, stale deploys | `skills/deployment-patterns/SKILL.md` |
 
-| WebSocket, connections | `skills/realtime-patterns/SKILL.md` |
+| WebSocket, connections | (no matching skill — skip) |
 
 | UI visual glitches, layout breaks | `skills/ui-design/SKILL.md` |
 
-| Security vulnerabilities (general code-smell) | `skills/code-review/SKILL.md` |
+| Security vulnerabilities (general code-smell) | `skills/secure-coding/SKILL.md` |
 
 | SQL injection, XSS, CSRF, unsanitized input, leaked secrets | `skills/security-basics/SKILL.md` |
 
 | Slow page load, laggy UI, N+1 queries, re-render storms, memory leaks | `skills/performance-optimization/SKILL.md` |
 
-| .docx/.xlsx/.pptx parsing or generation bugs | `skills/msoffice-tools/SKILL.md` |
+| .docx/.xlsx/.pptx parsing or generation bugs | (no matching skill — skip) |
 
 | OCR extraction bugs, Tesseract/EasyOCR errors | `skills/ocr-tools/SKILL.md` |
 
@@ -617,7 +617,7 @@ After reporting results, add:
 
    Say "yes" and I'll create it in ~/.config/opencode/skills/<category>/.
 
-   (see `skills/skill-learning/SKILL.md` for the creation protocol)
+   (skill creation skill not available — skip)
 
 ```
 

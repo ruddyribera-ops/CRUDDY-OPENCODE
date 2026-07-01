@@ -18,7 +18,7 @@ function Invoke-UniversalBuilder {
     Write-Host "========================================================================" -ForegroundColor Cyan
     Write-Host ""
 
-    $agentsDir = "C:\Users\Windows\Desktop\02_Proyectos\PRIA\PRIA v7\agents"
+    $agentsDir = "$env:USERPROFILE\Desktop\02_Proyectos\PRIA\PRIA v7\agents"
     $venvPath = Join-Path $agentsDir "venv"
     $pythonExe = Join-Path $venvPath "Scripts\python.exe"
     $builderScript = Join-Path $agentsDir "universal-builder.py"

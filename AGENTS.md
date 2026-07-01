@@ -1,6 +1,6 @@
-﻿---
-# OpenCode AI Orchestrator — Coordinator Routing Table
-# Max 200 lines. This is the routing decision authority.
+---
+# OpenCode AI Orchestrator � Coordinator Routing Table
+# Max 250 lines. This is the routing decision authority.
 
 ## Agent Identity Map
 
@@ -12,34 +12,36 @@
 | `tech-lead` | Technical oversight, code quality, routing | solutions-architect | code-builder, bug-fixer, qa-engineer |
 | `delivery-engineer` | Deploy, Railway, CI/CD, verification | tech-lead | (executes directly) |
 | `qa-engineer` | Test plan, acceptance, bug triage | tech-lead | bug-fixer |
-| `expert-tester` | Adversarial deep tester — hunts edge cases the brief didn't anticipate. Complements qa-engineer (process gate), code-reviewer (static review), bug-fixer (reactive). | main-coordinator | (executes directly) |
-| `ai-evaluator` | LLM output quality specialist — evaluates AI behavior with RAGAS, DeepEval, and LLM-as-judge patterns. Tests hallucination, groundedness, bias, prompt-injection resistance. | main-coordinator | (executes directly) |
+| `expert-tester` | Adversarial deep tester � hunts edge cases the brief didn't anticipate. Complements qa-engineer (process gate), code-reviewer (static review), bug-fixer (reactive). | main-coordinator | (executes directly) |
+| `ai-evaluator` | LLM output quality specialist � evaluates AI behavior with RAGAS, DeepEval, and LLM-as-judge patterns. Tests hallucination, groundedness, bias, prompt-injection resistance. | main-coordinator | (executes directly) |
 | `architecture-advisor` | Deep architecture, Architect Pack, tradeoffs | project-manager | tech-lead, code-builder |
+| `spec-miner` | Brownfield spec extractor — produces PRELIMINARY 4-file specs (architecture, modules, data-model, conventions) from existing code without modifying it. Per-module only, max 5 per dispatch. | main-coordinator | architecture-advisor (mandatory validation) |
+| `loop-operator` | Structured loop controller — runs loops requested by caller agents (qa-engineer, bug-fixer, expert-tester, code-builder). Enforces 4 mandatory safety rails: max_iterations, cost_ceiling, no_progress_detector, human_escalation. NEVER decides whether to loop. | (called by expert-tester, qa-engineer, bug-fixer, code-builder) | (returns control to caller; no nested loops) |
 | `bug-fixer` | Debug, root cause, error resolution | tech-lead | code-builder (if fix needs code) |
 | `code-analyzer` | Scan, audit, health check, patterns | tech-lead | (read-only, no delegation) |
 | `code-builder` | Write code, implement features, refactor | tech-lead | (executes directly) |
 | `code-explainer` | Plain-language code explanation | (any, ad-hoc) | (read-only, no delegation) |
-| `code-reviewer` | Code quality reviewer — evaluates implementation against quality gates, finds bugs, security issues, style problems | tech-lead | (read-only, no delegation) |
+| `code-reviewer` | Code quality reviewer � evaluates implementation against quality gates, finds bugs, security issues, style problems | tech-lead | (read-only, no delegation) |
 | `evolution-agent` | Self-improvement, pattern detection, genes | (meta, reports to coordinator) | (no delegation) |
 | `main-coordinator` | Routing, orchestration, safety enforcement | Ruddy | all agents |
 | `project-generator` | New project scaffolding, full planning | account-manager | solutions-architect |
 | `skill-manager` | Skill creation, management, import/export | (meta, ad-hoc) | (no delegation) |
 | `standup-summary` | Daily status, git activity, progress | (ad-hoc) | (read-only, no delegation) |
-| `tech-writer` | Document engineer — writes human + AI-reader docs (GEO, Diataxis, buildwithfern/fluidtopics 2026) | project-manager | code-reviewer, designer, code-explainer |
-| `designer` | Design systems architect — design tokens, component specs, visual artifacts (designsystemscollective 2026, Agentic Design Systems) | project-manager | code-builder, tech-writer, code-analyzer |
-| `support` | Customer support triage + response — auto-categorize, knowledge-base lookup, no-lost-context handoff (kustomer/bluetweak 2026) | account-manager | bug-fixer, tech-writer, project-manager, cybersecurity |
-| `cybersecurity` | Application security engineer — OWASP ASI 2026, threat modeling, read-only vuln audits (owaspai.org, genai.owasp.org) | tech-lead | code-builder, bug-fixer, account-manager |
-| `observability-sre` | Production observability specialist — distributed tracing, latency monitoring, cost tracking, capacity planning, post-mortem analysis | tech-lead | (executes directly) |
-| `ocr-tools` | OCR tools skill — Tesseract, EasyOCR, PaddleOCR, RapidOCR, Surya, preprocessing pipelines | (ad-hoc) | (read-only) |
-| `ui-design` | UI/UX design skill — typography, spacing, color, accessibility, Tailwind, shadcn | (ad-hoc) | (read-only) |
-| `superpowers-subagent-driven-development` | Subagent orchestration skill — implementer/reviewer split, task briefs, review packages | (ad-hoc) | (read-only) |
-| `superpowers-writing-skills` | Skill authoring meta-skill — Anthropic best practices, persuasion principles, graphviz | (ad-hoc) | (read-only) |
-| `awesome-ask-questions-if-underspecified` | Pause-and-clarify skill — Trail of Bits methodology for ambiguous requests | (ad-hoc) | (read-only) |
-| `awesome-office-hours` | Brainstorm/design partner skill — YC-style demand forcing + builder mode | (ad-hoc) | (read-only) |
+| `tech-writer` | Document engineer � writes human + AI-reader docs (GEO, Diataxis, buildwithfern/fluidtopics 2026) | project-manager | code-reviewer, designer, code-explainer |
+| `designer` | Design systems architect � design tokens, component specs, visual artifacts (designsystemscollective 2026, Agentic Design Systems) | project-manager | code-builder, tech-writer, code-analyzer |
+| `support` | Customer support triage + response � auto-categorize, knowledge-base lookup, no-lost-context handoff (kustomer/bluetweak 2026) | account-manager | bug-fixer, tech-writer, project-manager, cybersecurity |
+| `cybersecurity` | Application security engineer � OWASP ASI 2026, threat modeling, read-only vuln audits (owaspai.org, genai.owasp.org) | tech-lead | code-builder, bug-fixer, account-manager |
+| `observability-sre` | Production observability specialist � distributed tracing, latency monitoring, cost tracking, capacity planning, post-mortem analysis | tech-lead | (executes directly) |
+| `ocr-tools` | OCR tools skill � Tesseract, EasyOCR, PaddleOCR, RapidOCR, Surya, preprocessing pipelines | (ad-hoc) | (read-only) |
+| `ui-design` | UI/UX design skill � typography, spacing, color, accessibility, Tailwind, shadcn | (ad-hoc) | (read-only) |
+| `superpowers-subagent-driven-development` | Subagent orchestration skill � implementer/reviewer split, task briefs, review packages | (ad-hoc) | (read-only) |
+| `superpowers-writing-skills` | Skill authoring meta-skill � Anthropic best practices, persuasion principles, graphviz | (ad-hoc) | (read-only) |
+| `awesome-ask-questions-if-underspecified` | Pause-and-clarify skill � Trail of Bits methodology for ambiguous requests | (ad-hoc) | (read-only) |
+| `awesome-office-hours` | Brainstorm/design partner skill � YC-style demand forcing + builder mode | (ad-hoc) | (read-only) |
 
 ---
 
-## Intent → Agent Routing Table
+## Intent ? Agent Routing Table
 
 | Intent | Agent | Trigger Words |
 |--------|-------|---------------|
@@ -50,6 +52,8 @@
 | Scan/analyze project | `code-analyzer` | scan, analyze, detect, structure, tech stack, map, audit, dependencies, health |
 | Explain code | `code-explainer` | explain, what does, how does, tell me about, describe, walk me through, explain |
 | Tech decisions | `architecture-advisor` | should I, which is better, architecture, tradeoff, pros cons, recommend, evaluate |
+| Brownfield spec extraction | `spec-miner` | brownfield, extract spec, onramp legacy, reverse-engineer spec, document existing system, understand inherited codebase |
+| Structured loop execution | `loop-operator` | TDD loop, test until green, fix until passes, iterative refinement, build until compiles, multi-iteration verification |
 | Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference, explain |
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | New project from scratch | `project-generator` | new project, I want to build, create an app, desde cero, scaffold, bootstrap |
@@ -63,7 +67,6 @@
 | Security review / threat model | `cybersecurity` | security, audit, vulnerability, OWASP, threat model, pentest, secure, harden, appsec, CVE |
 | Self-evolution | `evolution-agent` | analyze performance, suggest improvements, evolve, genes |
 | Client interaction | `account-manager` | client, customer, pricing, scope, contract, meeting |
-| Write/structure docs | `tech-writer` | document, doc, README, write docs, GEO, Diataxis, tutorial, how-to, reference, explain |
 | Design system / UI spec | `designer` | design system, design tokens, component, color palette, typography, visual style, mockup, layout, brand |
 | User/client support | `support` | support, how do I, doesn't work, broken, help, error, problem, complaint, ticket, customer |
 | Observability / SRE / monitoring | `observability-sre` | observability, SRE, monitor, trace, latency, error rate, p99, p95, cost, token, capacity, post-mortem, incident, deploy healthy, track costs, trace failure, where tokens, alert |
@@ -80,19 +83,37 @@
 ## Handoff Rules
 
 ```
-Client → account-manager (brief received)
-account-manager → project-manager (brief ready, "go" confirmed)
-project-manager → solutions-architect (for tech decisions)
-solutions-architect → tech-lead (for implementation plan)
-tech-lead → code-builder / bug-fixer / qa-engineer (parallel dispatch)
-qa-engineer → bug-fixer (for bugs found)
-delivery-engineer → (executes deploy, reports to tech-lead)
-project-generator → solutions-architect (after planning)
-tech-writer → code-reviewer (docs PR review), designer (diagrams), code-explainer (plain-language rewrites)
-designer → code-builder (implementation), code-analyzer (a11y audit), tech-writer (design system docs)
-support → bug-fixer (code issues), tech-writer (doc gaps), project-manager (feature requests), account-manager (escalation)
-cybersecurity → code-builder (implement fixes), bug-fixer (active exploits), account-manager (incidents)
+Client ? account-manager (brief received)
+account-manager ? project-manager (brief ready, "go" confirmed)
+project-manager ? solutions-architect (for tech decisions)
+solutions-architect ? tech-lead (for implementation plan)
+tech-lead ? code-builder / bug-fixer / qa-engineer (parallel dispatch)
+qa-engineer ? bug-fixer (for bugs found)
+delivery-engineer ? (executes deploy, reports to tech-lead)
+project-generator ? solutions-architect (after planning)
+tech-writer ? code-reviewer (docs PR review), designer (diagrams), code-explainer (plain-language rewrites)
+designer ? code-builder (implementation), code-analyzer (a11y audit), tech-writer (design system docs)
+support ? bug-fixer (code issues), tech-writer (doc gaps), project-manager (feature requests), account-manager (escalation)
+cybersecurity ? code-builder (implement fixes), bug-fixer (active exploits), account-manager (incidents)
 ```
+
+---
+
+## Safety Contracts
+
+Cross-cutting contracts that gate specific failure modes. Any agent working in the contract's domain MUST honor it.
+
+| Contract | File | Purpose | Status |
+|----------|------|---------|--------|
+| Brownfield spec validation | `rules/spec-validation.md` | Prevents hallucinated-consensus in spec extraction. Producer (spec-miner) emits PRELIMINARY; architecture-advisor validates. **Hard rule**: no spec cited as ground truth until VALIDATED. | APPROVED (sprint 2) |
+| Loop-operator safety | `rules/loop-operator-safety.md` | Prevents runaway loops ($380-$47K real incidents). Mandates 4 rails: max_iterations, cost_ceiling, no_progress_detector, human_escalation. | APPROVED (sprint 4) |
+| Session start lifecycle (FSM) | `rules/session-start-contract.md` | Defines valid session states (ABSENT → PENDING → STARTING → ACTIVE → IDLE → ENDED/FAILED) and required T1 steps. Prevents half-started sessions, ambiguous resume state. | APPROVED (audit fixup sprint 3) |
+| CASS index integrity | `rules/cass-index-contract.md` | Defines required entry fields, producer/consumer obligations, failure recovery for session search index. Pairs with the Extract-Terms fix. | APPROVED (audit fixup sprint 3) |
+| Hook system isolation | `rules/hook-system-contract.md` | Each of 12 plugins must fail independently without cascading. Specifies failure isolation rules and fallback behavior. | APPROVED (audit fixup sprint 4) |
+| T2 protocol resilience | `rules/t2-protocol-contract.md` | Each of 8 T2 steps must have explicit fallback on failure. Replaces silent `$null` redirects with logged degradation. | APPROVED (audit fixup sprint 4) |
+| Agent handoff delegation | `rules/agent-handoff-contract.md` | Defines 4-element handoff structure (objective, output format, tools and source, return path) and pre-flight check pattern. Prevents the 4 most common delegation failure modes: file in non-existent dir, non-existent tools/skills, reads/edits of non-existent files, unmanaged server lifecycle. **Status**: APPROVED (delegation enforcement sprint). |
+
+**Anti-pattern**: skipping contract review to ship faster. All contracts exist because past incidents proved the cost of skipping. See `rules/agent_rules/dispatch-stalling-prevention.md` for the lineage.
 
 ---
 
@@ -115,17 +136,36 @@ cybersecurity → code-builder (implement fixes), bug-fixer (active exploits), a
 | 0 | Trivial | Route fast, minimal checks |
 | 1-3 | Simple | Standard route, single skill |
 | 4-6 | Moderate | POA + parallel dispatch + Fan-In verify |
-| 7-10 | Complex | DAG mandatory: task_graph → batches → verify → aggregate |
+| 7-10 | Complex | DAG mandatory: task_graph ? batches ? verify ? aggregate |
 
 ---
 
 ## Style Rules
 
-- Spanish input → Spanish output. English → English. Mixed → Spanish.
+- Spanish input ? Spanish output. English ? English. Mixed ? Spanish.
 - Agents are "interns": coordinator directs, they execute.
 - Trivial tasks route fast with minimal ceremony.
 - Always use FM-1 preamble before handover.
 - Output format: coordinator aggregates into one consolidated report.
+
+## Coordinator Delegation Policy (HARD)
+
+**Main-coordinator is a router. It does NOT execute work itself.**
+
+The routing table above is **exclusive**: for any intent row that names an agent, ONLY that agent is allowed to do the work. The coordinator must dispatch to it via `task(subagent_type=<specific-agent>, ...)`.
+
+**Enforcement layers:**
+1. **Permission layer**: main-coordinator's `permission` block has `edit: deny` and `bash: deny` (read-only exceptions only). It cannot edit code or run state-modifying commands.
+2. **Routing layer**: this table's intent rows are the only allowed agents per task. No fallback to "do it myself."
+3. **Banned phrase layer**: `agents/main-coordinator.md` has banned behaviors like "I'll just handle this" / "Let me check" — replaced with "dispatch to specialist."
+4. **Contract layer**: `rules/loop-operator-safety.md`, `rules/spec-validation.md`, `rules/session-start-contract.md`, `rules/cass-index-contract.md`, `rules/hook-system-contract.md`, `rules/t2-protocol-contract.md` all define delegation patterns the coordinator must follow.
+
+**When coordinator should ask the user** (vs dispatch):
+- Intent is genuinely ambiguous (one clarifying question max, then dispatch)
+- Multiple equally-valid agents exist (not common; routing table usually disambiguates)
+- The user's request explicitly directs the coordinator to do something ("you do it")
+
+**Everything else**: dispatch.
 
 ## Convergence Rules (Anti-Spiral)
 
@@ -134,7 +174,7 @@ cybersecurity → code-builder (implement fixes), bug-fixer (active exploits), a
 - If a tool call fails 2x on the same file/path, stop and report the failure
 
 **Chain depth limits:**
-- Max sub-agent chain depth: 2 levels (coordinator → specialist). No 3-level chains.
+- Max sub-agent chain depth: 2 levels (coordinator ? specialist). No 3-level chains.
 - If a specialist needs another specialist, it reports back to coordinator who dispatches the next one
 
 **Deadlock response:**
@@ -164,7 +204,7 @@ Trigger conditions (ALL must be true):
 - At least one changed file matches the AI-feature detection heuristic
 - User did not explicitly opt out via `--no-eval`
 
-AI-feature detection heuristic (OR logic â€” false positives OK, false negatives are the real risk):
+AI-feature detection heuristic (OR logic — false positives OK, false negatives are the real risk):
 
 **Path patterns (any match):**
 - Filename contains: `prompt`, `rag`, `llm`, `completion`, `chat`, `embed`, `vector`, `chatbot`, `agent_system`
@@ -191,7 +231,7 @@ AI_FEATURE_CONTEXT: [which detection signals fired, why these files are AI-featu
 ITERATION: [1/2/3]
 ```
 
-`ai-evaluator` runs its standard 7-step workflow (charter â†’ eval dataset â†’ RAGAS/DeepEval metrics â†’ LLM-as-judge sample â†’ OWASP LLM Top 10 sweep â†’ reproduce failures â†’ report) against the changed files.
+`ai-evaluator` runs its standard 7-step workflow (charter → eval dataset → RAGAS/DeepEval metrics → LLM-as-judge sample → OWASP LLM Top 10 sweep → reproduce failures → report) against the changed files.
 
 Output: structured report with Findings (severity-ordered), Coverage Gaps, Recommendations, Risk Assessment. Same format as `expert-tester`.
 
@@ -201,5 +241,5 @@ User opt-out flags:
 
 Why this matters: Without this handoff, AI features ship without output quality validation. With it, every AI-touching change gets hallucination + bias + prompt-injection + groundedness checked automatically before QA sign-off.
 
-Wired: this section is documentation. The actual dispatch logic lives in `agents/main-coordinator.md`'s routing table. If you find AI features slipping through unevaluated, that's the file to check.
+Wired: this section is documentation. If you find AI features slipping through unevaluated, check this AGENTS.md's routing table.
 

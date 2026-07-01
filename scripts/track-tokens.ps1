@@ -10,8 +10,16 @@ param(
     [string]$Agent = "",
     [int]$Tokens = 0,
     [string]$Task = "",
-    [string]$Workdir = "C:\Users\Windows\.config\opencode"
+    [string]$Workdir = ""
 )
+
+if (-not $Workdir) {
+    $Workdir = $env:OPENCODE_CONFIG_HOME
+    if (-not $Workdir) {
+        if ($env:USERPROFILE) { $Workdir = Join-Path $env:USERPROFILE ".config\opencode" }
+        else { throw "OPENCODE_CONFIG_HOME and USERPROFILE are both unset - cannot determine workdir" }
+    }
+}
 
 $DbPath = Join-Path $Workdir "memory\token-tracking.jsonl"
 $BudgetPath = Join-Path $Workdir "memory\token-budgets.yaml"
@@ -24,13 +32,43 @@ function Ensure-Db {
 }
 
 function Load-Budgets {
-    if (Test-Path $BudgetPath) {
-        $content = Get-Content $BudgetPath -Raw
-        if ($content.Trim()) {
-            return $content | ConvertFrom-Yaml
+    # Try powershell-yaml first; fall back to hardcoded values on any failure.
+    # This works on PowerShell 5.1 where ConvertFrom-Yaml is not native.
+    try {
+        if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
+            Import-Module powershell-yaml -ErrorAction Stop
+        }
+        if (Test-Path $BudgetPath) {
+            $content = Get-Content $BudgetPath -Raw
+            if ($content.Trim()) {
+                return $content | ConvertFrom-Yaml
+            }
+        }
+    } catch {
+        # YAML unavailable or parse failure — use hardcoded fallback below
+        Write-Verbose "YAML budget load failed, using hardcoded fallback: $_"
+    }
+    # Hardcoded fallback when YAML parser unavailable or config missing
+    return [PSCustomObject]@{
+        agent_budgets = @{
+            'main-coordinator'     = 80000
+            'code-builder'         = 50000
+            'code-analyzer'         = 30000
+            'bug-fixer'            = 40000
+            'architecture-advisor' = 40000
+            'project-manager'     = 30000
+            'tech-lead'           = 50000
+            'qa-engineer'          = 30000
+            'designer'             = 40000
+            'code-reviewer'        = 30000
+            'cybersecurity'        = 40000
+            'expert-tester'        = 40000
+            'ai-evaluator'         = 40000
+            'observability-sre'    = 40000
+            'tech-writer'          = 30000
+            'skill-manager'        = 30000
         }
     }
-    return @{}
 }
 
 function Save-Record {
@@ -48,15 +86,30 @@ function Save-Record {
 function Check-Budget {
     param([string]$Agent, [int]$Tokens)
     $budgets = Load-Budgets
+
+    # Per-session budget check
     $limit = $budgets.agent_budgets.$Agent
     if (-not $limit) {
+        Write-Warning "Unknown agent '$Agent' - using default budget 50000. Add to token-budgets.yaml or hardcoded map."
         $limit = $budgets.default_per_task
- if (-not $limit) { $limit = 50000 }
+        if (-not $limit) { $limit = 50000 }
     }
     if ($Tokens -gt $limit) {
-        Write-Host "REJECT: $Agent exceeds budget ($Tokens > $limit)"
+        Write-Host "REJECT: $Agent per-session budget exceeded ($Tokens > $limit)"
         exit 1
     }
+
+    # Per-task budget check (if defined in budgets.yaml per_task section)
+    if ($budgets.per_task) {
+        $perTaskLimit = $budgets.per_task.$Agent
+        if ($perTaskLimit) {
+            if ($Tokens -gt $perTaskLimit) {
+                Write-Host "REJECT: $Agent per-task budget exceeded ($Tokens > $perTaskLimit)"
+                exit 1
+            }
+        }
+    }
+
     Write-Host "GO: $Agent within budget ($Tokens <= $limit)"
     exit 0
 }

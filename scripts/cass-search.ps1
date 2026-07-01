@@ -24,8 +24,11 @@ if ($raw.Trim()) {
         $l = $l.Trim()
         if ($l) {
             try {
-                $entries += $l | ConvertFrom-Json
-            } catch {}
+$entries += $l | ConvertFrom-Json
+        } catch {
+            # Skip malformed JSON lines; don't fail entire search
+            Write-Warning "cass-search: skipping malformed JSON line - $($_.Exception.Message)"
+        }
         }
     }
 }
@@ -61,8 +64,14 @@ if ($results.Count -eq 0) {
 $results = $results | Sort-Object { $_.score } -Descending | Select-Object -First $Limit
 $meta = $null
 if (Test-Path $metaFile) {
-    try { $meta = Get-Content $metaFile -Raw | ConvertFrom-Json } catch {}
-}
+        try {
+            $meta = Get-Content $metaFile -Raw | ConvertFrom-Json
+        } catch {
+            # Corrupt meta file; default to empty
+            Write-Warning "cass-search: corrupt meta file, using defaults - $($_.Exception.Message)"
+            $meta = @{ last_run = $null; total_entries = 0 }
+        }
+    }
 Write-Host "=== CASS Search: ""$Query"" ===" -ForegroundColor Cyan
 Write-Host "Found $($results.Count) results"
 if ($meta) { Write-Host "Total indexed: $($meta.total_entries)" -ForegroundColor DarkGray }

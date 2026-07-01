@@ -431,11 +431,18 @@
         "Triggers":  "security check, secure this, vulnerability, OWASP, sql injection, auth bypass, xss, csrf, parameterized query",
         "Path":  "skills/secure-coding/SKILL.md"
     },
+{
+        "name": "testing-and-debugging",
+        "description": "End-to-end testing and debugging methodology — bug investigation, property-based testing, performance, end-to-end webapp testing. Composes systematic-debugging, investigate, webapp-testing, and performance-optimization. Use when chasing a bug, designing tests, investigating failures, or auditing performance.",
+        "version": "1.0.0",
+        "triggers": "debug this, fix this bug, test this feature, find what's broken, performance issue, race condition, flapping test, repro, root cause, investigate, slow query",
+        "path": "skills/testing-and-debugging/SKILL.md"
+    },
     {
-        "Name":  "testing-and-debugging",
-        "Description":  "End-to-end testing and debugging methodology — bug investigation, property-based testing, performance, end-to-end webapp testing. Composes systematic-debugging, investigate, webapp-testing, and performance-optimization. Use when chasing a bug, designing tests, investigating failures, or auditing performance.",
-        "Version":  "1.0.0",
-        "Triggers":  "debug this, fix this bug, test this feature, find what's broken, performance issue, race condition, flapping test, repro, root cause, investigate, slow query",
-        "Path":  "skills/testing-and-debugging/SKILL.md"
+        "name": "codemap",
+        "description": "Fast codebase orientation via deterministic markdown overview (pure stdlib Python, no LLM, no network). Generates two files (codemap.md + modules.md) capped at 8 KiB each in seconds. Use when cold-starting on an unfamiliar repo, need a quick structural overview, want a shareable markdown doc, or onboarding to a project. Triggers: new repo orientation, codebase map, fast overview, what's in this repo, give me a tour, summarize this repo, codebase overview. NOT for deep graph queries (use codebase-memory MCP), specific function lookup (grep/Read), health/quality (code-analyzer), security (cybersecurity), or design (architecture-advisor).",
+        "version": "1.0.0",
+        "triggers": "new repo orientation, codebase map, fast overview, what's in this repo, give me a tour, summarize this repo, codebase overview",
+        "path": "skills/codemap/SKILL.md"
     }
 ]

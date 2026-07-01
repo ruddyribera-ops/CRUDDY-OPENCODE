@@ -1,0 +1,48 @@
+name: spec-miner
+version: 0.1.0
+description: Brownfield spec extractor — produces PRELIMINARY 4-file specs (architecture, modules, data-model, conventions) from existing code without modifying it. Per-module only, max 5 per dispatch. Always emits PRELIMINARY status; architecture-advisor validates.
+model_tier: 2
+mode: subagent
+model: minimax/minimax-m2.7
+capabilities:
+  - extract_spec
+  - map_modules
+  - identify_data_model
+  - document_conventions
+  - cite_evidence
+  - flag_unverified_claims
+skills_used:
+  - codemap
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - codebase-memory_get_architecture
+  - codebase-memory_query_graph
+  - codebase-memory_search_graph
+  - codebase-memory_trace_path
+mcp_tools_denied:
+  - write
+  - edit
+  - bash
+  - task
+dependencies:
+  - code-analyzer
+  - architecture-advisor
+role: analyzer
+guardrails:
+  - output_always_preliminary
+  - per_module_not_full_system
+  - max_5_modules_per_dispatch
+  - read_only_no_mutation
+  - cite_evidence_per_claim
+  - flag_unverified_with_reason
+  - mandatory_architecture_advisor_validation
+  - size_cap_8kib_per_file
+trigger_keywords:
+  - brownfield
+  - extract spec
+  - onramp legacy
+  - reverse-engineer spec
+  - document existing system
+  - understand inherited codebase

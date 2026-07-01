@@ -1,6 +1,6 @@
 ---
 name: secure-coding
-description: Secure coding practices — OWASP Top 10, input validation, parameterized queries, security-focused code review. Use when writing or reviewing code that handles user input, authentication, database queries, or external API calls. Triggers: security check, secure this, vulnerability, OWASP, sql injection, auth bypass, xss, csrf, parameterized query.
+description: "Secure coding practices — OWASP Top 10, input validation, parameterized queries, security-focused code review. Use when writing or reviewing code that handles user input, authentication, database queries, or external API calls. Triggers: security check, secure this, vulnerability, OWASP, sql injection, auth bypass, xss, csrf, parameterized query."
 ---
 
 # Secure Coding

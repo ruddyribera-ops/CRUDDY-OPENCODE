@@ -202,7 +202,10 @@ function Fire-T1 {
                 Write-Host "   Auto-summary: $($summaryResult.Length) chars"
             }
         }
-    } catch {}
+    } catch {
+        # Auto-summary is fire-and-forget; failure must not block session start
+        Write-Warning "session_machine: auto-summary failed - $($_.Exception.Message)"
+    }
 
     Write-Host "   Session initialized: $sessionId"
 }
@@ -247,10 +250,13 @@ function Fire-T2 {
             if ($yaml -match '(tasks:\n(?:  - .*\n)*)') {
                 $block = $matches[0]
                 $yaml = $yaml.Replace($block, $block + $newLines)
-                $yaml = $yaml -replace "`n", "`r`n"
-                Set-Content -Path $SessionYamlPath -Value $yaml -Encoding UTF8
-            }
-        } catch {}
+$yaml = $yaml -replace "`n", "`r`n"
+    Set-Content -Path $SessionYamlPath -Value $yaml -Encoding UTF8
+    }
+} catch {
+    # session.yaml write is best-effort; log but don't fail session start
+    Write-Warning "session_machine: session.yaml write failed - $($_.Exception.Message)"
+}
     }
 
     $tokenNum = 0
@@ -328,10 +334,13 @@ $today
 ## Next Steps
 1.
 "@
-                $hc | Out-File -FilePath "$handoverDir\latest.md" -Encoding UTF8
-                Write-Host "   Handover written: $handoverDir\latest.md"
-            }
-        } catch {}
+$hc | Out-File -FilePath "$handoverDir\latest.md" -Encoding UTF8
+    Write-Host "   Handover written: $handoverDir\latest.md"
+    }
+} catch {
+    # Handover write is best-effort; log but don't block session end
+    Write-Warning "session_machine: handover write failed - $($_.Exception.Message)"
+}
     }
 
     Write-Host "   T3 complete"
@@ -399,19 +408,26 @@ function Fire-T4 {
     try {
         $kgScript = "$env:USERPROFILE\.config\opencode\scripts\kg_write_proxygen.py"
         $result = Invoke-Expression "python `"$kgScript`" search `"session`" 2>`$null" | Out-String
-        if ($result) {
-            $kgSessions = $result -split "`n" | Where-Object { $_ -match 'Session-' }
+if ($result) {
+        $kgSessions = $result -split "`n" | Where-Object { $_ -match 'Session-' }
         }
-    } catch {}
+} catch {
+    # KG list is best-effort; failure means we just don't show recent sessions
+    Write-Warning "session_machine: KG list failed - $($_.Exception.Message)"
+    $kgSessions = @()
+}
 
     # 5. Compute duration
     $duration = "unknown"
     if ($started -ne "unknown") {
         try {
-            $startTime = [DateTime]::Parse($started)
-            $duration = [Math]::Round(((Get-Date) - $startTime).TotalMinutes)
-            $duration = "${duration}min"
-        } catch {}
+$startTime = [DateTime]::Parse($started)
+        $duration = [Math]::Round(((Get-Date) - $startTime).TotalMinutes)
+        $duration = "${duration}min"
+    } catch {
+        # Date parsing failed; default to unknown duration
+        $duration = "unknown"
+    }
     }
 
     # 6. Build output
@@ -507,7 +523,10 @@ function Fire-T6 {
             }
             $yaml = $yaml -replace "`n", "`r`n"
             Set-Content -Path $SessionYamlPath -Value $yaml -Encoding UTF8
-        } catch {}
+        } catch {
+            # Session yaml write at session end; log but don't fail
+            Write-Warning "session_machine: end-session yaml write failed - $($_.Exception.Message)"
+        }
     }
 
     $kgCmd = "entity `"Decision-$(Get-Date -Format 'yyyy-MM-dd')`" `"decision`" `"decision:$Decision`" `"context:$DecisionContext`""   

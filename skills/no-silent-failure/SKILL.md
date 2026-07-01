@@ -1,6 +1,6 @@
 ---
 name: no-silent-failure
-description: Never bare except:pass or catch{}. Always log + re-raise minimum. Structured logging with trace IDs. Use when writing error handling, designing logging, or debugging silent failures. Triggers: error handling, silent failure, exception, logging, trace ID, re-raise, alert fatigue, error categorization.
+description: "Never bare except:pass or catch{}. Always log + re-raise minimum. Structured logging with trace IDs. Use when writing error handling, designing logging, or debugging silent failures. Triggers: error handling, silent failure, exception, logging, trace ID, re-raise, alert fatigue, error categorization."
 ---
 
 # No Silent Failure

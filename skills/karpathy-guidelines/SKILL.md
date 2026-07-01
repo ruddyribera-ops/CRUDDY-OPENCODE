@@ -1,6 +1,6 @@
 ---
 name: karpathy-guidelines
-description: Andrej Karpathy's software engineering principles — augmented LLM, simple patterns first, focused evaluation, transparency in agent reasoning. Use when designing agentic systems or making architectural decisions. Triggers: Karpathy, augmented LLM, agent design, simple first, transparent reasoning, intern model, jagged intelligence.
+description: "Andrej Karpathy's software engineering principles — augmented LLM, simple patterns first, focused evaluation, transparency in agent reasoning. Use when designing agentic systems or making architectural decisions. Triggers: Karpathy, augmented LLM, agent design, simple first, transparent reasoning, intern model, jagged intelligence."
 ---
 
 # Karpathy Guidelines

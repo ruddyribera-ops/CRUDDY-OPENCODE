@@ -133,7 +133,10 @@ if (Test-Path $outcomeScript) {
     try {
         & $outcomeScript -TaskType $taskType -FilesTouched $filesTouched -Errors 0 -RetryCount 0 -StrategyUsed "t2-protocol" -Agent $Agent -Success $(if($isSuccess){1}else{0}) 2>$null | Out-Null
         $results += "outcome_record"
-    } catch { }
+    } catch {
+        # outcome-record.ps1 is best-effort; failure must not break T2
+        $failed += "outcome_record: $($_.Exception.Message)"
+    }
 }
 
 # ── 6c. GENE FITNESS TRACKING ───────────────────────────────
@@ -154,7 +157,10 @@ if (Test-Path $fitnessFile) {
         $fitnessLine = $fitnessEntry | ConvertTo-Json -Compress
         [System.IO.File]::AppendAllText($fitnessFile, "$fitnessLine`n", [System.Text.Encoding]::UTF8)
         $results += "gene_fitness"
-    } catch { }
+    } catch {
+        # gene_fitness tracking is best-effort; log but don't break T2
+        $failed += "gene_fitness: $($_.Exception.Message)"
+    }
 }
 
 # ── 7. Retro-analyze trigger (every 10 tasks) ──────────────────
@@ -163,14 +169,22 @@ $counterPath = Join-Path $configDir "gates\.task-counter.json"
 if (Test-Path $retroScript) {
     try {
         # Read counter, increment, check threshold
+        # Handle both formats: new (proper JSON) and old (PowerShell hashtable literal)
         $counter = @{ count = 0; last = $null }
         if (Test-Path $counterPath) {
-            $counter = Get-Content $counterPath -Raw | ConvertFrom-Json
+            $rawContent = Get-Content $counterPath -Raw
+            if ($rawContent -match '^@\{') {
+                # Old format: PowerShell hashtable literal — try to parse, fallback to defaults
+                try { $counter = $rawContent | ConvertFrom-Json } catch { $counter = @{ count = 0; last = $null } }
+            } else {
+                try { $counter = Get-Content $counterPath -Raw | ConvertFrom-Json } catch { $counter = @{ count = 0; last = $null } }
+            }
         }
         $newCount = $counter.count + 1
         $counter | Add-Member -NotePropertyName "count" -NotePropertyValue $newCount -Force
         $counter | Add-Member -NotePropertyName "last" -NotePropertyValue (Get-Date -Format o) -Force
-        $counter | Set-Content -Path $counterPath -Encoding UTF8
+        # Write as proper JSON (no BOM), not PowerShell hashtable literal
+        $counter | ConvertTo-Json -Compress | Set-Content -Path $counterPath -Encoding UTF8 -NoNewline
 
         # Fire retro-analyze every 10 tasks
         if ($newCount % 10 -eq 0) {
@@ -183,7 +197,10 @@ if (Test-Path $retroScript) {
                 $results += "retro-analyze"
             }
         }
-    } catch { }
+    } catch {
+        # counter file is best-effort; log but don't break T2
+        $failed += "counter: $($_.Exception.Message)"
+    }
 }
 
 # ── 8. Graph write (fire-and-forget) ──

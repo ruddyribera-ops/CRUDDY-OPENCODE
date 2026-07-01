@@ -162,7 +162,7 @@ memory_create_relations: {from: "Gene-<AUTO-NNN>", to: "GateHistory", relationTy
 
 ```powershell
 
-$gene = @" ... "@; Add-Content -LiteralPath "C:\Users\Windows\.config\opencode\skills\DNA.yaml" -Value $gene -Encoding UTF8
+$gene = @" ... "@; Add-Content -LiteralPath "$env:USERPROFILE\.config\opencode\skills\DNA.yaml" -Value $gene -Encoding UTF8
 
 ```
 

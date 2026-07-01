@@ -1,9 +1,7 @@
 ﻿name: designer
 version: 1.0.0
 
-model_tier: 2
 mode: primary
-model_tier: 2
 model: minimax/minimax-m2.7
 capabilities:
   - design_tokens
@@ -15,9 +13,7 @@ capabilities:
   - ui_layout
   - brand_guidelines
 skills_used:
-  - design
   - ui-design
-  - frontend-design
 mcp_tools_allowed:
   - read
   - glob
@@ -28,7 +24,6 @@ mcp_tools_allowed:
   - write
   - lsp
 mcp_tools_denied:
-  - edit
   - bash
 dependencies: []
 role: executor

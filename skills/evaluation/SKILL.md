@@ -1,6 +1,6 @@
 ---
 name: evaluation
-description: LLM/AI output evaluation patterns — RAGAS, DeepEval, LLM-as-judge, hallucination detection, prompt-injection testing, OWASP LLM Top 10, distribution shift detection. Use when building or testing any AI/LLM feature. Triggers: evaluate, RAGAS, hallucination, groundedness, LLM-as-judge, prompt injection, model bias, response quality, AI eval, OWASP LLM.
+description: "LLM/AI output evaluation patterns — RAGAS, DeepEval, LLM-as-judge, hallucination detection, prompt-injection testing, OWASP LLM Top 10, distribution shift detection. Use when building or testing any AI/LLM feature. Triggers: evaluate, RAGAS, hallucination, groundedness, LLM-as-judge, prompt injection, model bias, response quality, AI eval, OWASP LLM."
 ---
 
 # Evaluation Skill — LLM Output Quality Patterns

@@ -4,7 +4,7 @@ condition: modify|overwrite|rebuild|rewrite.*file|batch.*file
 scope: "tool:edit(**/*), tool:write(**/*)"
 severity: error
 triggered_by: "Batch file modification without snapshot backup"
-exception_scope: "C:\Users\Windows\.config\opencode\, D:\Temp\opencode\"
+exception_scope: "~/.config/opencode/, $env:TEMP/opencode/"
 ---
 
 # BATCH FILE MODIFICATION — HARD GATE
@@ -15,7 +15,7 @@ exception_scope: "C:\Users\Windows\.config\opencode\, D:\Temp\opencode\"
 
 This rule is triggered when ANY of:
 - **More than 1 file** is involved in the modification
-- Target file is **outside** `C:\Users\Windows\.config\opencode\` and `D:\Temp\opencode\`
+- Target file is **outside** `~/.config/opencode/` and `$env:TEMP/opencode/`
 - Any `python-docx`, `openpyxl`, or library that **overwrites in-place** without version history
 
 ## Required Steps (MANDATORY — do not skip)

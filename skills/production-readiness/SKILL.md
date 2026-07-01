@@ -1,6 +1,6 @@
 ---
 name: production-readiness
-description: Production readiness checklist — deploy, monitor, trace, track costs. Use when shipping to production, deploying a new feature, doing a release readiness review, or auditing an existing service for production fitness. Triggers: production ready, deploy check, ship it, release readiness, monitor this, cost audit, runtime safety, rollback plan.
+description: "Production readiness checklist — deploy, monitor, trace, track costs. Use when shipping to production, deploying a new feature, doing a release readiness review, or auditing an existing service for production fitness. Triggers: production ready, deploy check, ship it, release readiness, monitor this, cost audit, runtime safety, rollback plan."
 ---
 
 # Production Readiness

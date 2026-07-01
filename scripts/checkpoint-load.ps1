@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 $CONFIG_ROOT = $env:OPENCODE_CONFIG_HOME
 if (-not $CONFIG_ROOT) {
     if ($env:USERPROFILE) { $CONFIG_ROOT = Join-Path $env:USERPROFILE ".config\opencode" }
-    else { $CONFIG_ROOT = "C:\Users\Windows\.config\opencode" }
+    else { throw "OPENCODE_CONFIG_HOME and USERPROFILE are both unset - cannot determine config root" }
 }
 
 $CHECKPOINT_DIR = Join-Path $CONFIG_ROOT "memory\checkpoints"

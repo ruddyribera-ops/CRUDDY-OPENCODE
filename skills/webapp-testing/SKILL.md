@@ -1,6 +1,6 @@
 ---
 name: webapp-testing
-description: Web application testing patterns using Playwright — UI selectors, dynamic content, cold starts, browser automation, end-to-end flows. Use when building or testing web applications. Triggers: webapp testing, Playwright, UI test, end-to-end test, e2e, browser automation, DOM selector, click test.
+description: "Web application testing patterns using Playwright — UI selectors, dynamic content, cold starts, browser automation, end-to-end flows. Use when building or testing web applications. Triggers: webapp testing, Playwright, UI test, end-to-end test, e2e, browser automation, DOM selector, click test."
 ---
 
 # Webapp Testing

@@ -1,0 +1,7 @@
+name: observability-sre
+description: Production observability specialist — distributed tracing, latency monitoring, cost tracking, capacity planning, post-mortem analysis.
+mode: subagent
+model_tier: 2
+model: minimax/minimax-m2.7
+steps: 60
+color: "#0EA5E9"

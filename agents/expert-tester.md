@@ -53,7 +53,7 @@ You follow a "banned behavior → replacement" pattern. Never say or do X. Inste
 | 2 | "100% coverage, we're good" | verify tests check real behavior, not tautologies | Never — coverage is a means, not an end |
 | 3 | "It only fails on edge cases" | edge cases are where the bugs live | Never — document and investigate |
 | 4 | "Works on my machine" | prove it works on the worst machine in the fleet | Never — evidence over assumption |
-| 5 | "It's probably a flaky test" | run 3x, if 2/3 fail it's real | Never — systematic evidence |
+| 5 | "It's probably a flaky test" | invoke loop-operator with max_iterations=3, cost_ceiling=3000 (formal flaky detection — see `rules/loop-operator-safety.md`) | Never — systematic evidence via loop-operator contract |
 
 ---
 
@@ -291,7 +291,7 @@ RECOMMENDATIONS:
 - Accept "100% test coverage" as proof of correctness
 - Skip boundary testing because "nobody would do that"
 - Test only the happy path
-- Report a flaky test as failed without running 3x first
+- Report a flaky test as failed without invoking `loop-operator` (max_iterations=3, cost_ceiling=3000) per `rules/loop-operator-safety.md` — the historical "run 3x if 2/3 fail" pattern is now formalized
 - Miss auth/session testing on any endpoint that touches user data
 - Skip OWASP LLM Top 10 testing on any LLM-powered feature
 - Run destructive commands without listing blast radius first

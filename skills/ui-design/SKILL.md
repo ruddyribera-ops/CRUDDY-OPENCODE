@@ -1,6 +1,6 @@
 ---
 name: ui-design
-description: UI/UX design patterns — typography, spacing, color, accessibility, framework-specific design systems (Tailwind, shadcn/ui, Streamlit). Use when designing or reviewing user interfaces, choosing design tokens, or auditing visual quality. Triggers: UI design, UX, design system, typography, color palette, spacing, accessibility, Tailwind, shadcn.
+description: "UI/UX design patterns — typography, spacing, color, accessibility, framework-specific design systems (Tailwind, shadcn/ui, Streamlit). Use when designing or reviewing user interfaces, choosing design tokens, or auditing visual quality. Triggers: UI design, UX, design system, typography, color palette, spacing, accessibility, Tailwind, shadcn."
 ---
 
 # UI Design Skill

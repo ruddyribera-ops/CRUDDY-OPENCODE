@@ -118,23 +118,23 @@ If analyzing a specific domain, read the skill to know what "good" looks like:
 
 | Deployment readiness | `skills/deployment-patterns/SKILL.md` |
 
-| Test coverage/quality | `skills/testing-standards/SKILL.md` |
+| Test coverage/quality | `skills/testing-and-debugging/SKILL.md` |
 
 | API structure | `skills/api-patterns/SKILL.md` |
 
-| CI/CD setup | `skills/ci-cd-patterns/SKILL.md` |
+| CI/CD setup | `skills/deployment-patterns/SKILL.md` |
 
-| Python project patterns | `skills/python-patterns/SKILL.md` |
+| Python project patterns | (no matching skill — skip) |
 
-| Data pipelines/analysis | `skills/data-analysis/SKILL.md` |
+| Data pipelines/analysis | (no matching skill — skip) |
 
-| Full project health | `skills/code-review/SKILL.md` |
+| Full project health | `skills/differential-review/SKILL.md` |
 
 | Security posture (OWASP, secrets, input validation) | `skills/security-basics/SKILL.md` |
 
 | Performance audit (bundle size, query efficiency, caching) | `skills/performance-optimization/SKILL.md` |
 
-| Office-file integrations (.docx/.xlsx/.pptx pipelines) | `skills/msoffice-tools/SKILL.md` |
+| Office-file integrations (.docx/.xlsx/.pptx pipelines) | (no matching skill — skip) |
 
 | OCR/document-intake pipelines | `skills/ocr-tools/SKILL.md` |
 
@@ -408,7 +408,7 @@ Check what EXISTS and what's MISSING:
 
 ## Recommendations
 
-1. Add CI/CD pipeline ↑ read `skills/ci-cd-patterns/SKILL.md` for baseline
+1. Add CI/CD pipeline ↑ read `skills/deployment-patterns/SKILL.md` for baseline
 
 2. Create .env.example for environment documentation
 

@@ -8,7 +8,7 @@
 // - Every 10 idle events â†’ retro-analyze.ps1
 // - All events â†’ session_events.jsonl (always worked, keep it)
 
-import { appendFile, mkdir, readFile } from "node:fs/promises"
+import { appendFile, mkdir, readFile, openSync, closeSync, unlinkSync } from "node:fs/promises"
 import { execFile } from "node:child_process"
 import { promisify } from "node:util"
 import path from "node:path"
@@ -91,11 +91,28 @@ async function incrementCounter() {
 }
 
 // â”€â”€ Auto-memory (calls PowerShell script) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const flushMutex = new Map()  // prevents concurrent flush for same taskName (race from session.idle + forced-idle at 90s)
+// M-10: File-based mutex replaces in-memory Map (survives plugin reload)
+function acquireFlushLock(sessionId) {
+  const lockPath = path.join(MEMORY_DIR, ".flush-" + sessionId + ".lock")
+  try {
+    const fd = openSync(lockPath, "wx")
+    closeSync(fd)
+    return lockPath
+  } catch (e) {
+    return null  // Already locked
+  }
+}
+
+function releaseFlushLock(lockPath) {
+  if (lockPath) {
+    try { unlinkSync(lockPath) } catch (e) {}
+  }
+}
+
 async function flushMemory(taskName, result) {
-  // Coalesce rapid-fire calls: if same taskName is in-flight, skip
-  if (flushMutex.get(taskName)) return
-  flushMutex.set(taskName, true)
+  // M-10: Coalesce rapid-fire calls: if same taskName is in-flight, skip
+  const lockPath = acquireFlushLock(taskName)
+  if (!lockPath) return
   try {
     // M3 fix: escape metacharacters before passing to PowerShell
  // Escape $, `, and " to prevent param injection via -Result or -TaskName
@@ -113,8 +130,8 @@ async function flushMemory(taskName, result) {
     const stderr = (e.stderr ? e.stderr.toString().trim() : "").slice(0, 300)
     const code   = e.code || e.signal || "?"
     await log(`auto-memory FAILED: code=${code} stderr="${stderr}"`)
-  } finally {
-    flushMutex.delete(taskName)
+} finally {
+    releaseFlushLock(lockPath)
   }
 }
 
@@ -264,7 +281,11 @@ if (lastActive > 0 && idleMs >= FORCE_IDLE_MS) {
       }
 
       // â”€â”€ session.idle â†’ auto-memory â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      if (event.type === "session.idle") {
+if (event.type === "session.idle") {
+        // M-7: Skip unknown+untitled sessions that flood logs
+        if (sessionId === "unknown" && (title === undefined || title === "untitled")) {
+          return
+        }
         const activity = sessionActivity.get(sessionId) || 0
 
         if (activity >= IDLE_THRESHOLD) {

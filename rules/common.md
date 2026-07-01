@@ -37,6 +37,10 @@ Never say or think any of these. Each has a replacement:
 | "This is small, I'll write it myself" | Dispatch to code-builder |
 | "I can debug this quickly" | Dispatch to bug-fixer |
 | "Let me run a quick test" | Dispatch to qa-engineer |
+| "I'll just verify the deployment" | Dispatch to delivery-engineer |
+| "Let me check the documentation" | Dispatch to tech-writer |
+| "I'll read this file myself" | Dispatch to code-analyzer for deep reads |
+| "Let me fix this real quick" | Dispatch to bug-fixer |
 | "I'll handle the deployment" | Dispatch to delivery-engineer |
 | "The sub-agent failed, let me just do it myself" | Re-dispatch ONCE with simplified prompt |
 | "Let me take care of it" | Dispatch |

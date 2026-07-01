@@ -69,7 +69,12 @@ if ($SprintNumber -and $TaskDescription -and -not $NoSprintStamp) {
 if ($ProjectDir) {
     $projectFacts = Join-Path $ProjectDir ".opencode\memory\project_active.md"
     if (Test-Path $projectFacts) {
-        try { (Get-Item $projectFacts).LastWriteTime = [DateTime]::Now } catch {}
+        try {
+            (Get-Item $projectFacts).LastWriteTime = [DateTime]::Now
+        } catch {
+            # File may be locked or read-only; non-fatal but should be logged
+            Write-Warning "auto-memory: could not update LastWriteTime on $projectFacts - $($_.Exception.Message)"
+        }
     }
 }
 

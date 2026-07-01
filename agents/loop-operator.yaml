@@ -1,0 +1,46 @@
+name: loop-operator
+version: 0.1.0
+description: Structured loop controller with 4 mandatory safety rails (max_iterations, cost_ceiling, no_progress_detector, human_escalation). Runs loops requested by caller agents; enforces the contract in rules/loop-operator-safety.md. NEVER decides whether to loop; only runs loops that other agents request.
+model_tier: 2
+mode: subagent
+model: minimax/minimax-m2.7
+capabilities:
+  - run_loop
+  - detect_stall
+  - enforce_cost_ceiling
+  - persist_loop_state
+  - enforce_max_iterations
+  - escalate_to_caller
+skills_used:
+  - testing-and-debugging
+  - systematic-debugging
+mcp_tools_allowed:
+  - read
+  - glob
+  - grep
+  - bash
+  - write
+mcp_tools_denied:
+  - edit
+  - webfetch
+  - external_directory
+  - task
+dependencies: []
+role: executor
+guardrails:
+  - max_iterations_default_5_hard_cap_10
+  - cost_ceiling_default_5000_hard_cap_20000
+  - no_progress_detector_required
+  - hard_exit_codes_only
+  - human_escalation_on_stall
+  - human_escalation_on_cost_exceeded
+  - never_modify_source_code
+  - never_invoke_nested_loops
+  - state_persistence_per_iteration
+trigger_keywords:
+  - TDD loop
+  - test until green
+  - fix until passes
+  - iterative refinement
+  - build until compiles
+  - multi-iteration verification

@@ -1,6 +1,6 @@
 ---
 name: superpowers-subagent-driven-development
-description: Subagent orchestration pattern for parallel work — implementer/reviewer split, task briefs, review packages. Use when delegating complex multi-step tasks to subagents, running parallel review workflows, or building task pipelines. Triggers: subagent task, delegation, parallel review, implementer prompt, task brief, review package.
+description: "Subagent orchestration pattern for parallel work — implementer/reviewer split, task briefs, review packages. Use when delegating complex multi-step tasks to subagents, running parallel review workflows, or building task pipelines. Triggers: subagent task, delegation, parallel review, implementer prompt, task brief, review package."
 ---
 
 # Subagent-Driven Development Skill

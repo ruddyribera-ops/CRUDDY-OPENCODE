@@ -1,6 +1,6 @@
 ---
 name: database-patterns
-description: SQL/SQLite migration patterns, seed data, and query utilities. Use when designing schemas, writing migrations, seeding test data, or optimizing queries. Triggers: migration, seed data, SQLite, PostgreSQL, schema, connection pool, index strategy, N+1, ORM.
+description: "SQL/SQLite migration patterns, seed data, and query utilities. Use when designing schemas, writing migrations, seeding test data, or optimizing queries. Triggers: migration, seed data, SQLite, PostgreSQL, schema, connection pool, index strategy, N+1, ORM."
 ---
 
 # Database Patterns

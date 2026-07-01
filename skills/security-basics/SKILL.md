@@ -1,6 +1,6 @@
 ---
 name: security-basics
-description: Security best practices, vulnerability prevention, and secure development across web applications, APIs, networks, and embedded systems. Triggers: security, OWASP, vulnerability, SAST, DAST, input validation, XSS, SQL injection, CSRF, auth, bcrypt, JWT, SAST, DAST, incident response.
+description: "Security best practices, vulnerability prevention, and secure development across web applications, APIs, networks, and embedded systems. Triggers: security, OWASP, vulnerability, SAST, DAST, input validation, XSS, SQL injection, CSRF, auth, bcrypt, JWT, SAST, DAST, incident response."
 ---
 
 # Security Basics

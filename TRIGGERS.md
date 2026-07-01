@@ -1,16 +1,16 @@
-# TRIGGERS Ã¢â‚¬â€ Mandatory Session Lifecycle Protocol
+# TRIGGERS — Mandatory Session Lifecycle Protocol
 
-**Version:** 2.0 Ã¢â‚¬â€ Phase C (checkpoint, mail, sprint stamp, tokens, archive)
+**Version:** 2.0 — Phase C (checkpoint, mail, sprint stamp, tokens, archive)
 **Effective:** 2026-05-27
 **Applies to:** main-coordinator (primary), all sub-agents (secondary)
 **Enforcement:** These triggers fire automatically. No exceptions without user override.
 
 ---
 
-## T1 Ã¢â‚¬â€ Session START (Fires: when any session starts)
+## T1 — Session START (Fires: when any session starts)
 
-### What to do Ã¢â‚¬â€ IN ORDER:
-1. **Check for checkpoint:** `Test-Path memory/checkpoint.yaml` → if exists, offer resume prompt: "Ã°Å¸Å¡Â§ Checkpoint found from [date]. Resume step X/Y? (yes/no)"
+### What to do — IN ORDER:
+1. **Check for checkpoint:** `Test-Path memory/checkpoint.yaml` → if exists, offer resume prompt: "[*] Checkpoint found from [date]. Resume step X/Y? (yes/no)"
 2. **Load `handover/latest.md`** → parse context, pending items, state snapshot
 3. **Load `session.yaml`** → if exists and has tasks → offer resume prompt
 4. **Load `project_active.md`** → current project state for mentioned projects
@@ -49,9 +49,9 @@
    ```
    Session → touches → Project
    ```
-8. **Present to user (DESCRIPTIVE Ã¢â‚¬â€ for OpenCode auto-naming):**
+8. **Present to user (DESCRIPTIVE — for OpenCode auto-naming):**
    ```
-   Session: {descriptive name} Ã¢â‚¬â€ {project}
+   Session: {descriptive name} — {project}
    Context: {what we're doing, max 1 line}
    State: {pending items if resuming, or "fresh start"}
    ```
@@ -80,7 +80,7 @@
 
 ---
 
-## T2 [UPDATED 2026-06-03: Use t2-complete.ps1] Ã¢â‚¬â€ Task COMPLETES (Fires: every time ANY agent returns a result)
+## T2 [UPDATED 2026-06-03: Use t2-complete.ps1] — Task COMPLETES (Fires: every time ANY agent returns a result)
 
 ### Compliance Checklist (3 mandatory questions):
 
@@ -129,22 +129,22 @@
 ### Notification Rules:
 | Event | Notify? | Format |
 |-------|---------|--------|
-| Lesson learned | Ã¢Å“â€¦ | `Ã°Å¸â€œÂ Saved lesson: [one-liner]` |
-| State change | Ã¢Å“â€¦ | `Ã°Å¸â€œÂ¦ Project updated: [what changed]` |
+| Lesson learned | Ã¢Å“… | `Ã°Å¸“Â Saved lesson: [one-liner]` |
+| State change | Ã¢Å“… | `Ã°Å¸“Â¦ Project updated: [what changed]` |
 | Decision recorded | Ã¢ÂÅ’ | Silent |
 | session_log append | Ã¢ÂÅ’ | Silent |
 | KG update | Ã¢ÂÅ’ | Silent |
 
 ---
 
-## T3 Ã¢â‚¬â€ Session END (Fires: user signs off, 30+ min idle, project switch, error/crash)
+## T3 — Session END (Fires: user signs off, 30+ min idle, project switch, error/crash)
 
-### What to do Ã¢â‚¬â€ IN ORDER:
+### What to do — IN ORDER:
 1. **Auto-archive old handovers (C5):** `powershell scripts/archive-handovers.ps1 -MaxAgeDays 7`
 2. **Token budget report (C4):** `powershell scripts/track-tokens.ps1 -Action "report"` → include in notification
 3. **Write `handover/latest.md`:**
    ```markdown
-   # Handover: {YYYY-MM-DD} Ã¢â‚¬â€ {Session Name}
+   # Handover: {YYYY-MM-DD} — {Session Name}
    
    ## Context
    {what we were doing, why}
@@ -176,7 +176,7 @@
 6. **Stamp `current_sprint.md`** → `powershell scripts/stamp-sprint.ps1 -TaskDescription "{session summary}" -SessionEnd`
 7. **Finalize session entity in KG** → `status: completed`
 8. **Append session summary to `session_log.md`** → totals row
-9. **Notify user:** "Ã°Å¸â€œâ€¹ Handover saved. [token report]. Pending: [summary]. See you next time."
+9. **Notify user:** "Ã°Å¸“â€¹ Handover saved. [token report]. Pending: [summary]. See you next time."
 10. **Clear `session.yaml`** → state is now in handover (keep as reference, reset tasks)
 
 ### Interim handover (30+ min idle / project switch):
@@ -187,7 +187,7 @@ Write minimal: what was happening, what failed, last known good state.
 
 ---
 
-## T4 Ã¢â‚¬â€ User asks "Status" / "What's going on" / "QuÃƒÂ© hicimos"
+## T4 — User asks "Status" / "What's going on" / "QuÃƒÂ© hicimos"
 
 ### What to do:
 1. Read `session.yaml` → current tasks, state
@@ -197,24 +197,24 @@ Write minimal: what was happening, what failed, last known good state.
 
 ### Output format:
 ```
-Ã°Å¸â€œâ€¹ Current: {session name}
+Ã°Å¸“â€¹ Current: {session name}
 Ã¢ÂÂ± Started: {time} ({duration} ago)
-Ã¢Å“â€¦ Done: {N}/{M} tasks
-   - {task 1} Ã¢Å“â€¦
-   - {task 2} Ã¢Å“â€¦
+Ã¢Å“… Done: {N}/{M} tasks
+   - {task 1} Ã¢Å“…
+   - {task 2} Ã¢Å“…
 Ã¢Â¬Å“ Pending:
    - {pending 1}
    - {pending 2}
-Ã°Å¸â€œÂ Decisions: {bullet}
+Ã°Å¸“Â Decisions: {bullet}
 Ã¢Å¡Â Ã¯Â¸Â Blockers: {bullet or None}
-Ã°Å¸â€œÅ  {Metrics}
+Ã°Å¸“Å  {Metrics}
 ```
 
 ---
 
-## T5 Ã¢â‚¬â€ Lesson discovered (Fires: on unexpected behavior, user correction, non-obvious fix)
+## T5 — Lesson discovered (Fires: on unexpected behavior, user correction, non-obvious fix)
 
-### What to do Ã¢â‚¬â€ BOTH simultaneously:
+### What to do — BOTH simultaneously:
 
 1. **Append to `lessons_learned.md`:**
    ```markdown
@@ -233,7 +233,7 @@ Write minimal: what was happening, what failed, last known good state.
    observations: ["date:", "what_happened:", "correct_approach:", "category:", "applied:"]
    ```
 3. **Wire relation:** `Current-Session → discovers → Lesson-{name}`
-4. **Notify user:** `Ã°Å¸â€œÂ Saved lesson: [one-liner]`
+4. **Notify user:** `Ã°Å¸“Â Saved lesson: [one-liner]`
 5. **Write lesson to context graph (fire-and-forget):**
    Record lesson as a graph node with edge to session. Graph writes are advisory.
    `powershell
@@ -247,7 +247,7 @@ Write minimal: what was happening, what failed, last known good state.
      # Graph write failure is non-blocking -- lesson is already saved to flat files
    }
    `
-## T6 Ã¢â‚¬â€ Decision made (Fires: on architectural/design choices, AND Challenger Rule overrides)
+## T6 — Decision made (Fires: on architectural/design choices, AND Challenger Rule overrides)
 
 ### What to do:
 1. **Append to `session.yaml` decisions:**
@@ -262,7 +262,7 @@ Write minimal: what was happening, what failed, last known good state.
    observations: ["date:", "context:", "decision:", "alternatives:", "rationale:"]
    ```
 3. **Wire relation:** `Current-Session → makes → Decision-{name}`
-4. **Silent** Ã¢â‚¬â€ no user notification unless significant
+4. **Silent** — no user notification unless significant
 5. **Write decision to context graph (fire-and-forget):**
    Record decision as a graph node with edge to session. Graph writes are advisory.
    `powershell
@@ -276,13 +276,13 @@ Write minimal: what was happening, what failed, last known good state.
      # Graph write failure is non-blocking -- decision is already saved to session.yaml
    }
    `
-### Challenger Rule Override Ã¢â‚¬â€ Special Decision Type
+### Challenger Rule Override — Special Decision Type
 When user overrides a Challenger Rule challenge ("yes, proceed" or "override"), this is logged as a T6 decision with special prefix:
 
 ```powershell
 & "$CONFIG/scripts/session_machine.ps1" -Trigger T6 `
   -Decision "Challenger-Override: {pattern}" `
-  -DecisionContext "{risky pattern} Ã¢â‚¬â€ user insisted" `
+  -DecisionContext "{risky pattern} — user insisted" `
   -Rationale "{risk accepted at timestamp}. Alternative: {correct approach}."
 ```
 
@@ -301,16 +301,16 @@ try {
   # Graph write failure is non-blocking -- override is already logged in session.yaml
 }
 `
-## T7 Ã¢â‚¬â€ State change (Fires: project state, deploy status, test count changes)
+## T7 — State change (Fires: project state, deploy status, test count changes)
 
 ### What to do:
 1. **Update `project_active.md`** → edit entry for affected project
 2. **Update KG project entity** → add observation with new state
-3. **Notify user:** `Ã°Å¸â€œÂ¦ Updated project state: {what changed}`
+3. **Notify user:** `Ã°Å¸“Â¦ Updated project state: {what changed}`
 
 ---
 
-## T8 Ã¢â‚¬â€ Mail between agents (Fires: cross-domain issue found)
+## T8 — Mail between agents (Fires: cross-domain issue found)
 
 ### Command:
 ```powershell
@@ -320,7 +320,7 @@ python $CONFIG/scripts/mail.py read {msg-id}       # Read + mark read
 python $CONFIG/scripts/mail.py clear [{agent}]      # Clear mailbox
 ```
 
-### Challenger Rule Ã¢â‚¬â€ Audit Trail (MANDATORY)
+### Challenger Rule — Audit Trail (MANDATORY)
 
 Every time the user says "yes, proceed anyway" or "override" to a Challenger Rule challenge, the coordinator MUST log this as a decision:
 
@@ -334,7 +334,7 @@ Every time the user says "yes, proceed anyway" or "override" to a Challenger Rul
 
 Example:
 - User says "use md5 for passwords" → Challenger Rule fires → user says "yes, proceed"
-- Coordinator logs: `Challenger-Override: md5-password-hashing Ã¢â‚¬â€ User confirmed override 2026-05-27. Risk: bcrypt is required for passwords.`
+- Coordinator logs: `Challenger-Override: md5-password-hashing — User confirmed override 2026-05-27. Risk: bcrypt is required for passwords.`
 
 **This is non-negotiable.** The audit trail lives in `session.yaml` decisions and in `lessons_learned.md` if the override leads to a incident.
 
@@ -356,17 +356,17 @@ try {
 **When does an agent mail another?**
 ```
 Specialist completes task
-  Ã¢â€Å“Ã¢â€â‚¬ Found security smell (plaintext password, SQL injection, etc.)
-  Ã¢â€â€š  Ã¢â€â€Ã¢â€â‚¬→ Mail to code-analyzer: "Security issue in [file]: [details]"
-  Ã¢â€Å“Ã¢â€â‚¬ Found architectural issue (wrong pattern, scalability concern)
-  Ã¢â€â€š  Ã¢â€â€Ã¢â€â‚¬→ Mail to architecture-advisor: "Architecture concern in [area]: [details]"
-  Ã¢â€Å“Ã¢â€â‚¬ Found cross-domain bug (frontend issue while working backend)
-  Ã¢â€â€š  Ã¢â€â€Ã¢â€â‚¬→ Mail to appropriate specialist: "Cross-domain issue in [file]: [details]"
-  Ã¢â€Å“Ã¢â€â‚¬ Is blocked (missing API key, unclear requirement, external dependency down)
-  Ã¢â€â€š  Ã¢â€â€Ã¢â€â‚¬→ Mail to main-coordinator: "BLOCKED on [reason]"
-  Ã¢â€Å“Ã¢â€â‚¬ Discovered something another agent should handle later
-  Ã¢â€â€š  Ã¢â€â€Ã¢â€â‚¬→ Mail to that agent: "FYI: [details]"
-  Ã¢â€â€Ã¢â€â‚¬ Everything clean → No mail needed
+  Ã¢—Å“Ã¢—â‚¬ Found security smell (plaintext password, SQL injection, etc.)
+  Ã¢—â€š  Ã¢——Ã¢—â‚¬→ Mail to code-analyzer: "Security issue in [file]: [details]"
+  Ã¢—Å“Ã¢—â‚¬ Found architectural issue (wrong pattern, scalability concern)
+  Ã¢—â€š  Ã¢——Ã¢—â‚¬→ Mail to architecture-advisor: "Architecture concern in [area]: [details]"
+  Ã¢—Å“Ã¢—â‚¬ Found cross-domain bug (frontend issue while working backend)
+  Ã¢—â€š  Ã¢——Ã¢—â‚¬→ Mail to appropriate specialist: "Cross-domain issue in [file]: [details]"
+  Ã¢—Å“Ã¢—â‚¬ Is blocked (missing API key, unclear requirement, external dependency down)
+  Ã¢—â€š  Ã¢——Ã¢—â‚¬→ Mail to main-coordinator: "BLOCKED on [reason]"
+  Ã¢—Å“Ã¢—â‚¬ Discovered something another agent should handle later
+  Ã¢—â€š  Ã¢——Ã¢—â‚¬→ Mail to that agent: "FYI: [details]"
+  Ã¢——Ã¢—â‚¬ Everything clean → No mail needed
 ```
 
 ### Check mail at task start (MANDATORY):
@@ -374,11 +374,11 @@ Specialist completes task
 python $CONFIG/scripts/mail.py inbox
 ```
 Process unread messages BEFORE starting new work. If unread mail exists, summarize to user:
-"Ã°Å¸â€œÂ¬ {N} unread messages. [subject list]. Process now?"
+"Ã°Å¸“Â¬ {N} unread messages. [subject list]. Process now?"
 
 ### Mail persistence:
 - Mail survives crashes, restarts, context resets
-- NOT real-time Ã¢â‚¬â€ recipient reads on next task start
+- NOT real-time — recipient reads on next task start
 - Max 50 unread per mailbox before auto-clear oldest
 
 ---

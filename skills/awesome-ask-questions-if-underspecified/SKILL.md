@@ -1,6 +1,6 @@
 ---
 name: awesome-ask-questions-if-underspecified
-description: Pause-and-clarify pattern — from Trail of Bits. Use when user request is ambiguous, underspecified, or has multiple plausible interpretations. Triggers: clarify, ambiguous, underspecified, ask user, what do you mean, missing context, scope unclear, constraints missing.
+description: "Pause-and-clarify pattern — from Trail of Bits. Use when user request is ambiguous, underspecified, or has multiple plausible interpretations. Triggers: clarify, ambiguous, underspecified, ask user, what do you mean, missing context, scope unclear, constraints missing."
 ---
 
 # Ask Questions If Underspecified Skill

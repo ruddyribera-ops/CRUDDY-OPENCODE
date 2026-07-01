@@ -4,7 +4,7 @@
 
 param(
     [string]$Skills = "",
-    [string]$SkillsDir = "C:/Users/Windows/.config/opencode/skills"
+    [string]$SkillsDir = "$env:USERPROFILE\.config\opencode\skills"
 )
 
 $ErrorActionPreference = "Stop"

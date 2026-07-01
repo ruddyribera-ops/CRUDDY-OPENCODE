@@ -74,7 +74,7 @@ export const PluginName = async () => {
 ```json
 "plugin": [
   ...existing plugins...,
-  "C:\\Users\\Windows\\.config\\opencode\\plugins\\<name>.js"
+  "{env:USERPROFILE}\\.config\\opencode\\plugins\\<name>.js"
 ]
 ```
 

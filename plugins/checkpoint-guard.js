@@ -38,7 +38,7 @@ const CHECKPOINT_SAVE_SCRIPT = path.join(CONFIG_ROOT, "scripts", "checkpoint-sav
 const CHECKPOINT_INTERVAL_MS = 5 * 60 * 1000
 
 // Bash commands / PowerShell cmdlets / redirection operators that change filesystem state.
-const MODIFYING_BASH_PATTERNS = /\b(rm|mv|cp|write|edit|delete|move|copy|Set-Content|Remove-Item|Move-Item|Copy-Item|New-Item)\b|>>?|<\s*</i
+const MODIFYING_BASH_PATTERNS = /\b(rm|mv|cp|write|edit|delete|move|copy|Set-Content|Remove-Item|Move-Item|Copy-Item|New-Item|del|rd|ren|Rename-Item)\b|>>?|<\s*</i
 
 let lastCheckpoint = 0
 

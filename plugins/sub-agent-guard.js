@@ -25,7 +25,10 @@
 import { gateLog } from "./_shared.js"
 
 const DEFAULT_TIMEOUT_MS = 300000  // 5 minutes
-const MAX_PROMPT_LEN = 300
+// MAX_PROMPT_LEN: generous limit prevents legitimate task descriptions from being
+// truncated mid-word. 300 was too aggressive — real sub-agent prompts (with file
+// paths, requirements, context) exceed it easily. 1500 gives headroom for complex tasks.
+const MAX_PROMPT_LEN = 1500
 
 const EMPTY_RESULT_MESSAGE =
   "[SUB-AGENT-GUARD] Task returned empty result. " +
@@ -47,7 +50,7 @@ const EMPTY_RESULT_MESSAGE =
  * @returns {string}
  */
 function simplifyPrompt(prompt) {
-  if (!prompt) return prompt
+  if (prompt == null) return ""
   let simplified = String(prompt).replace(/```[\s\S]*?```/g, "[code stripped]")
   if (simplified.length > MAX_PROMPT_LEN) {
     simplified = simplified.slice(0, MAX_PROMPT_LEN - 3) + "..."

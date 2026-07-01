@@ -12,8 +12,8 @@ $cfg = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
 Assert ($cfg.default_agent -eq "main-coordinator") "default_agent not main-coordinator"
 
 # Check for duplicate config files (leftover from mis-installed packages)
-Assert (-not (Test-Path -LiteralPath "C:\Users\Windows\.opencode")) "duplicate home .opencode still exists"
-Assert (-not (Test-Path -LiteralPath "C:\Users\Windows\opencode.json")) "duplicate home opencode.json still exists"
+Assert (-not (Test-Path -LiteralPath "$env:USERPROFILE\.opencode")) "duplicate home .opencode still exists"
+Assert (-not (Test-Path -LiteralPath "$env:USERPROFILE\opencode.json")) "duplicate home opencode.json still exists"
 Assert (-not (Test-Path -LiteralPath "$env:APPDATA\opencode\opencode.json")) "duplicate AppData opencode.json still exists"
 Assert (-not (Test-Path -LiteralPath (Join-Path $root "opencode.json.bak"))) "duplicate opencode.json.bak still exists"
 

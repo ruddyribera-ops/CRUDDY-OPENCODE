@@ -25,6 +25,34 @@ if (-not $SessionLogPath) {
     }
 }
 
+# ── Helper: Extract search terms (defined early to avoid forward-reference bug) ──
+function Extract-Terms {
+    param([string]$text)
+
+    # Stopwords to filter
+    $stopwords = @("the", "a", "an", "of", "in", "for", "to", "and", "or", "with", "on", "at", "by",
+                    "is", "it", "as", "be", "was", "are", "been", "from", "this", "that", "done",
+                    "global", "windows", "test", "audit", "fix", "add", "update", "build", "done",
+                    "step", "phase", "task", "module", "complete", "completed", "verification",
+                    "verify", "pass", "failed", "working")
+
+    # Extract camelCase, snake_case, words 3+ chars, and ALL-CAPS acronyms
+    $words = [regex]::Matches($text, '(?<![a-z])([A-Z][a-z]+|[a-z]{3,}|_[a-z]{3,}|[A-Z]{2,})', "IgnoreCase")
+
+    $terms = @()
+    foreach ($w in $words) {
+        $term = $w.Value.TrimStart('_').ToLower()
+        # Keep all-caps acronyms (PRIA, API, SQL, etc.) and 3+ char terms
+        $isAcronym = $w.Value -cmatch '^[A-Z]{2,}$'
+        if ($isAcronym -or ($term.Length -ge 3 -and $stopwords -notcontains $term)) {
+            $terms += $term
+        }
+    }
+
+    # Unique
+    return ($terms | Sort-Object -Unique)
+}
+
 if (-not (Test-Path $SessionLogPath)) {
     Write-Host "[cass-index] No session log found. Skipping."
     exit 0
@@ -163,32 +191,3 @@ if ($Verbose -or $newCount -gt 0) {
 }
 
 exit 0
-
-
-# ── Helper: Extract search terms ─────────────────────────────────────────
-function Extract-Terms {
-    param([string]$text)
-
-    # Stopwords to filter
-    $stopwords = @("the", "a", "an", "of", "in", "for", "to", "and", "or", "with", "on", "at", "by",
-                    "is", "it", "as", "be", "was", "are", "been", "from", "this", "that", "done",
-                    "global", "windows", "test", "audit", "fix", "add", "update", "build", "done",
-                    "step", "phase", "task", "module", "complete", "completed", "verification",
-                    "verify", "pass", "failed", "working")
-
-    # Extract camelCase, snake_case, words 3+ chars, and ALL-CAPS acronyms
-    $words = [regex]::Matches($text, '(?<![a-z])([A-Z][a-z]+|[a-z]{3,}|_[a-z]{3,}|[A-Z]{2,})', "IgnoreCase")
-
-    $terms = @()
-    foreach ($w in $words) {
-        $term = $w.Value.TrimStart('_').ToLower()
-        # Keep all-caps acronyms (PRIA, API, SQL, etc.) and 3+ char terms
-        $isAcronym = $w.Value -cmatch '^[A-Z]{2,}$'
-        if ($isAcronym -or ($term.Length -ge 3 -and $stopwords -notcontains $term)) {
-            $terms += $term
-        }
-    }
-
-    # Unique
-    return ($terms | Sort-Object -Unique)
-}

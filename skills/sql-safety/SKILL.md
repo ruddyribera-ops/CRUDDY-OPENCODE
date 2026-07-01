@@ -1,6 +1,6 @@
 ---
 name: sql-safety
-description: Parameterized queries only. PostgreSQL/SQLite type discipline. Idempotent migrations via ON CONFLICT. Use when writing database code, designing migrations, or reviewing SQL. Triggers: SQL injection, parameterized query, migration, ON CONFLICT, schema, Postgres, SQLite, DROP TABLE, idempotent.
+description: "Parameterized queries only. PostgreSQL/SQLite type discipline. Idempotent migrations via ON CONFLICT. Use when writing database code, designing migrations, or reviewing SQL. Triggers: SQL injection, parameterized query, migration, ON CONFLICT, schema, Postgres, SQLite, DROP TABLE, idempotent."
 ---
 
 # SQL Safety
