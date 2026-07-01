@@ -214,6 +214,7 @@
         "C:/Users/Windows/.config/opencode/plugins/pre-tool-guard.js",
         "C:/Users/Windows/.config/opencode/plugins/post-tool-guard.js",
         "C:/Users/Windows/.config/opencode/plugins/sub-agent-guard.js",
+        "C:/Users/Windows/.config/opencode/plugins/routing-stability.js",
         "C:/Users/Windows/.config/opencode/plugins/checkpoint-guard.js",
         "C:/Users/Windows/.config/opencode/plugins/session-start-memory.js",
         "C:/Users/Windows/.config/opencode/plugins/main-coordinator-tracing.js"

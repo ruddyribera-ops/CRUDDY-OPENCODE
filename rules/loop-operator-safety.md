@@ -31,7 +31,7 @@ Three failure modes converge in loop execution:
 2. **Hallucinated consensus**: same prompt returning similar-looking but subtly wrong outputs. Loop confirms the wrong answer repeatedly.
 3. **Stall thrashing**: same dispatch, same output, no progress. Detector misses it; loop runs forever.
 
-The contract addresses all three with **four mandatory safety rails** (see Loop-Operator Contract below).
+The contract addresses all three with **six mandatory safety rails** (see Loop-Operator Contract below).
 
 ---
 
@@ -50,9 +50,9 @@ A loop has exactly 4 valid terminal states. Anything else is a bug:
 
 ---
 
-## Loop-Operator contract (mandatory rails)
+## Loop-Operator contract (6 mandatory rails)
 
-Any agent invoking loop execution **MUST** enforce all four rails. No exceptions, no opt-outs, no "I'll skip this for a quick test".
+Any agent invoking loop execution **MUST** enforce all six rails. No exceptions, no opt-outs, no "I'll skip this for a quick test".
 
 ### Rail 1 — max_iterations
 
@@ -80,8 +80,9 @@ The critical rail. Without it, loops thrash on identical output forever.
 1. After each iteration, capture verifier output (test result, lint status, build outcome)
 2. Hash the output to a stable signature (sha256 of normalized text)
 3. Append signature to progress_history (capped at last 5)
-4. If progress_history[-3:] are all identical → emit STALLED
-5. Reset history on any progress (different signature)
+4. Re-inject per-iteration context (Rail 6 — accumulated_results, budget_remaining)
+5. If progress_history[-3:] are all identical → emit STALLED
+6. Reset history on any progress (different signature)
 ```
 
 **Verifier examples**:
@@ -105,18 +106,49 @@ When `STALLED` or `COST_EXCEEDED` fires:
 3. State preserved to `/tmp/loop-state-<id>.json` for resumption if approved
 4. **Caller decides**: extend budget? narrow scope? abort? user prompt?
 
+### Rail 5 — act_halting (convergence detection)
+
+- **Default**: enabled
+- **Hard cap**: cannot be disabled for callers `expert-tester`, `qa-engineer`, `bug-fixer`
+- **Behavior**: When verifier emits a binary PASS signal, emit `GOAL_MET` immediately regardless of iteration count
+- **Requires**: caller MUST provide a verifier that emits binary pass/fail (not just exit code)
+- **Rationale**: OpenMythOS ACT (Adaptive Computation Time) hypothesis — successful loops converge early. Burning iterations after convergence wastes tokens and can mask already-solved issues.
+
+**Verifier contract extension:**
+- `qa-engineer`: `pytest --tb=line` exit 0 → PASS
+- `bug-fixer`: error repro returns no error → PASS
+- `code-builder` (build-until-compiles): `tsc --noEmit` exit 0 → PASS
+- `expert-tester`: target mutation killed → PASS
+
+**Forbidden:** act_halting is NOT a substitute for no_progress_detector (Rail 3). Both MUST run. Rail 3 catches "no progress"; Rail 5 catches "convergence reached."
+
+### Rail 6 — per_iteration_injection (context preservation)
+
+- **Default**: enabled
+- **Behavior**: On every loop iteration, the loop-operator MUST re-inject:
+  1. `original_user_request` — immutable from coordinator handover
+  2. `task_graph` — the decomposition passed at loop start
+  3. `accumulated_results` — last 3 iteration outputs (or all if fewer)
+  4. `budget_remaining` — tokens left in cost_ceiling (Rail 2)
+- **Rationale**: OpenMythOS input injection (`B·e` term) — without re-injection, loop state drifts from original task. After 3-4 iterations without re-injection, the loop-agent's context can drift from the original user request.
+- **Forbidden**: Skipping re-injection to save tokens (drift cost > token cost).
+- **Edge cases**:
+  - Iteration 1 (no prior results): `accumulated_results` is empty list, NOT undefined.
+  - `budget_remaining = 0`: already exited per Rail 2, never reaches Rail 6.
+  - `task_graph` is null: Rail 6 degrades gracefully, only injects `original_user_request`.
+
 ---
 
 ## Caller contract (who can invoke loops)
 
 Loop execution is a **shared utility**, not an autonomous agent. The following agents MAY invoke loop patterns, subject to the rails above:
 
-| Caller | Use case | Notes |
-|--------|----------|-------|
-| `expert-tester` | Property-based test iterations, mutation test cycles | Already uses informal iteration (`run 3x, if 2/3 fail`) |
-| `qa-engineer` | Test-until-green regression | Cap at 5 iterations; escalate on stall |
-| `bug-fixer` | Fix-until-passes (when same error recurs) | Cap at 3 iterations; escalate on stall |
-| `code-builder` | Build-until-compiles | Cap at 3 iterations; escalate on stall |
+| Caller | Use case | act_halting | per_iteration_injection | Notes |
+|--------|----------|-------------|-------------------------|-------|
+| `expert-tester` | Property-based test iterations, mutation test cycles | ENABLED (hard) | ENABLED (hard) | Already uses informal iteration (`run 3x, if 2/3 fail`) |
+| `qa-engineer` | Test-until-green regression | ENABLED (hard) | ENABLED (hard) | Cap at 5 iterations; escalate on stall |
+| `bug-fixer` | Fix-until-passes (when same error recurs) | ENABLED (hard) | ENABLED (hard) | Cap at 3 iterations; escalate on stall |
+| `code-builder` | Build-until-compiles | ENABLED (default) | ENABLED (default) | Cap at 3 iterations; escalate on stall |
 
 **Forbidden callers** (must NOT invoke loops without human approval):
 
@@ -215,6 +247,7 @@ The following are **strict violations** of this contract:
 | Runaway cost ($380-$47K incidents) | Rail 2: cost_ceiling hard cap |
 | Hallucinated consensus (stuck on wrong answer) | Rail 3: no_progress_detector |
 | Stall thrashing (same output forever) | Rail 3 + Rail 1: max_iterations |
+| Context drift after 3-4 iterations | Rail 6: per_iteration_injection |
 | Sub-agent-guard timeout loss of progress | State persistence via checkpoint-guard |
 | Unauthorized loop invocation by advisory agents | Caller contract + human approval gate |
 | Silent cost overruns | T2 logging tracks tokens per loop |
