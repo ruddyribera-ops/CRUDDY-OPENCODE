@@ -2,5 +2,14 @@
   "dependencies": {
     "@opencode-ai/plugin": "1.4.3",
     "js-yaml": "^4.2.0"
+  },
+  "scripts": {
+    "validate": "npx tsx scripts/validate-skills.ts && python3 scripts/check-rules.py validate",
+    "validate:skills": "npx tsx scripts/validate-skills.ts",
+    "validate:rules": "python3 scripts/check-rules.py validate",
+    "validate:jsonc": "node scripts/validate-jsonc.js opencode.json",
+    "validate:config": "pwsh -File scripts/validate-config.ps1",
+    "validate:manifests": "pwsh -File scripts/validate-manifests.ps1",
+    "lint:js": "npx biome lint plugins/ scripts/"
   }
 }

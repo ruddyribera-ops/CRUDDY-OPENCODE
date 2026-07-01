@@ -1,4 +1,4 @@
-# Pre-commit hooks for OpenCode config validation
+﻿# Pre-commit hooks for OpenCode config validation
 # Install: pip install pre-commit && pre-commit install
 # Run manually: pre-commit run --all-files
 #
@@ -24,7 +24,7 @@ repos:
       - id: dna-gene-schema
         name: DNA.yaml gene schema validation
         description: Validate DNA.yaml genes against the zod schema
-        entry: bash -c 'cd "$CONFIG_ROOT/plugins" && node --test gate-system.test.js 2>&1 | grep -E "^(✔|✖|ℹ tests|ℹ pass|ℹ fail)" | grep -v "ℹ cancelled"'
+        entry: bash -c 'cd "$REPO_ROOT/plugins" && node --test gate-system.test.js 2>&1 | grep -E "^(âœ”|âœ–|â„¹ tests|â„¹ pass|â„¹ fail)" | grep -v "â„¹ cancelled"'
         language: system
         files: 'skills/DNA\.yaml$'
         pass_filenames: false
@@ -33,7 +33,7 @@ repos:
       - id: plugin-syntax
         name: Plugin JS syntax check
         description: Verify all plugin files parse as valid JavaScript
-        entry: bash -c 'for f in "$CONFIG_ROOT/plugins"/*.js; do node --check "$f" || exit 1; done'
+        entry: bash -c 'for f in "$REPO_ROOT/plugins"/*.js; do node --check "$f" || exit 1; done'
         language: system
         files: 'plugins/.*\.js$'
         pass_filenames: false

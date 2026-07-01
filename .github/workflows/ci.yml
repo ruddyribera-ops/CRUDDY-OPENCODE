@@ -1,0 +1,71 @@
+name: OpenCode Config CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  validate-linux:
+    name: Validate (Linux / Node + Python)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Validate skill definitions (TS)
+        run: npx tsx scripts/validate-skills.ts
+
+      - name: Validate rules
+        run: python3 scripts/check-rules.py validate
+
+      - name: Validate JSONC config files
+        run: node scripts/validate-jsonc.js opencode.json agents/*.yaml
+
+  validate-windows:
+    name: Validate (Windows / PowerShell)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup PowerShell Core
+        uses: microsoft/powershell-actions/setup-powershell@v1
+        with:
+          pwsh-version: '7.4'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Validate config (8-layer integrity)
+        run: pwsh -File scripts/validate-config.ps1
+
+      - name: Validate agent manifests
+        run: pwsh -File scripts/validate-manifests.ps1
+
+      - name: Validate skill versions
+        run: pwsh -File scripts/skill-version-check.ps1
