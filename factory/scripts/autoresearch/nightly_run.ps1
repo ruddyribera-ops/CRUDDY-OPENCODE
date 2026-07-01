@@ -3,7 +3,10 @@
 # Runs daily at 02:00 via Task Scheduler
 
 $ErrorActionPreference = "Continue"
-$OPENCODE_ROOT = "C:\Users\Windows\.config\opencode"
+$OPENCODE_ROOT = if ($env:OPENCODE_CONFIG_HOME) { $env:OPENCODE_CONFIG_HOME }
+                elseif ($env:USERPROFILE) { Join-Path $env:USERPROFILE ".config\opencode" }
+                elseif ($env:HOME) { Join-Path $env:HOME ".config/opencode" }
+                else { "$PSScriptRoot\..\.." }
 $LOG_FILE = "$OPENCODE_ROOT\memory\autoresearch_nightly.log"
 $VENV_PATH = "$OPENCODE_ROOT\factory\scripts\memory_retrieval\.venv"
 $ITERATE_SCRIPT = "$OPENCODE_ROOT\factory\scripts\autoresearch\iterate.py"

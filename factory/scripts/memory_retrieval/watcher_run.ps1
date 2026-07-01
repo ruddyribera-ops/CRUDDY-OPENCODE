@@ -4,7 +4,10 @@
 # Stop by creating: C:\Users\Windows\.config\opencode\.opencode\watcher.stop
 
 $ErrorActionPreference = "Continue"
-$OPENCODE_ROOT = "C:\Users\Windows\.config\opencode"
+$OPENCODE_ROOT = if ($env:OPENCODE_CONFIG_HOME) { $env:OPENCODE_CONFIG_HOME }
+                elseif ($env:USERPROFILE) { Join-Path $env:USERPROFILE ".config\opencode" }
+                elseif ($env:HOME) { Join-Path $env:HOME ".config/opencode" }
+                else { "$PSScriptRoot\..\.." }
 $VENV_PATH = "$OPENCODE_ROOT\scripts\memory_retrieval\.venv"
 $WATCHER_SCRIPT = "$OPENCODE_ROOT\factory\scripts\memory_retrieval\watcher.py"
 

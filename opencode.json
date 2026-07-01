@@ -206,17 +206,17 @@
     "share": "manual",
     "autoupdate": "notify",
     "plugin": [
-        "C:/Users/Windows/.config/opencode/plugins/memory-bridge.js",
-        "C:/Users/Windows/.config/opencode/plugins/gate-system.js",
-        "C:/Users/Windows/.config/opencode/plugins/post-turn-biome.js",
-        "C:/Users/Windows/.config/opencode/plugins/compaction-survival.js",
-        "C:/Users/Windows/.config/opencode/plugins/session-title-guard.js",
-        "C:/Users/Windows/.config/opencode/plugins/pre-tool-guard.js",
-        "C:/Users/Windows/.config/opencode/plugins/post-tool-guard.js",
-        "C:/Users/Windows/.config/opencode/plugins/sub-agent-guard.js",
-        "C:/Users/Windows/.config/opencode/plugins/routing-stability.js",
-        "C:/Users/Windows/.config/opencode/plugins/checkpoint-guard.js",
-        "C:/Users/Windows/.config/opencode/plugins/session-start-memory.js",
-        "C:/Users/Windows/.config/opencode/plugins/main-coordinator-tracing.js"
+        "plugins/memory-bridge.js",
+        "plugins/gate-system.js",
+        "plugins/post-turn-biome.js",
+        "plugins/compaction-survival.js",
+        "plugins/session-title-guard.js",
+        "plugins/pre-tool-guard.js",
+        "plugins/post-tool-guard.js",
+        "plugins/sub-agent-guard.js",
+        "plugins/routing-stability.js",
+        "plugins/checkpoint-guard.js",
+        "plugins/session-start-memory.js",
+        "plugins/main-coordinator-tracing.js"
     ]
 }
