@@ -20,7 +20,11 @@
 
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import * as yaml from 'js-yaml';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 interface ValidationResult {
   skill: string;
@@ -30,7 +34,7 @@ interface ValidationResult {
   valid: boolean;            // true if no tier1 errors
 }
 
-const SKILLS_DIR = join(process.env.USERPROFILE || '', '.config', 'opencode', 'skills');
+const SKILLS_DIR = join(__dirname, '..', 'skills');
 const MIN_DESCRIPTION_LENGTH = 30;
 const MIN_BODY_LENGTH = 500;
 

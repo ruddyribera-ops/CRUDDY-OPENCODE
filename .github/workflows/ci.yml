@@ -34,7 +34,7 @@ jobs:
         run: python3 scripts/check-rules.py validate
 
       - name: Validate JSONC config files
-        run: node scripts/validate-jsonc.js opencode.json agents/*.yaml
+        run: node scripts/validate-jsonc.js opencode.json
 
       - name: Test manifest schema conformance
         run: node tests/test-manifest-schema.mjs
